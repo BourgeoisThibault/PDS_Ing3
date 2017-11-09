@@ -1,4 +1,4 @@
-package pds.esibank.notificationserver.controllers;
+package pds.esibank.notificationserver.rest.controllers;
 
 import org.springframework.web.bind.annotation.*;
 
