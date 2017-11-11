@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.net.Socket;
+import java.util.Random;
 
 /**
  * @author BOURGEOIS Thibault
@@ -12,10 +13,17 @@ import java.net.Socket;
  * Time     16:40
  */
 @Data
-@Builder
 @ToString
 public class MobileClient {
-    private Socket socket;
     private String token;
-    private String name;
+    private String id_user;
+    private String imei;
+
+    public MobileClient() {
+        super();
+    }
+
+    public void generateToken() {
+        setToken("mypersonneltoken" + Math.random()*1000000);
+    }
 }
