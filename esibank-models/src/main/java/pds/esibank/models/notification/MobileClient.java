@@ -4,7 +4,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+import javax.xml.bind.DatatypeConverter;
 import java.net.Socket;
+import java.util.Base64;
 import java.util.Random;
 
 /**
@@ -24,6 +26,7 @@ public class MobileClient {
     }
 
     public void generateToken() {
-        setToken("mypersonneltoken" + Math.random()*1000000);
+        String str = new String(DatatypeConverter.parseBase64Binary(imei + id_user));
+        token = DatatypeConverter.printBase64Binary(str.getBytes());
     }
 }

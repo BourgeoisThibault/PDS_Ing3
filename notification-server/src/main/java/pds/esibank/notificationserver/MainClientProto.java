@@ -5,9 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import pds.esibank.models.notification.MobileClient;
 import pds.esibank.models.notification.NotificationModel;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
+import java.math.BigInteger;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.security.interfaces.RSAKey;
+import java.security.spec.RSAKeyGenParameterSpec;
 
 /**
  * @author BOURGEOIS Thibault
@@ -26,6 +30,10 @@ public class MainClientProto {
     private static BufferedInputStream reader = null;
 
     public static void main(String[] args) {
+
+        String str = new String(DatatypeConverter.parseBase64Binary(_IMEI + null));
+        String res = DatatypeConverter.printBase64Binary(str.getBytes());
+        System.out.println(res);
 
         try {
             Socket socket = new Socket("127.0.0.1", 2702);
