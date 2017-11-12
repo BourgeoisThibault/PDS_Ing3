@@ -46,12 +46,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-core</artifactId>
-            <version>1.9</version>
-        </dependency>
-
 		<dependency>
 			<groupId>pds.esibank</groupId>
 			<artifactId>esibank-models</artifactId>
