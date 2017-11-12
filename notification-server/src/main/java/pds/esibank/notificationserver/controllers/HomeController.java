@@ -27,7 +27,7 @@ public class HomeController {
 
     @GetMapping("/test")
     public String getTest(){
-        return "Test OK";
+        return "<h1>NOTIFICATION</h1>";
     }
 
 }
