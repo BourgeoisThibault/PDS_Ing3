@@ -43,7 +43,6 @@ public class NotificationService {
             } catch (InterruptedException e) {
                 logger.error("Can't sleep");
             }
-            logger.info("Size of connectionTab: " + ListConnection.getSocketMobileClientMap().size());
             for (Map.Entry<Socket,MobileClient> e : ListConnection.getSocketMobileClientMap().entrySet()) {
 
                 try {
