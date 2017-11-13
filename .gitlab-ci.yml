@@ -5,4 +5,4 @@ maven-build:
     - mvn clean install
   artifacts:
     paths:
-      - /*/target/*.*
+      - /rest-server/target/serverrest.war
