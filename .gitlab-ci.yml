@@ -1,14 +1,4 @@
 image: maven:3.3.9-jdk-8
-
-maven-build:
-  script:
-    - mvn clean install
-
-deploy:
-  script:
-    - echo "Deploy to production server"
-  environment:
-    name: myenv
     
 before_script:
   # Install ssh-agent if not already installed, it is required by Docker.
@@ -32,4 +22,14 @@ before_script:
   # instead.
   # - mkdir -p ~/.ssh
   # - '[[ -f /.dockerenv ]] && echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts'
-  - scp -r -p /builds/esibank-project/project-esibank/notification-server/target/notificationserver.war 192.154.88.151:/home/esibank/app.war
+
+maven-build:
+  script:
+    - mvn clean install
+
+deploy:
+  script:
+    - echo "Deploy to production server"
+    - scp -r -p /builds/esibank-project/project-esibank/notification-server/target/notificationserver.war 192.154.88.151:/home/esibank/app.war
+  environment:
+    name: myenv
