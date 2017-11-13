@@ -5,4 +5,4 @@ maven-build:
     - mvn clean install
   artifacts:
     paths:
-      - /rest-server/target/serverrest.war
+      - testenv
