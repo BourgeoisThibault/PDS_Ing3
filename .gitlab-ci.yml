@@ -9,7 +9,7 @@ stages:
 - build
 - test
 
-maven: build:
+maven:build:
 stage: build
 environment: staging
 script:
