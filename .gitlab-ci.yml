@@ -1,33 +1,13 @@
-image: maven:3-jdk-8
+image: maven:3.3.9-jdk-8
 cache:
-paths:
-- $HOME/.m2/
-variables:
-MAVEN_CLI_OPTS: "-s /.m2/settings.xml -B"
-SONAR_PROJECT_NAME: "project-demo"
-stages:
-- build
-- test
-
-maven:build:
-stage: build
-environment: staging
-script:
-- "mvn $MAVEN_CLI_OPTS clean compile"
-artifacts:
-when: on_success
-expire_in: 1 day
-paths:
-- target/
-
-maven:package:
-stage: test
-environment: staging
-dependencies:
-- maven:build
-script: "mvn $MAVEN_CLI_OPTS package"
-artifacts:
-when: on_success
-expire_in: 1 day
-paths:
-- target/
+  paths:
+    - /root/.m2/repository/
+before_script:
+  - apt-get update -y && apt-get upgrade -y
+    
+NMQC-build:
+  script:
+    - mvn clean install
+  artifacts:
+    paths:
+      - ./target/*.jar
