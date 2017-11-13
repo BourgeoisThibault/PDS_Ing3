@@ -3,8 +3,4 @@ image: maven:3.3.9-jdk-8
 maven-build:
   script:
     - mvn clean install
-
-deploy:
-  stage: deploy
-  script:
     - sh deploy.sh
