@@ -1,19 +1,34 @@
-# These are the default stages.
-# You don't need to explicitly define them.
-# But you could define any stages you want.
+---
+image: maven:3-jdk-8
+cache:
+ paths:
+ - $HOME/.m2/
+variables:
+  MAVEN_CLI_OPTS: "-s /.m2/settings.xml -B"
+  SONAR_PROJECT_NAME: "project-demo"
 stages:
-  - build
-  - test
-  - deploy
+- build
+- test
 
-# This is the name of the job.
-# You can choose it freely.
-maven_build:
-  # A job is always executed within a stage.
-  # If no stage is set, it defaults to 'test'.
-  stage: test
-  # Here you can execute arbitrate terminal commands.
-  # If any of the commands returns a non zero exit code the job fails.
-  script:
-    - echo "Building project with maven"
-    - mvn verify
+maven:build:
+stage: build
+environment: staging
+script:
+- "mvn $MAVEN_CLI_OPTS clean compile"
+artifacts:
+when: on_success
+expire_in: 1 day
+paths:
+- target/
+
+maven:package:
+stage: test
+environment: staging
+dependencies:
+- maven:build
+script: "mvn $MAVEN_CLI_OPTS package"
+artifacts:
+when: on_success
+expire_in: 1 day
+paths:
+- target/
