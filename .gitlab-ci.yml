@@ -1,6 +1,11 @@
 image: maven:3.3.9-jdk-8
-    
+
 maven-build:
   script:
     - mvn clean install
-    - sh deploy.sh
+
+deploy:
+  script:
+    - echo "Deploy to production server"
+  environment:
+    name: myenv
