@@ -31,5 +31,3 @@ deploy:
   script:
     - echo "Deploy to production server"
     - scp -r -p /builds/esibank-project/project-esibank/notification-server/target/notificationserver.war 192.154.88.151:/home/esibank/app.war
-  environment:
-    name: myenv
