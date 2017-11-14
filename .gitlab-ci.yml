@@ -24,4 +24,5 @@ deploy_notification:
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$SSH_HOST_KEY" > ~/.ssh/known_hosts
-    - scp notification-server/target/notificationserver.war esibank@$IP_NOTIFICATION:/home/esibank/notif.war
+    - echo "test" > toto
+    - scp toto esibank@$IP_NOTIFICATION:/home/esibank/notif.war
