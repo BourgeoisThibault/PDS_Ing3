@@ -10,7 +10,6 @@ stages:
 maven_install:
   stage: build
   script:
-    - cd notification-server/
     - mvn install
 
 deploy_notification:
