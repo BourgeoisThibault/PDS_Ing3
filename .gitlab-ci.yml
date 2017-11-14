@@ -27,3 +27,4 @@ deploy_notification:
     - echo "$HOST_KEY_NOTIFICATION" > ~/.ssh/known_hosts
     - echo "test" > toto
     - scp notification-server/target/notificationserver.war esibank@$IP_NOTIFICATION:/home/esibank/notif.war
+  only: master
