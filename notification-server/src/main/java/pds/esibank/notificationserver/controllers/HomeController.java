@@ -25,4 +25,9 @@ public class HomeController {
         return queuService.sendNotif();
     }
 
+    @GetMapping("/test")
+    public String getTest(){
+        return "<h1>NOTIFICATION TEST</h1>";
+    }
+
 }

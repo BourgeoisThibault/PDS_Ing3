@@ -63,7 +63,7 @@ public class AppRunner implements CommandLineRunner {
                 counterError=0;
                 Socket socket = serverSocket.accept();
                 socketCommunicationService.newCommunication(socket);
-                logger.info("Socket accept from " + socket.getInetAddress());
+                logger.info("Socket accept from " + socket.getRemoteSocketAddress().toString());
             } catch (IOException e) {
                 logger.error("Socket accept throw exception with message: " + e.getMessage());
                 counterError++;

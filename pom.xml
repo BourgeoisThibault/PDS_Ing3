@@ -14,6 +14,7 @@
         <module>esibank-models</module>
         <module>notification-server</module>
         <module>shares-price-history</module>
+        <module>banktransfer</module>
     </modules>
 
     <properties>
