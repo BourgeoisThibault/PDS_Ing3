@@ -5,10 +5,8 @@ deploy_development:
     - mkdir ~/.ssh
     - echo "$SSH_HOST_KEY" > ~/.ssh/known_hosts
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - echo "$SSH_PUBLIC_KEY" > ~/.ssh/id_rsa.pub
-    - chmod 700 ~/.ssh/id_rsa.pub
+    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - chmod 700 ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/known_hosts
     - echo "test" > toto
     - cat toto
     - scp toto 192.154.88.151:/home/esibank/app.war
