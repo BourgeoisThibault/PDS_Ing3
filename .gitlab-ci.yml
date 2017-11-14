@@ -1,7 +1,6 @@
 image: maven:3.3.9-jdk-8
 
 deploy_development:
-    stage: deploy
     script:
     - mvn install
     - echo "$SSH_PRIVATE_KEY" > id_rsa
