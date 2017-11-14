@@ -3,10 +3,10 @@ image: maven:3.3.9-jdk-8
 deploy_development:
     script:
     - mkdir ~/.ssh
-    - echo "$SSH_HOST_KEY" > ~/.ssh/known_hosts
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - chmod 700 ~/.ssh/id_rsa
+    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+    - echo "$SSH_HOST_KEY" > ~/.ssh/known_hosts
     - echo "test" > toto
     - cat toto
     - scp toto 192.154.88.151:/home/esibank/app.war
