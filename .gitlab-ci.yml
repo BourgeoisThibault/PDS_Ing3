@@ -7,4 +7,5 @@ deploy_development:
     - chmod 700 id_rsa
     - mkdir ~/.ssh
     - echo "$SSH_HOST_KEY" > ~/.ssh/known_hosts
+    - cat ~/.ssh/known_hosts
     - scp -i id_rsa rest-server/target/serverrest.war 192.154.88.151:/home/esibank/app.war
