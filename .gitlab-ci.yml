@@ -8,5 +8,5 @@ deploy_development:
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$SSH_HOST_KEY" > ~/.ssh/known_hosts
     - echo "test" > toto
-    - cat toto
+    - cat /etc/ssh/ssh_config
     - scp toto 192.154.88.151:/home/esibank/app.war
