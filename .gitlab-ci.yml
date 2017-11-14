@@ -1,17 +1,5 @@
 image: maven:3.3.9-jdk-8
 
-stages:
-    - build
-    - deploy
-
-build:
-    stage: build
-    script:
-        - mvn clean install
-    artifacts:
-        paths:
-            - rest-server/target/serverrest.war
-
 deploy_development:
     stage: deploy
     script:
@@ -20,4 +8,4 @@ deploy_development:
     - chmod 700 id_rsa
     - mkdir ~/.ssh
     - echo "$SSH_HOST_KEY" > ~/.ssh/known_hosts
-    - scp -i id_rsa target/*.war deployer@$SSH_HOST:/home/esibank/app.war
+    - scp -i id_rsa rest-server/target/serverrest.war esibank@192.154.88.151:/home/esibank/app.war
