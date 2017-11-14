@@ -16,9 +16,14 @@ before_script:
   # WARNING: Use this only with the Docker executor, if you use it with shell
   # you will overwrite your user's SSH config.
   - mkdir -p ~/.ssh
-  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
-maven-install:
+Test SSH:
   script:
-    - mvn package -U
-    - scp -r notification-server/target/notificationserver.war esibank@192.154.88.151:/home/esibank/app.war
+  # try to connect to GitLab.com
+  - ssh esibank@192.154.88.151
+
+#maven-install:
+ # script:
+  #  - mvn package -U
+   # - scp notification-server/target/notificationserver.war esibank@192.154.88.151:/home/esibank/app.war
