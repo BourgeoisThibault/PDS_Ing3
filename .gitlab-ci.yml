@@ -5,5 +5,5 @@ maven-install:
     - mvn package -U
   artifacts:
     paths:
-    - target/*.war
+    - rest-server/target/serverrest.war
     - mywar/*.war
