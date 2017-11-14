@@ -11,9 +11,10 @@
     <modules>
         <module>rest-server</module>
         <module>web-app-server</module>
-        <module>esibank-models</module>
+        <module>esibank-utils</module>
         <module>notification-server</module>
         <module>shares-price-history</module>
+        <module>data-access-server</module>
     </modules>
 
     <properties>

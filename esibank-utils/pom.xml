@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>esibank-models</artifactId>
+    <artifactId>esibank-utils</artifactId>
 
     <dependencies>
 

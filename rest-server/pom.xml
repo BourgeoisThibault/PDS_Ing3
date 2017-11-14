@@ -48,7 +48,7 @@
         </dependency>
 		<dependency>
 			<groupId>pds.esibank</groupId>
-			<artifactId>esibank-models</artifactId>
+			<artifactId>esibank-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

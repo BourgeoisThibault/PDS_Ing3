@@ -1,4 +1,4 @@
-package pds.esibank.proto.protoweb.services;
+package pds.esibank.webapp.services;
 
 
 import pds.esibank.models.LdapUser;
