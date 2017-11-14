@@ -21,7 +21,7 @@ before_script:
 Test SSH:
   script:
   # try to connect to GitLab.com
-  - ssh esibank:esibankpds@192.154.88.151
+  - ssh esibank@192.154.88.151
 
 #maven-install:
  # script:
