@@ -23,11 +23,10 @@ before_script:
   # - mkdir -p ~/.ssh
   # - '[[ -f /.dockerenv ]] && echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts'
 
-maven-build:
+maven-install:
   script:
-    - mvn clean install
-
-deploy:
-  script:
-    - echo "Deploy to production server"
-    - scp -r -p /builds/esibank-project/project-esibank/notification-server/target/notificationserver.war 192.154.88.151:/home/esibank/app.war
+    - mvn package -U
+  artifacts:
+    paths:
+    - target/*.war
+    - mywar/*.war
