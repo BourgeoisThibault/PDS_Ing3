@@ -9,11 +9,13 @@ stages:
 
 maven_install:
   stage: build
+  environment: staging
   script:
     - mvn install
 
 deploy_notification:
   stage: deploy
+  environment: staging
   dependencies:
     - maven_install
   script:
