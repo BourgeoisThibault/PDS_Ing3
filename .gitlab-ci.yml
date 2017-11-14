@@ -21,6 +21,7 @@ before_script:
 Test SSH:
   script:
   # try to connect to GitLab.com
+  - ssh-keygen -t rsa
   - scp  -r -i ~/.ssh/id_rsa . esibank@192.154.88.151:\home\esibank\
 
 #maven-install:
