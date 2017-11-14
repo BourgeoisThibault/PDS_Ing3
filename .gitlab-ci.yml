@@ -1,5 +1,8 @@
 image: maven:3.3.9-jdk-8
 
+variables:
+  IP_NOTIFICATION: "192.154.88.164"
+
 stages:
   - build
   - deploy
@@ -9,16 +12,15 @@ maven_install:
   script:
     - cd notification-server/
     - mvn install
-  artifacts:
-    paths:
-    - notification-server\target\notificationserver.war
 
 deploy_notification:
   stage: deploy
+  dependencies:
+    - maven_install
   script:
     - mkdir ~/.ssh
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$SSH_HOST_KEY" > ~/.ssh/known_hosts
-    - scp notification-server/target/notificationserver.war esibank@192.154.88.151:/home/esibank/notif.war
+    - scp notification-server/target/notificationserver.war esibank@$IP_NOTIFICATION:/home/esibank/notif.war
