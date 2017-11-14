@@ -13,6 +13,7 @@
         <module>web-app-server</module>
         <module>esibank-models</module>
         <module>notification-server</module>
+        <module>banktransfer</module>
     </modules>
 
     <properties>
