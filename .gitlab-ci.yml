@@ -10,16 +10,15 @@ stages:
 
 maven_install:
   stage: build
-  environment: staging
   script:
     - mvn install
 
 deploy_notification:
   stage: deploy
-  environment: staging
   dependencies:
     - maven_install
   script:
+    - mvn install
     - mkdir ~/.ssh
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
@@ -27,4 +26,3 @@ deploy_notification:
     - echo "$HOST_KEY_NOTIFICATION" > ~/.ssh/known_hosts
     - echo "test" > toto
     - scp notification-server/target/notificationserver.war esibank@$IP_NOTIFICATION:/home/esibank/notif.war
-  only: master
