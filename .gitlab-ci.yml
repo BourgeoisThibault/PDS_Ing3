@@ -1,8 +1,9 @@
 image: maven:3.3.9-jdk-8
 
 variables:
+  IP_REST: "192.154.88.162"
   IP_NOTIFICATION: "192.154.88.164"
-  HOST_KEY_NOTIFICATION: "192.154.88.164 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBebAl7r/s0cIpyttduO0qcPg2X/+4PXsNxwLpA3SxQzSYoa7bZHTTFEupwgVS+68cz1aISfMr8PDCQPrCYbMUs="
+ # HOST_KEY_NOTIFICATION: "192.154.88.164 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBebAl7r/s0cIpyttduO0qcPg2X/+4PXsNxwLpA3SxQzSYoa7bZHTTFEupwgVS+68cz1aISfMr8PDCQPrCYbMUs="
 
 stages:
   - build
@@ -13,7 +14,7 @@ before_script:
   - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
   - chmod 700 ~/.ssh/id_rsa
   - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-  - echo "$HOST_KEY_NOTIFICATION" > ~/.ssh/known_hosts
+  - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
 
 maven_install:
   stage: build
@@ -29,11 +30,11 @@ deploy_notification:
   dependencies:
     - maven_install
   script:
-    - scp notification-server/target/notificationserver.war esibank@$IP_NOTIFICATION:/home/esibank/newNotif.war
+    - scp notification-server/target/notificationserver.war esibank@$IP_NOTIFICATION:/home/esibank/myNotif.war
 
 deploy_rest:
   stage: deploy
   dependencies:
     - maven_install
   script:
-    - scp rest-server/target/serverrest.war esibank@$IP_NOTIFICATION:/home/esibank/newRest.war
+    - scp rest-server/target/serverrest.war esibank@$IP_REST:/home/esibank/myResp.war
