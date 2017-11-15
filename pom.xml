@@ -15,6 +15,7 @@
         <module>notification-server</module>
         <module>shares-price-history</module>
         <module>data-access-server</module>
+        <module>bank-transfer</module>
     </modules>
 
     <properties>
