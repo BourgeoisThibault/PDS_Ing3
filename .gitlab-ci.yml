@@ -8,6 +8,13 @@ stages:
   - build
   - deploy
 
+before_script:
+  - mkdir ~/.ssh
+  - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+  - chmod 700 ~/.ssh/id_rsa
+  - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+  - echo "$HOST_KEY_NOTIFICATION" > ~/.ssh/known_hosts
+
 maven_install:
   stage: build
   script:
@@ -22,22 +29,11 @@ deploy_notification:
   dependencies:
     - maven_install
   script:
-    - mkdir ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/id_rsa
-    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "$HOST_KEY_NOTIFICATION" > ~/.ssh/known_hosts
-    - echo "test" > toto
-    - scp notification-server/target/notificationserver.war esibank@$IP_NOTIFICATION:/home/esibank/notif.war
+    - scp notification-server/target/notificationserver.war esibank@$IP_NOTIFICATION:/home/esibank/newNotif.war
 
 deploy_rest:
   stage: deploy
   dependencies:
     - maven_install
   script:
-    - mkdir ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/id_rsa
-    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "$HOST_KEY_NOTIFICATION" > ~/.ssh/known_hosts
-    - scp rest-server/target/serverrest.war esibank@$IP_NOTIFICATION:/home/esibank/rest.war
+    - scp rest-server/target/serverrest.war esibank@$IP_NOTIFICATION:/home/esibank/newRest.war
