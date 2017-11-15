@@ -41,7 +41,9 @@ maven_install:
       - rest-server/target/serverrest.war
       - web-app-server/target/serverweb.war
       - notification-server/target/notificationserver.war
-  only: master
+  only:
+    refs:
+      - master
 
 deploy_database:
   stage: deploy
@@ -50,7 +52,9 @@ deploy_database:
   script:
     - scp data-access-server/target/dataaccess.war esibank@$IP_DATABASE:/var/lib/tomcat8/webapps/dataaccess.war
   when: on_success
-  only: master
+  only:
+    refs:
+      - master
 
 deploy_rest:
   stage: deploy
@@ -59,7 +63,9 @@ deploy_rest:
   script:
     - scp rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
   when: on_success
-  only: master
+  only:
+    refs:
+      - master
 
 deploy_webapp:
   stage: deploy
@@ -68,7 +74,9 @@ deploy_webapp:
   script:
     - scp web-app-server/target/serverweb.war esibank@$IP_WEBAPP:/var/lib/tomcat8/webapps/serverweb.war
   when: on_success
-  only: master
+  only:
+    refs:
+      - master
 
 deploy_notification:
   stage: deploy
@@ -78,5 +86,6 @@ deploy_notification:
     - scp notification-server/target/notificationserver.war esibank@$IP_NOTIFICATION:/var/lib/tomcat8/webapps/notificationserver.war
     - ssh esibank@$IP_NOTIFICATION "sudo service tomcat8 restart"
   when: on_success
-  only: master
-
+  only:
+    refs:
+      - master
