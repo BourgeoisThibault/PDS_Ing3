@@ -12,13 +12,15 @@ maven_install:
   stage: build
   script:
     - mvn install
+  artifacts:
+      paths:
+      - notification-server/target/notificationserver.war
 
 deploy_notification:
   stage: deploy
   dependencies:
     - maven_install
   script:
-    - mvn install
     - mkdir ~/.ssh
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
