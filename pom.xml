@@ -16,6 +16,7 @@
         <module>shares-price-history</module>
         <module>data-access-server</module>
         <module>bank-transfer</module>
+        <module>push-server</module>
     </modules>
 
     <properties>
