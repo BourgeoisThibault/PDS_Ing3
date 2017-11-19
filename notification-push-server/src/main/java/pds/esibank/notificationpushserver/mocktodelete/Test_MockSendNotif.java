@@ -25,7 +25,7 @@ public class Test_MockSendNotif {
      * todo: delete after create service notif. THIS IS ONLY FOR TEST
      */
 
-    private static String T_TOKEN = "token3";
+    private static String T_TOKEN = "token7";
 
     private static PrintWriter writer = null;
     private static BufferedInputStream reader = null;

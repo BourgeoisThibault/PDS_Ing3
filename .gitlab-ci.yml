@@ -85,8 +85,7 @@ deploy_notification:
   dependencies:
     - maven_install
   script:
-    - scp notification-server/target/notificationserver.war esibank@$IP_NOTIFICATION:/var/lib/tomcat8/webapps/notificationserver.war
-    - ssh esibank@$IP_NOTIFICATION "sudo service tomcat8 restart"
+    - scp notification-server/target/notificationserver.jar esibank@$IP_NOTIFICATION:/home/esibank/notificationserver.jar
   when: on_success
   only:
     refs:

@@ -23,7 +23,7 @@ public class Test_MockMobile {
      * todo: delete after create service android. THIS IS ONLY FOR TEST
      */
 
-    private static String T_TOKEN = "myonlysocketpushtesttibo";
+    private static String T_TOKEN = "thibault";
 
     private static PrintWriter writer = null;
     private static BufferedInputStream reader = null;
