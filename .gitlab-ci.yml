@@ -42,7 +42,7 @@ maven_install:
       - rest-server/target/serverrest.war
       - web-app-server/target/serverweb.war
       - notification-server/target/notificationserver.war
-      - notification-push-server/target/notificationpushserver.jar
+      - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
   only:
     refs:
       - master
@@ -97,7 +97,7 @@ deploy_push:
   dependencies:
     - maven_install
   script:
-    - scp notification-push-server/target/notificationpushserver.jar esibank@$IP_PUSH:/home/esibank/notificationpushserver.jar
+    - scp notification-push-server/target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:/home/esibank/notificationpushserver.jar
   when: on_success
   only:
     refs:
