@@ -39,6 +39,7 @@ public class CommunicationThread extends Thread {
                 sendString(writer, "Not TOKEN");
                 logger.info("Wrong token not save");
             } else {
+                logger.info("New connection with TOKEN: " + msgToken);
                 ListConnection.addSocketAndMobileToMap(socket,msgToken);
             }
 

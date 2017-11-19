@@ -47,6 +47,20 @@ public class ManagerThread extends Thread {
     @Override
     public void run() {
 
+        logger.info("");
+        logger.info("");
+        logger.info("##########################");
+        logger.info("#                        #");
+        logger.info("#   NEW SERVER STARTED   #");
+        logger.info("#                        #");
+        logger.info("#   Mobile : 9090        #");
+        logger.info("#   Push   : 8888        #");
+        logger.info("#   Admin  : 9999        #");
+        logger.info("#                        #");
+        logger.info("##########################");
+        logger.info("");
+        logger.info("");
+
         serverPause = false;
 
         listenNotificationThread = new ListenNotificationThread();

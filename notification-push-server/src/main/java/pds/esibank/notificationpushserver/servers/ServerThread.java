@@ -60,8 +60,6 @@ public class ServerThread extends Thread {
                 counterError=0;
                 Socket socket = serverSocket.accept();
 
-                logger.info("Socket accepted");
-
                 CommunicationThread communicationThread = new CommunicationThread();
                 communicationThread.setSocket(socket);
                 communicationThread.run();
