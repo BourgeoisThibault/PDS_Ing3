@@ -37,6 +37,7 @@ maven_install:
     - mvn install
   when: on_success
   artifacts:
+      expire_in: 6 hrs
       paths:
       - data-access-server/target/dataaccess.war
       - rest-server/target/serverrest.war
