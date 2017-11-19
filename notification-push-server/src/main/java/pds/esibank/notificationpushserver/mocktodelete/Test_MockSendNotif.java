@@ -25,7 +25,7 @@ public class Test_MockSendNotif {
      * todo: delete after create service notif. THIS IS ONLY FOR TEST
      */
 
-    private static String T_TOKEN = "tokentest";
+    private static String T_TOKEN = "token3";
 
     private static PrintWriter writer = null;
     private static BufferedInputStream reader = null;
@@ -44,10 +44,13 @@ public class Test_MockSendNotif {
 
             if(msg.equals("true")) {
                 NotificationModel notificationModel = new NotificationModel();
-                notificationModel.setTitle("Un super titre");
+                notificationModel.setTitle("Un autre super titre");
                 notificationModel.setMessage("Ici ce sera le message de la notification.");
                 send(JsonUtils.objectToJson(notificationModel));
             }else {
+                if(msg.equals("false")) {
+                    System.out.println("false");
+                }
                 System.out.println("Notif not send");
             }
 
