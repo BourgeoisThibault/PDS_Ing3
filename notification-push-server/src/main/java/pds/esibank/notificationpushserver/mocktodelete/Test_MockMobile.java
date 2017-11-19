@@ -43,7 +43,7 @@ public class Test_MockMobile {
                 String msg = read();
                 if(msg.equals("PING")){
                     send("PONG");
-                    System.out.println("PING");
+                    System.out.println("I receive PING so return PONG");
                 } else {
                     NotificationModel notificationModel = JsonUtils.objectFromJson(msg, NotificationModel.class);
                     System.out.println("New notification");
