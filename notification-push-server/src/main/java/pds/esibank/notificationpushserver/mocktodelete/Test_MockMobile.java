@@ -39,7 +39,7 @@ public class Test_MockMobile {
 
             while (true) {
                 String msg = read();
-                if(msg.equals("PONG")){
+                if(msg.equals("PING")){
                     send("PONG");
                     System.out.println(msg);
                 } else {

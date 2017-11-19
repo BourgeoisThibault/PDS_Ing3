@@ -98,6 +98,7 @@ deploy_push:
     - maven_install
   script:
     - scp notification-push-server/target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:/home/esibank/notificationpushserver.jar
+    - ssh esibank@$IP_PUSH "sudo service pushserver restart"
   when: on_success
   only:
     refs:
