@@ -57,6 +57,12 @@
         </dependency>
 
         <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
             <groupId>pds.esibank</groupId>
             <artifactId>esibank-utils</artifactId>
             <version>${project.version}</version>
