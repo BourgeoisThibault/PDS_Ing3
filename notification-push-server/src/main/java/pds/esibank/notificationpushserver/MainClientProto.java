@@ -1,4 +1,4 @@
-package pds.esibank.notificationserver;
+package pds.esibank.notificationpushserver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

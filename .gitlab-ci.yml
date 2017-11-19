@@ -5,6 +5,7 @@ variables:
   IP_REST: "192.154.88.162"
   IP_WEBAPP: "192.154.88.163"
   IP_NOTIFICATION: "192.154.88.164"
+  IP_PUSH: "192.154.88.165"
 
 stages:
   - compile
@@ -41,6 +42,7 @@ maven_install:
       - rest-server/target/serverrest.war
       - web-app-server/target/serverweb.war
       - notification-server/target/notificationserver.war
+      - notification-push-server/target/notificationpushserver.jar
   only:
     refs:
       - master
@@ -85,6 +87,17 @@ deploy_notification:
   script:
     - scp notification-server/target/notificationserver.war esibank@$IP_NOTIFICATION:/var/lib/tomcat8/webapps/notificationserver.war
     - ssh esibank@$IP_NOTIFICATION "sudo service tomcat8 restart"
+  when: on_success
+  only:
+    refs:
+      - master
+
+deploy_notification:
+  stage: deploy
+  dependencies:
+    - maven_install
+  script:
+    - scp notification-push-server/target/notificationpushserver.jar esibank@$IP_PUSH:/home/esibank/notificationpushserver.jar
   when: on_success
   only:
     refs:

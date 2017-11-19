@@ -1,51 +1,46 @@
-package pds.esibank.notificationserver;
+package pds.esibank.notificationpushserver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-import pds.esibank.notificationserver.threads.NotificationService;
-import pds.esibank.notificationserver.threads.SocketCommunicationService;
-import pds.esibank.notificationserver.utils.ListConnection;
+import org.apache.log4j.Logger;
+import pds.esibank.notificationpushserver.utils.ListConnection;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
  * @author BOURGEOIS Thibault
- * Date     10/11/2017
- * Time     21:39
+ * Date     18/11/2017
+ * Time     22:37
  */
-@Component
-public class AppRunner implements CommandLineRunner {
+public class ServerThread extends Thread {
 
-    private static final Logger logger = LoggerFactory.getLogger(AppRunner.class);
+    private Logger logger = Logger.getLogger(ServerThread.class);
 
-    private final int _PORT = 2702;
+    private int _PORT;
     private Boolean isStopped;
-    private ServerSocket serverSocket;
 
-    private final SocketCommunicationService socketCommunicationService;
-    private final NotificationService notificationService;
+    public void set_PORT(int _PORT) {
+        this._PORT = _PORT;
+    }
 
-    public AppRunner(SocketCommunicationService socketCommunicationService, NotificationService notificationService) {
-        this.socketCommunicationService = socketCommunicationService;
-        this.notificationService = notificationService;
+    public void setStopped(Boolean stopped) {
+        isStopped = stopped;
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run() {
 
         this.isStopped = false;
 
         // Initialize list of mobile connected to empty
         ListConnection.initializeList();
 
-        notificationService.checkAllConnection();
+        CheckThread checkThread = new CheckThread();
+        checkThread.start();
 
         // Initialize Socket server to null
-        serverSocket = null;
+        ServerSocket serverSocket = null;
 
         try {
             serverSocket = new ServerSocket(_PORT);
@@ -58,23 +53,39 @@ public class AppRunner implements CommandLineRunner {
         }
 
         int counterError = 0;
+
         while (!isStopped && !serverSocket.isClosed()) {
             try {
                 counterError=0;
                 Socket socket = serverSocket.accept();
-                socketCommunicationService.newCommunication(socket);
-                logger.info("Socket accept from " + socket.getRemoteSocketAddress().toString());
+
+                logger.info("Socket accepted");
+
+                CommunicationThread communicationThread = new CommunicationThread();
+                communicationThread.setSocket(socket);
+                communicationThread.run();
+
             } catch (IOException e) {
                 logger.error("Socket accept throw exception with message: " + e.getMessage());
                 counterError++;
                 if(counterError == 3) {
                     logger.error("Socket accept throw exception 3 time. Server of socket shut down");
                     logger.error("Please restart server");
-                    serverSocket.close();
+                    try {
+                        checkThread.stop();
+                        serverSocket.close();
+                    } catch (IOException e1) {
+                        logger.error("Can't stop server");
+                    }
                     this.isStopped = true;
                 }
             }
         }
+
+        if(isStopped) {
+            checkThread.setIsStopped(true);
+        }
+
     }
 
 }
