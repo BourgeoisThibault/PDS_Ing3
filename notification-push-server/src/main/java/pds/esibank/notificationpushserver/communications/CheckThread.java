@@ -38,7 +38,7 @@ public class CheckThread extends Thread {
 
                 try {
                     PrintWriter writer = new PrintWriter(list.getKey().getOutputStream(), true);
-                    sendString(writer, "PING");
+                    sendString(writer, "PONG");
                     try {
                         BufferedInputStream reader = new BufferedInputStream(list.getKey().getInputStream());
                         String response = readString(reader);
