@@ -41,7 +41,7 @@ maven_install:
       - data-access-server/target/dataaccess.war
       - rest-server/target/serverrest.war
       - web-app-server/target/serverweb.war
-      - notification-server/target/notificationserver.war
+      - notification-server/target/notificationserver.jar
       - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
   only:
     refs:
