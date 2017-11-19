@@ -30,7 +30,7 @@ public class CheckThread extends Thread {
     public void run() {
         while(!isStopped) {
             try {
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 logger.error("Can't sleep");
             }

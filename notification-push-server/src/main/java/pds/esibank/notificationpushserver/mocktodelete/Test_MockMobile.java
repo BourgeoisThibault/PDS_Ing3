@@ -2,6 +2,8 @@ package pds.esibank.notificationpushserver.mocktodelete;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import pds.esibank.models.notification.NotificationModel;
+import pds.esibank.notificationpushserver.utils.JsonUtils;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedInputStream;
@@ -21,7 +23,7 @@ public class Test_MockMobile {
      * todo: delete after create service android. THIS IS ONLY FOR TEST
      */
 
-    private static String T_TOKEN = "mocketTokenForTestEsibank";
+    private static String T_TOKEN = "myonlysocketpushtesttibo";
 
     private static PrintWriter writer = null;
     private static BufferedInputStream reader = null;
@@ -41,9 +43,12 @@ public class Test_MockMobile {
                 String msg = read();
                 if(msg.equals("PING")){
                     send("PONG");
-                    System.out.println(msg);
+                    System.out.println("PING");
                 } else {
-                    System.out.println(msg);
+                    NotificationModel notificationModel = JsonUtils.objectFromJson(msg, NotificationModel.class);
+                    System.out.println("New notification");
+                    System.out.println("Titre: " + notificationModel.getTitle());
+                    System.out.println("Message: " + notificationModel.getMessage());
                 }
             }
 

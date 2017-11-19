@@ -25,7 +25,7 @@ public class Test_MockSendNotif {
      * todo: delete after create service notif. THIS IS ONLY FOR TEST
      */
 
-    private static String T_TOKEN = "mocketTokenForTestEsibank";
+    private static String T_TOKEN = "myonlysocketpushtesttibo";
 
     private static PrintWriter writer = null;
     private static BufferedInputStream reader = null;
@@ -33,7 +33,7 @@ public class Test_MockSendNotif {
     public static void main(String[] args) {
 
         try {
-            Socket socket = new Socket("127.0.0.1", 8888);
+            Socket socket = new Socket("esibank.inside.esiag.info", 8888);
 
             writer = new PrintWriter(socket.getOutputStream(), true);
             reader = new BufferedInputStream(socket.getInputStream());
@@ -44,8 +44,8 @@ public class Test_MockSendNotif {
 
             if(msg.equals("true")) {
                 NotificationModel notificationModel = new NotificationModel();
-                notificationModel.setTitle("the titre");
-                notificationModel.setMessage("the message");
+                notificationModel.setTitle("Un super titre");
+                notificationModel.setMessage("Ici ce sera le message de la notification.");
                 send(JsonUtils.objectToJson(notificationModel));
             }else {
                 System.out.println("Notif not send");
