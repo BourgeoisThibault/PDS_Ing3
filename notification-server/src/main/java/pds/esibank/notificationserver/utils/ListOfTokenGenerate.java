@@ -53,7 +53,7 @@ public class ListOfTokenGenerate {
         String token = UUID.randomUUID().toString();
         Boolean find = false;
 
-        if(tokenList.get(token) == null) {
+        if(tokenList.get(token) != null) {
             find = true;
             while (find=true) {
                 token = UUID.randomUUID().toString();
