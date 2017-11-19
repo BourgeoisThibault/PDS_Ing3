@@ -2,6 +2,7 @@ package pds.esibank.notificationserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import pds.esibank.notificationserver.utils.ListOfTokenGenerate;
 
 import java.util.concurrent.Executor;
 
@@ -14,6 +15,9 @@ import java.util.concurrent.Executor;
 public class App {
 
     public static void main(String[] args) throws Exception {
+
+        ListOfTokenGenerate.initializeMap();
+
         // close the application context to shut down the custom ExecutorService
         SpringApplication.run(App.class, args);
     }

@@ -2,8 +2,8 @@ package pds.esibank.notificationserver.controllers;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pds.esibank.notificationserver.utils.ListOfTokenGenerate;
 
 /**
  * @author BOURGEOIS Thibault
@@ -15,10 +15,19 @@ public class HomeController {
 
     private final Logger logger = Logger.getLogger(HomeController.class);
 
-    @GetMapping("/test")
+    @RequestMapping(path = "/", method = RequestMethod.GET)
     public String getTest(){
-        logger.info("this is test logging.");
         return "<h1>NOTIFICATION TEST</h1>";
+    }
+
+    @RequestMapping(path = "/token", method = RequestMethod.GET)
+    public String genToken(){
+        return ListOfTokenGenerate.generateAnonymousToken();
+    }
+
+    @RequestMapping(path = "/token/{uid}", method = RequestMethod.GET)
+    public String genToken(@PathVariable Long uid){
+        return ListOfTokenGenerate.generateUidToken(uid);
     }
 
 }
