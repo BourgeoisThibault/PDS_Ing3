@@ -86,6 +86,7 @@ deploy_notification:
     - maven_install
   script:
     - scp notification-server/target/notificationserver.jar esibank@$IP_NOTIFICATION:/home/esibank/notificationserver.jar
+    - ssh esibank@$IP_NOTIFICATION "sudo service notifserver restart"
   when: on_success
   only:
     refs:
