@@ -1,8 +1,9 @@
 package pds.esibank.notificationpushserver;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.net.SocketServer;
-import pds.esibank.notificationpushserver.utils.ListConnection;
+import pds.esibank.notificationpushserver.servers.ListenNotificationThread;
+import pds.esibank.notificationpushserver.servers.ServerThread;
+import pds.esibank.notificationpushserver.communications.ListConnection;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -10,7 +11,6 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import static pds.esibank.notificationpushserver.utils.JsonUtils.objectToJson;
 import static pds.esibank.notificationpushserver.utils.StreamUtils.readString;
 import static pds.esibank.notificationpushserver.utils.StreamUtils.sendString;
 
@@ -25,10 +25,12 @@ public class ManagerThread extends Thread {
 
     private int _ADMIN_PORT;
     private int _PORT;
+    private int _PUSH_PORT;
 
     private Boolean serverPause;
 
     private ServerThread serverThread;
+    private ListenNotificationThread listenNotificationThread;
 
     public void set_ADMIN_PORT(int _ADMIN_PORT) {
         this._ADMIN_PORT = _ADMIN_PORT;
@@ -38,10 +40,18 @@ public class ManagerThread extends Thread {
         this._PORT = _PORT;
     }
 
+    public void set_PUSH_PORT(int _PUSH_PORT) {
+        this._PUSH_PORT = _PUSH_PORT;
+    }
+
     @Override
     public void run() {
 
         serverPause = false;
+
+        listenNotificationThread = new ListenNotificationThread();
+        listenNotificationThread.set_PORT(_PUSH_PORT);
+        listenNotificationThread.start();
 
         serverThread = new ServerThread();
         serverThread.set_PORT(_PORT);

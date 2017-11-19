@@ -1,16 +1,12 @@
-package pds.esibank.notificationpushserver;
+package pds.esibank.notificationpushserver.communications;
 
 import org.apache.log4j.Logger;
-import pds.esibank.models.notification.MobileClient;
-import pds.esibank.notificationpushserver.utils.ListConnection;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import static pds.esibank.notificationpushserver.utils.JsonUtils.objectFromJson;
-import static pds.esibank.notificationpushserver.utils.JsonUtils.objectToJson;
 import static pds.esibank.notificationpushserver.utils.StreamUtils.readString;
 import static pds.esibank.notificationpushserver.utils.StreamUtils.sendString;
 
