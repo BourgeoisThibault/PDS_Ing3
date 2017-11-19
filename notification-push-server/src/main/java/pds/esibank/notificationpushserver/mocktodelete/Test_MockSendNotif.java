@@ -1,9 +1,10 @@
-package pds.esibank.notificationpushserver;
+package pds.esibank.notificationpushserver.mocktodelete;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pds.esibank.models.notification.MobileClient;
 import pds.esibank.models.notification.NotificationModel;
+import pds.esibank.notificationpushserver.utils.JsonUtils;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.*;
@@ -18,46 +19,38 @@ import java.security.spec.RSAKeyGenParameterSpec;
  * Date     09/11/2017
  * Time     17:51
  */
-public class MainClientProto {
+public class Test_MockSendNotif {
 
     /**
-     * todo: delete after create service android. THIS IS ONLY FOR TEST
+     * todo: delete after create service notif. THIS IS ONLY FOR TEST
      */
 
-    private static String _IMEI = "351557010202731";
+    private static String T_TOKEN = "mocketTokenForTestEsibank";
 
     private static PrintWriter writer = null;
     private static BufferedInputStream reader = null;
 
     public static void main(String[] args) {
 
-        String str = new String(DatatypeConverter.parseBase64Binary(_IMEI + null));
-        String res = DatatypeConverter.printBase64Binary(str.getBytes());
-        System.out.println(res);
-
         try {
-            Socket socket = new Socket("127.0.0.1", 2702);
+            Socket socket = new Socket("127.0.0.1", 8888);
 
             writer = new PrintWriter(socket.getOutputStream(), true);
             reader = new BufferedInputStream(socket.getInputStream());
 
-            MobileClient mobileClient = new MobileClient();
-            mobileClient.setImei(_IMEI);
-            
-            send(toJson(mobileClient));
-            
-            mobileClient = fromJson(read(),MobileClient.class);
+            send(T_TOKEN);
 
-            System.out.println(mobileClient.toString());
+            String msg = read();
 
-            while (true) {
-                String accept = read();
-                if(accept.equals("PING")) {
-                    send("PONG");
-                } else {
-                    System.out.println(fromJson(accept,NotificationModel.class).toString());
-                }
+            if(msg.equals("true")) {
+                NotificationModel notificationModel = new NotificationModel();
+                notificationModel.setTitle("the titre");
+                notificationModel.setMessage("the message");
+                send(JsonUtils.objectToJson(notificationModel));
+            }else {
+                System.out.println("Notif not send");
             }
+
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }catch (IOException e) {
@@ -74,7 +67,7 @@ public class MainClientProto {
         response = new String(b, 0, stream);
         return response;
     }
-    
+
     private static void send(String msg) throws IOException {
         writer.write(msg);
         //TOUJOURS UTILISER flush() POUR ENVOYER RÉELLEMENT DES INFOS AU SERVEUR

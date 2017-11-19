@@ -1,10 +1,11 @@
-package pds.esibank.notificationpushserver;
+package pds.esibank.notificationpushserver.servers;
 
 import org.apache.log4j.Logger;
-import pds.esibank.notificationpushserver.utils.ListConnection;
+import pds.esibank.notificationpushserver.communications.CheckThread;
+import pds.esibank.notificationpushserver.communications.CommunicationThread;
+import pds.esibank.notificationpushserver.communications.ListConnection;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 

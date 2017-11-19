@@ -1,8 +1,7 @@
-package pds.esibank.notificationpushserver;
+package pds.esibank.notificationpushserver.communications;
 
 import org.apache.log4j.Logger;
-import pds.esibank.models.notification.MobileClient;
-import pds.esibank.notificationpushserver.utils.ListConnection;
+
 import static pds.esibank.notificationpushserver.utils.StreamUtils.readString;
 import static pds.esibank.notificationpushserver.utils.StreamUtils.sendString;
 
@@ -31,7 +30,7 @@ public class CheckThread extends Thread {
     public void run() {
         while(!isStopped) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 logger.error("Can't sleep");
             }
