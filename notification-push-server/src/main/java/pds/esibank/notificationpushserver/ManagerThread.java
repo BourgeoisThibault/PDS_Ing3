@@ -21,7 +21,7 @@ import static pds.esibank.notificationpushserver.utils.StreamUtils.sendString;
  */
 public class ManagerThread extends Thread {
 
-    private Logger logger = Logger.getLogger(ManagerThread.class);
+    private final Logger logger = Logger.getLogger(ManagerThread.class);
 
     private int _ADMIN_PORT;
     private int _PORT;
