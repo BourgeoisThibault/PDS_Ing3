@@ -71,8 +71,8 @@ public class HomeController {
         notificationModel.setTitle(title);
         notificationModel.setMessage(message);
 
-        //String myUri = "http://notification.esibank.inside.esiag.info/send/" + uid;
-        String myUri = "http://localhost:1234/send/" + uid;
+        String myUri = "http://notification.esibank.inside.esiag.info/send/" + uid;
+        //String myUri = "http://localhost:1234/send/" + uid;
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity result = restTemplate.postForEntity(myUri,notificationModel,String.class);
