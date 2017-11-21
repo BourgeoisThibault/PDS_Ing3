@@ -15,6 +15,8 @@ import pds.esibank.notificationserver.utils.ListOfTokenGenerate;
 
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -50,10 +52,37 @@ public class HomeController {
     }
 
     @RequestMapping(path = "/send/{uid}", method = RequestMethod.POST)
-    public ResponseEntity postNotification(@PathVariable String uid, @RequestBody NotificationModel notificationModel) {
-        return new ResponseEntity("SUCCESS - uid=" + uid +
-                " titre=" + notificationModel.getTitle() +
-                " message=" + notificationModel.getMessage(),
+    public ResponseEntity<String> postNotification(@PathVariable String uid, @RequestBody NotificationModel notificationModel) {
+
+        if(uid.equals("0")) {
+            PushNotificationModel pushNotificationModel = new PushNotificationModel();
+
+            pushNotificationModel.setTitle(notificationModel.getTitle());
+            pushNotificationModel.setMessage(notificationModel.getMessage());
+            pushNotificationModel.setToken("AllToken");
+            rabbitTemplate.convertAndSend(pushNotificationModel);
+
+            return new ResponseEntity<String>("SUCCESS - Send to all token connected",
+                    HttpStatus.OK);
+        }
+
+        List<String> listToken = ListOfTokenGenerate.getTokenFromUid(Long.parseLong(uid));
+        if(listToken.size() == 0) {
+            return new ResponseEntity<String>("No token for this uid",
+                    HttpStatus.OK);
+        } else {
+            for (int i=0 ; i<listToken.size() ; i++) {
+                PushNotificationModel pushNotificationModel = new PushNotificationModel();
+
+                pushNotificationModel.setTitle(notificationModel.getTitle());
+                pushNotificationModel.setMessage(notificationModel.getMessage());
+                pushNotificationModel.setToken(listToken.get(i));
+
+                rabbitTemplate.convertAndSend(pushNotificationModel);
+            }
+        }
+
+        return new ResponseEntity<String>("SUCCESS - Send to " + listToken.size() + " token.",
                 HttpStatus.OK);
     }
 

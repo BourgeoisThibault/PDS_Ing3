@@ -1,8 +1,7 @@
 package pds.esibank.notificationserver.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.net.Socket;
+import java.util.*;
 
 /**
  * @author BOURGEOIS Thibault
@@ -23,14 +22,6 @@ public class ListOfTokenGenerate {
 
     public static void addToList(String token, Long uid) {
         tokenList.put(token,uid);
-    }
-
-    public static String getTokenByUid(Long uid) {
-        for (Map.Entry<String, Long> list : tokenList.entrySet()) {
-            if(list.getValue().equals(uid))
-                return list.getKey();
-        }
-        return null;
     }
 
     public static String generateAnonymousToken() {
@@ -64,5 +55,16 @@ public class ListOfTokenGenerate {
         }
 
         return token;
+    }
+
+    public static List<String> getTokenFromUid(Long uid) {
+        List<String> listToken = new ArrayList<String>();
+
+        for (Map.Entry<String,Long> list : tokenList.entrySet()) {
+            if(list.getValue().equals(uid))
+                listToken.add(list.getKey());
+        }
+
+        return listToken;
     }
 }
