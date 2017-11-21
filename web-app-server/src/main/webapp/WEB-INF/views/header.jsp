@@ -142,21 +142,16 @@
                         <span>Accueil</span>
                     </a>
                 </li>
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <i class="icon_document_alt"></i>
-                        <span>Proto</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="/prototype/list">Lister</a></li>
-                        <li><a class="" href="/prototype/add">Ajouter</a></li>
-                    </ul>
-                </li>
                 <li>
                     <a class="" href="/team">
                         <i class="fa fa-users"></i>
                         <span>Equipe</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="/notification">
+                        <i class="fa fa-paper-plane"></i>
+                        <span>Notification</span>
                     </a>
                 </li>
                 <li>

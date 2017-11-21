@@ -49,6 +49,14 @@ public class HomeController {
         return ListOfTokenGenerate.generateUidToken(uid);
     }
 
+    @RequestMapping(path = "/send/{uid}", method = RequestMethod.POST)
+    public ResponseEntity postNotification(@PathVariable String uid, @RequestBody NotificationModel notificationModel) {
+        return new ResponseEntity("SUCCESS - uid=" + uid +
+                " titre=" + notificationModel.getTitle() +
+                " message=" + notificationModel.getMessage(),
+                HttpStatus.OK);
+    }
+
     @RequestMapping(path = "/mq", method = RequestMethod.GET)
     public ResponseEntity sendMessage() {
 
