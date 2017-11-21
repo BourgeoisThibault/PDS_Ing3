@@ -52,9 +52,9 @@ public class HomeController {
     }
 
     @RequestMapping(path = "/send/{uid}", method = RequestMethod.POST)
-    public ResponseEntity<String> postNotification(@PathVariable String uid, @RequestBody NotificationModel notificationModel) {
+    public ResponseEntity<String> postNotification(@PathVariable Long uid, @RequestBody NotificationModel notificationModel) {
 
-        if(uid.equals("0")) {
+        if(uid == 0) {
             PushNotificationModel pushNotificationModel = new PushNotificationModel();
 
             pushNotificationModel.setTitle(notificationModel.getTitle());
@@ -66,7 +66,7 @@ public class HomeController {
                     HttpStatus.OK);
         }
 
-        List<String> listToken = ListOfTokenGenerate.getTokenFromUid(Long.parseLong(uid));
+        List<String> listToken = ListOfTokenGenerate.getTokenFromUid(uid);
         if(listToken.size() == 0) {
             return new ResponseEntity<String>("No token for this uid",
                     HttpStatus.OK);
