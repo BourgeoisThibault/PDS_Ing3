@@ -6,6 +6,8 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 import org.apache.log4j.Logger;
 import pds.esibank.models.notification.NotificationModel;
+import pds.esibank.models.notification.PushNotificationModel;
+import pds.esibank.notificationpushserver.communications.ListConnection;
 import pds.esibank.notificationpushserver.servers.QueueListenerThread;
 import pds.esibank.notificationpushserver.utils.JsonUtils;
 
@@ -33,30 +35,65 @@ public class NotifConsumer extends DefaultConsumer {
         this.channel = channel;
     }
 
+    /**
+     *
+     * TODO Uncomment process to verify and send notif to token
+     * @param consumerTag
+     * @param envelope
+     * @param properties
+     * @param body
+     * @throws IOException
+     */
     @Override
     public void handleDelivery(String consumerTag, Envelope envelope,
                                AMQP.BasicProperties properties, byte[] body) throws IOException {
 
         try {
             String message = new String(body, "UTF-8");
-            NotificationModel notificationModel = JsonUtils.objectFromJson(message,NotificationModel.class);
+            PushNotificationModel pushNotificationModel = JsonUtils.objectFromJson(message,PushNotificationModel.class);
 
-            if (notificationModel.getTitle().equals("NotifTest")) {
+            /*
+            NotificationModel notificationModel = new NotificationModel();
+            notificationModel.setTitle(pushNotificationModel.getTitle());
+            notificationModel.setMessage(pushNotificationModel.getMessage());
 
-                channel.basicReject(envelope.getDeliveryTag(),true);
+            if (ListConnection.searchToken(pushNotificationModel.getToken())) {
+                ListConnection.sendNotification(pushNotificationModel.getToken(), notificationModel);
 
-                logger.info("Traitement done for " + notificationModel.getTitle());
+                logger.info("Sending push to " + pushNotificationModel.getToken());
+                channel.basicAck(envelope.getDeliveryTag(),false);
+            } else {
+                if(pushNotificationModel.getToken().equals("allToken")) {
+                    ListConnection.sendNotificationToAllDevice(notificationModel);
+
+                    logger.info("Sending push to all device connected ");
+                    channel.basicAck(envelope.getDeliveryTag(),false);
+                } else {
+                    RepublishThread republishThread = new RepublishThread();
+                    republishThread.setChannel(channel);
+                    republishThread.setEnvelope(envelope);
+                    republishThread.start();
+                }
+            }
+            */
+
+            //TODO to delete soon
+            if (!pushNotificationModel.getToken().equals("TokenThibault")) {
+
+                RepublishThread republishThread = new RepublishThread();
+                republishThread.setChannel(channel);
+                republishThread.setEnvelope(envelope);
+                republishThread.start();
 
             } else {
-                logger.info("Traitement done for " + notificationModel.getTitle());
+                logger.info("Sending push to " + pushNotificationModel.getToken());
                 channel.basicAck(envelope.getDeliveryTag(),false);
-
             }
 
         } catch (UnsupportedEncodingException e) {
-            logger.error("Error for pars body byte to String with message: " + e.getMessage());
+            logger.error("Error for parse body byte to String with message: " + e.getMessage());
         } catch (IOException e) {
-            logger.error("Error for pars message json to NotificationModel with message: " + e.getMessage());
+            logger.error("Error for parse message json to NotificationModel with message: " + e.getMessage());
         }
 
     }

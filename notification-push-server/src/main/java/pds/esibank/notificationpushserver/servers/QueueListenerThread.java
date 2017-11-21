@@ -42,8 +42,8 @@ public class QueueListenerThread extends Thread {
         factory.setUsername("esibank");
         factory.setPassword("esibankpds");
         factory.setVirtualHost("esibank-mom");
-        //factory.setHost("esibank.inside.esiag.info");
-        factory.setHost("192.154.88.166");
+        factory.setHost("esibank.inside.esiag.info");
+        //factory.setHost("192.154.88.166");
         factory.setPort(5672);
 
         Connection connection = factory.newConnection();

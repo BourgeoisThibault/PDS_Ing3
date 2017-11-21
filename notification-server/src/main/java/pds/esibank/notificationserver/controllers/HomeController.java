@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pds.esibank.models.notification.NotificationModel;
+import pds.esibank.models.notification.PushNotificationModel;
 import pds.esibank.notificationserver.utils.ListOfTokenGenerate;
 
 
@@ -51,21 +52,39 @@ public class HomeController {
     @RequestMapping(path = "/mq", method = RequestMethod.GET)
     public ResponseEntity sendMessage() {
 
-        NotificationModel notificationModel = new NotificationModel();
+        PushNotificationModel pushNotificationModel = new PushNotificationModel();
 
-        notificationModel.setTitle("NotifThibault");
-        notificationModel.setMessage("Message number ");
-        rabbitTemplate.convertAndSend(notificationModel);
+        pushNotificationModel.setTitle("NotifThibault");
+        pushNotificationModel.setMessage("Message number ");
+        pushNotificationModel.setToken("TokenThibault");
+        rabbitTemplate.convertAndSend(pushNotificationModel);
 
-        notificationModel.setTitle("NotifTest");
-        notificationModel.setMessage("Message number ");
-        rabbitTemplate.convertAndSend(notificationModel);
+        pushNotificationModel.setTitle("NotifTest");
+        pushNotificationModel.setMessage("Message number ");
+        pushNotificationModel.setToken("TokenThibault");
+        rabbitTemplate.convertAndSend(pushNotificationModel);
 
-        notificationModel.setTitle("NotifUsman");
-        notificationModel.setMessage("Message number ");
-        rabbitTemplate.convertAndSend(notificationModel);
+        pushNotificationModel.setTitle("NotifUsman");
+        pushNotificationModel.setMessage("Message number ");
+        pushNotificationModel.setToken("TokenThibault");
+        rabbitTemplate.convertAndSend(pushNotificationModel);
 
-        return new ResponseEntity("SUCCESS", HttpStatus.NO_CONTENT);
+        pushNotificationModel.setTitle("NotifRuben");
+        pushNotificationModel.setMessage("Message number ");
+        pushNotificationModel.setToken("TokenThibault");
+        rabbitTemplate.convertAndSend(pushNotificationModel);
+
+        pushNotificationModel.setTitle("NotifLinda");
+        pushNotificationModel.setMessage("Message number ");
+        pushNotificationModel.setToken("TokenThibault");
+        rabbitTemplate.convertAndSend(pushNotificationModel);
+
+        pushNotificationModel.setTitle("NotifTony");
+        pushNotificationModel.setMessage("Message number ");
+        pushNotificationModel.setToken("TokenThibault");
+        rabbitTemplate.convertAndSend(pushNotificationModel);
+
+        return new ResponseEntity("SUCCESS", HttpStatus.OK);
     }
 
 }

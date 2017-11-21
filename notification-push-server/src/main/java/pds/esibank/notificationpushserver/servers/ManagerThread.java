@@ -1,8 +1,6 @@
-package pds.esibank.notificationpushserver;
+package pds.esibank.notificationpushserver.servers;
 
 import org.apache.log4j.Logger;
-import pds.esibank.notificationpushserver.servers.QueueListenerThread;
-import pds.esibank.notificationpushserver.servers.ServerThread;
 import pds.esibank.notificationpushserver.communications.ListConnection;
 
 import java.io.BufferedInputStream;
@@ -54,7 +52,6 @@ public class ManagerThread extends Thread {
         logger.info("#   NEW SERVER STARTED   #");
         logger.info("#                        #");
         logger.info("#   Mobile : 9090        #");
-        logger.info("#   Push   : 8888        #");
         logger.info("#   Admin  : 9999        #");
         logger.info("#                        #");
         logger.info("##########################");

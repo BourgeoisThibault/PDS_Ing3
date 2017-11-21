@@ -49,6 +49,16 @@ public class ListConnection {
         return false;
     }
 
+    public static void sendNotificationToAllDevice(NotificationModel notificationModel) throws IOException {
+
+        PrintWriter writer = null;
+
+        for (Map.Entry<Socket,String> list : socketMobileClientMap.entrySet()) {
+            writer = new PrintWriter(list.getKey().getOutputStream(), true);
+            sendString(writer, JsonUtils.objectToJson(notificationModel));
+        }
+    }
+
     public static void sendNotification(String token, NotificationModel notificationModel) throws IOException {
 
         PrintWriter writer = null;
