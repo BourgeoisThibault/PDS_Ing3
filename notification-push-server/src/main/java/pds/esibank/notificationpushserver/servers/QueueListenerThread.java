@@ -10,6 +10,8 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -21,7 +23,7 @@ public class QueueListenerThread extends Thread {
 
     private Logger logger = Logger.getLogger(QueueListenerThread.class);
 
-    private static final String QUEUE_NAME = "test.queue.newtibo";
+    private static final String QUEUE_NAME = "test.queue.testttlday";
 
     @Override
     public void run() {
@@ -47,7 +49,9 @@ public class QueueListenerThread extends Thread {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        String queu = channel.queueDeclare(QUEUE_NAME, true, false, false, null).getQueue();
+        Map<String, Object> args = new HashMap<String, Object>();
+        args.put("x-message-ttl", 86400000);
+        String queu = channel.queueDeclare(QUEUE_NAME, true, false, false, args).getQueue();
 
         NotifConsumer notifConsumer = new NotifConsumer(channel);
 
