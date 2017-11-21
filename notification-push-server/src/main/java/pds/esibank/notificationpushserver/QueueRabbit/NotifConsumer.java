@@ -57,8 +57,6 @@ public class NotifConsumer extends DefaultConsumer {
             logger.error("Error for pars body byte to String with message: " + e.getMessage());
         } catch (IOException e) {
             logger.error("Error for pars message json to NotificationModel with message: " + e.getMessage());
-        } catch (InterruptedException e) {
-            logger.error("Error with sleep method");
         }
 
     }
