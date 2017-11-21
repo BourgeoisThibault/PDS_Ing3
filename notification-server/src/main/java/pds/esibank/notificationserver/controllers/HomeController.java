@@ -45,14 +45,19 @@ public class HomeController {
     @RequestMapping(path = "/mq", method = RequestMethod.GET)
     public String sendMessage() {
 
-        AtomicInteger counter = new AtomicInteger();
-        for (int i = 0; i < 10; i++){
-            System.out.println("Sending notification number " + i);
-            NotificationModel notificationModel = new NotificationModel();
-            notificationModel.setTitle("Titre number " + i);
-            notificationModel.setMessage("Message number " + i);
-            rabbitTemplate.convertAndSend(notificationModel);
-        }
+        NotificationModel notificationModel = new NotificationModel();
+
+        notificationModel.setTitle("NotifThibault");
+        notificationModel.setMessage("Message number ");
+        rabbitTemplate.convertAndSend(notificationModel);
+
+        notificationModel.setTitle("NotifTest");
+        notificationModel.setMessage("Message number ");
+        rabbitTemplate.convertAndSend(notificationModel);
+
+        notificationModel.setTitle("NotifUsman");
+        notificationModel.setMessage("Message number ");
+        rabbitTemplate.convertAndSend(notificationModel);
 
         return "Success";
     }

@@ -28,7 +28,7 @@ public class RabbitMqConfig {
 
     @Bean
     public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("192.154.88.166");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("esibank.inside.esiag.info");
         connectionFactory.setUsername("esibank");
         connectionFactory.setPassword("esibankpds");
         connectionFactory.setVirtualHost("esibank-mom");

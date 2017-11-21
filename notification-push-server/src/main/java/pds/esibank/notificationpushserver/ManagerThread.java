@@ -1,7 +1,7 @@
 package pds.esibank.notificationpushserver;
 
 import org.apache.log4j.Logger;
-import pds.esibank.notificationpushserver.servers.ListenNotificationThread;
+import pds.esibank.notificationpushserver.servers.QueueListenerThread;
 import pds.esibank.notificationpushserver.servers.ServerThread;
 import pds.esibank.notificationpushserver.communications.ListConnection;
 
@@ -30,7 +30,7 @@ public class ManagerThread extends Thread {
     private Boolean serverPause;
 
     private ServerThread serverThread;
-    private ListenNotificationThread listenNotificationThread;
+    private QueueListenerThread listenNotificationThread;
 
     public void set_ADMIN_PORT(int _ADMIN_PORT) {
         this._ADMIN_PORT = _ADMIN_PORT;
@@ -63,8 +63,7 @@ public class ManagerThread extends Thread {
 
         serverPause = false;
 
-        listenNotificationThread = new ListenNotificationThread();
-        listenNotificationThread.set_PORT(_PUSH_PORT);
+        listenNotificationThread = new QueueListenerThread();
         listenNotificationThread.start();
 
         serverThread = new ServerThread();
