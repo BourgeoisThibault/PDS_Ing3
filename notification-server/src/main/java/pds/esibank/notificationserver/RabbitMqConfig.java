@@ -15,6 +15,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author BOURGEOIS Thibault
  * Date     20/11/2017
@@ -24,11 +27,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan("pds.esibank.notificationserver")
 public class RabbitMqConfig {
 
-    private static final String SIMPLE_MESSAGE_QUEUE = "test.queue.newtibo";
+    private static final String SIMPLE_MESSAGE_QUEUE = "test.queue.testttlday";
 
     @Bean
     public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("192.154.88.166");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("esibank.inside.esiag.info");
+        //CachingConnectionFactory connectionFactory = new CachingConnectionFactory("192.154.88.166");
         connectionFactory.setUsername("esibank");
         connectionFactory.setPassword("esibankpds");
         connectionFactory.setVirtualHost("esibank-mom");
@@ -37,7 +41,10 @@ public class RabbitMqConfig {
 
     @Bean
     public Queue simpleQueue() {
-        return new Queue(SIMPLE_MESSAGE_QUEUE);
+        Map<String, Object> args = new HashMap<String, Object>();
+        args.put("x-message-ttl", 86400000);
+        Queue queue = new Queue(SIMPLE_MESSAGE_QUEUE,true,false,false, args);
+        return queue;
     }
 
     @Bean

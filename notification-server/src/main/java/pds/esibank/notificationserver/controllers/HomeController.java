@@ -1,12 +1,18 @@
 package pds.esibank.notificationserver.controllers;
 
+import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pds.esibank.models.notification.NotificationModel;
 import pds.esibank.notificationserver.utils.ListOfTokenGenerate;
+
+
+import org.springframework.http.ResponseEntity;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -43,7 +49,7 @@ public class HomeController {
     }
 
     @RequestMapping(path = "/mq", method = RequestMethod.GET)
-    public String sendMessage() {
+    public ResponseEntity sendMessage() {
 
         AtomicInteger counter = new AtomicInteger();
         for (int i = 0; i < 10; i++){
@@ -54,7 +60,7 @@ public class HomeController {
             rabbitTemplate.convertAndSend(notificationModel);
         }
 
-        return "Success";
+        return new ResponseEntity("SUCCESS", HttpStatus.NO_CONTENT);
     }
 
 }
