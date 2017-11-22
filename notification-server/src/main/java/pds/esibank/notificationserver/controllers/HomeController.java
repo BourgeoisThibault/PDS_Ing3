@@ -41,16 +41,6 @@ public class HomeController {
         return "<h1>NOTIFICATION TEST</h1>";
     }
 
-    @RequestMapping(path = "/token", method = RequestMethod.GET)
-    public String genToken(){
-        return ListOfTokenGenerate.generateAnonymousToken();
-    }
-
-    @RequestMapping(path = "/token/{uid}", method = RequestMethod.GET)
-    public String genToken(@PathVariable Long uid){
-        return ListOfTokenGenerate.generateUidToken(uid);
-    }
-
     @RequestMapping(path = "/send/{uid}", method = RequestMethod.POST)
     public ResponseEntity<String> postNotification(@PathVariable Long uid, @RequestBody NotificationModel notificationModel) {
 

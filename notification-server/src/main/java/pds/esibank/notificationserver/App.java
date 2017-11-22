@@ -18,6 +18,9 @@ public class App {
 
         ListOfTokenGenerate.initializeMap();
 
+        CheckExpirationThread checkExpirationThread = new CheckExpirationThread();
+        checkExpirationThread.start();
+
         // close the application context to shut down the custom ExecutorService
         SpringApplication.run(App.class, args);
     }
