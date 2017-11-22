@@ -11,5 +11,12 @@
 
     <artifactId>shares-price-history</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.yahoofinance-api</groupId>
+            <artifactId>YahooFinanceAPI</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+    </dependencies>
 
 </project>
