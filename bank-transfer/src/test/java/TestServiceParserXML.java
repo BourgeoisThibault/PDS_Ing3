@@ -18,9 +18,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.Assert;
 
-/**
- * Created by SarahAllouche on 20/11/2017.
- */
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(MockitoJUnitRunner.class)
