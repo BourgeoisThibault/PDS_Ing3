@@ -1,6 +1,5 @@
 package pds.esibank.notificationserver.controllers;
 
-import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
