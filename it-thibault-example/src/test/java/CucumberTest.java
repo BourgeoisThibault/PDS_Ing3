@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
  * Time     20:48
  */
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/main/resources")
+@CucumberOptions(tags = "@thibault-example-cucumber",
+        features = "src/main/resources",
+        glue = "pds/esibank/it/example")
 public class CucumberTest {
 }
