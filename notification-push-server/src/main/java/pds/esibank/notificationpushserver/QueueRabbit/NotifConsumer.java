@@ -52,7 +52,6 @@ public class NotifConsumer extends DefaultConsumer {
             String message = new String(body, "UTF-8");
             PushNotificationModel pushNotificationModel = JsonUtils.objectFromJson(message,PushNotificationModel.class);
 
-            /*
             NotificationModel notificationModel = new NotificationModel();
             notificationModel.setTitle(pushNotificationModel.getTitle());
             notificationModel.setMessage(pushNotificationModel.getMessage());
@@ -74,20 +73,6 @@ public class NotifConsumer extends DefaultConsumer {
                     republishThread.setEnvelope(envelope);
                     republishThread.start();
                 }
-            }
-            */
-
-            //TODO to delete soon
-            if (!pushNotificationModel.getToken().equals("TokenThibault")) {
-
-                RepublishThread republishThread = new RepublishThread();
-                republishThread.setChannel(channel);
-                republishThread.setEnvelope(envelope);
-                republishThread.start();
-
-            } else {
-                logger.info("Sending push to " + pushNotificationModel.getToken());
-                channel.basicAck(envelope.getDeliveryTag(),false);
             }
 
         } catch (UnsupportedEncodingException e) {

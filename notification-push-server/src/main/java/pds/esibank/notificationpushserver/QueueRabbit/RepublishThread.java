@@ -31,7 +31,7 @@ public class RepublishThread extends Thread {
     @Override
     public void run() {
         try {
-            Thread.sleep(60000);
+            Thread.sleep(10000);
             channel.basicReject(envelope.getDeliveryTag(),true);
         } catch (IOException e) {
             logger.error("Error for republish message to the queue.");
