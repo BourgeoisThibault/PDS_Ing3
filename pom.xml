@@ -17,6 +17,7 @@
         <module>data-access-server</module>
         <module>bank-transfer</module>
         <module>notification-push-server</module>
+        <module>it-notification-server</module>
     </modules>
 
     <properties>
