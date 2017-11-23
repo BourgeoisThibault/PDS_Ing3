@@ -1,64 +1,28 @@
-package Beans;
+package pds.esibank.models;
+
+import lombok.*;
+
 import java.util.Date;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 /**
- * Created by SarahAllouche on 19/11/2017.
+ * Created by SarahAllouche on 23/11/2017.
  */
+@Data
+@Builder
+@AllArgsConstructor
 
-@Entity
-@Table(name="Transaction")
+@ToString
 public class Transaction {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column( name = "id_transaction" )
-    private int idTransaction;
-
-    @Basic(optional = true)
-    @Column( name = "lastname_crediter" )
+    private long idTransaction;
     private String lastNameCrediter;
-
-    @Basic(optional = true)
-    @Column( name = "firstname_crediter" )
     private String firstNameCrediter;
-
-    @Basic(optional = true)
-    @Column( name = "credit_account" )
     private String creditAccount;
-
-    @Basic(optional = true)
-    @Column( name = "impacted_bank" )
     private String impactedBank;
-
-    @Basic(optional = true)
-    @Column( name = "amount_transaction" )
     private float amountTransaction;
-
-    @Basic(optional = true)
-    @Column( name = "lastname_customer" )
     private String lastNameCustomer;
-
-    @Basic(optional = true)
-    @Column( name = "firstname_customer" )
     private String firstNameCustomer;
-
-    @Basic(optional = true)
-    @Column( name = "debit_account" )
     private String debitAccount;
-
-    @Basic(optional = true)
-    @Column( name = "date_transaction" )
-    @Temporal(TemporalType.DATE)
     private Date dateTransaction;
 
     /** Construteur **/
@@ -68,7 +32,7 @@ public class Transaction {
     }
 
     /** Getters **/
-    public int getIdTransaction() {
+    public long getIdTransaction() {
         return idTransaction;
     }
     public String getLastNameCrediter() {
@@ -101,7 +65,7 @@ public class Transaction {
     }
 
     /** Setters **/
-    public void setIdTransaction(final int idTransaction) {
+    public void setIdTransaction(final long idTransaction) {
         this.idTransaction = idTransaction;
     }
     public void setLastNameCrediter(final String lastNameCrediter) {

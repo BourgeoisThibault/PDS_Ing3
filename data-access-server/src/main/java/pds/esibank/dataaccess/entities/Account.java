@@ -1,4 +1,4 @@
-package Beans;
+package pds.esibank.dataaccess.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

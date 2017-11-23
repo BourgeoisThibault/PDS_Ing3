@@ -1,10 +1,12 @@
 package ServiceXml;
 
-import Beans.Transaction;
+
 
 import org.jdom2.*;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import pds.esibank.models.Transaction;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -33,7 +35,7 @@ public class ParserXML {
 			/*id transaction*/
             Element idTransaction = new Element("id_transaction");
             transaction.addContent(idTransaction);
-            Attribute attribuId = new Attribute("id", Integer.toString(tabTransaction.get(i).getIdTransaction()));
+            Attribute attribuId = new Attribute("id", Long.toString(tabTransaction.get(i).getIdTransaction()));
             idTransaction.setAttribute(attribuId);
 
 			/*Last Name Crediter*/

@@ -1,25 +1,36 @@
 package Main;
 
-import Beans.Transaction;
-import Model.modelJPA;
 import ServiceXml.ParserXML;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import pds.esibank.models.Transaction;
 
+import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by SarahAllouche on 22/11/2017.
  */
 public class transactionBank {
-    private modelJPA Modele = new modelJPA();
+   // private modelJPA Modele = new modelJPA();
     private ParserXML parser = new ParserXML();
     private ArrayList<Transaction> tabTransaction;
 
-    public void SendTransaction(){
+    public void SendTransaction() throws IOException{
 
         Boolean creationXml;
         //Get Transaction from the model on ArrayList
-        tabTransaction = Modele.getTransaction();
+        final String uri = "http://data-access:8080/transaction/allByDate";
+        //final String uri = "http://localhost:8080/transaction/allByDate";
+
+        ArrayList<Transaction> list = new ObjectMapper().readValue(new URL(uri),
+                TypeFactory.defaultInstance().constructCollectionType(List.class, Transaction.class));
+
+
+        tabTransaction = list;
 		/*Test tab not Empty*/
         if(!tabTransaction.isEmpty())
         {
@@ -42,7 +53,7 @@ public class transactionBank {
             System.out.println("Any Transaction for this date");
         }
     }
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws ParseException, IOException {
 
         transactionBank integrationTest = new transactionBank();
         integrationTest.SendTransaction();

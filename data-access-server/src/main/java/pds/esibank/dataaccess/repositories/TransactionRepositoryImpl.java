@@ -1,6 +1,8 @@
-package Model;
+package pds.esibank.dataaccess.repositories;
 
-import Beans.Transaction;
+
+import org.springframework.stereotype.Repository;
+import pds.esibank.dataaccess.entities.Transaction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,22 +10,26 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by SarahAllouche on 19/11/2017.
+ * Created by SarahAllouche on 23/11/2017.
  */
-public class modelJPA {
-    public ArrayList<Transaction> getTransaction() {
-        ArrayList<Transaction> tabTransaction = new ArrayList<Transaction>();
-        EntityManagerFactory transactionfacory = Persistence.createEntityManagerFactory("TransactionProperty");
-        // create entity JPA (link between Java and JPA)
-        EntityManager transactionentity = transactionfacory.createEntityManager();
-// :dateTransaction  ,
-        TypedQuery<Transaction> query = transactionentity.createQuery("Select t from Transaction t"
-                + " WHERE t.dateTransaction =:dateTransaction", Transaction.class)
-                .setParameter("dateTransaction", new Date(), TemporalType.DATE);
 
-        List<Transaction> listTransaction = query.getResultList();
-        //retrieve transaction from the listTransaction
-        for (Transaction t : listTransaction) {
+@Repository
+public class TransactionRepositoryImpl {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public ArrayList<Transaction> getTransactionByDate() {
+
+        ArrayList<Transaction> tabTransaction = new ArrayList<Transaction>();
+        // create entity JPA (link between Java and JPA)
+
+        TypedQuery<Transaction> query = entityManager.createQuery("FROM Transaction t WHERE t.dateTransaction =:dateTransaction",
+                Transaction.class)
+                .setParameter("dateTransaction", new Date(), TemporalType.DATE);
+         List<Transaction> listResult = query.getResultList();
+
+        for (Transaction t : listResult) {
             Transaction TransactionResultatQuery = new Transaction();
             TransactionResultatQuery.setIdTransaction(t.getIdTransaction());
             TransactionResultatQuery.setLastNameCrediter(t.getLastNameCrediter());
@@ -37,10 +43,7 @@ public class modelJPA {
             TransactionResultatQuery.setDateTransaction(t.getDateTransaction());
             tabTransaction.add(TransactionResultatQuery);
         }
-        //close entity
-        transactionentity.close();
-        //close connection TransactionTest
-        transactionfacory.close();
-        return tabTransaction;
+         return tabTransaction;
     }
-    }
+
+}
