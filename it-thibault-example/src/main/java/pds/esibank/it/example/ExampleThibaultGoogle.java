@@ -22,6 +22,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author BOURGEOIS Thibault
  * Date     23/11/2017
@@ -31,21 +33,25 @@ import java.util.concurrent.TimeUnit;
 @Component("pds.esibank.testing.TestingGet")
 public class ExampleThibaultGoogle {
 
+    private Logger logger = Logger.getLogger(ExampleThibaultGoogle.class);
+
     private ResponseEntity<String> _RESPONSE;
 
     @When("try to get page at \"(.+?)\"")
-    public void getResponseFromUri(final String uri) {
+    public void getResponseFromUriShouldReturnCode200(final String uri) {
+        logger.info("Declare RestTemplate object");
         final RestTemplate restTemplate = new RestTemplate();
-        final ResponseEntity<String> responseEntity =
-                restTemplate.getForEntity(uri, String.class);
 
-        _RESPONSE = responseEntity;
+        logger.info("Execute request to " + uri);
+        _RESPONSE = restTemplate.getForEntity(uri, String.class);
 
-        Assert.assertTrue(responseEntity.getStatusCode() == HttpStatus.OK);
+        logger.info("Execute assert for check HttpStatus - " + _RESPONSE.getStatusCode());
+        Assert.assertTrue(_RESPONSE.getStatusCode() == HttpStatus.OK);
     }
 
     @Then("body value is not null")
     public void bodyShouldBeNotNull() {
+        logger.info("Execute assert for check if body is not null");
         Assert.assertFalse(_RESPONSE.getBody().equals(null));
     }
 
