@@ -31,6 +31,14 @@ maven_test:
     - mvn test
   when: on_success
 
+maven_install_notmaster:
+  stage: build
+  script:
+    - mvn install
+  when: on_success
+  except:
+    - master
+
 maven_install:
   stage: build
   script:
