@@ -29,11 +29,13 @@ public class CheckThread extends Thread {
     @Override
     public void run() {
         while(!isStopped) {
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                logger.error("Can't sleep");
+                e.printStackTrace();
             }
+
             for (Map.Entry<Socket,String> list : ListConnection.getSocketMobileClientMap().entrySet()) {
 
                 try {
@@ -42,12 +44,11 @@ public class CheckThread extends Thread {
                     try {
                         BufferedInputStream reader = new BufferedInputStream(list.getKey().getInputStream());
                         String response = readString(reader);
-                        System.out.println(response);
-                    } catch (IOException e2) {
+                    } catch (Exception e2) {
                         ListConnection.getSocketMobileClientMap().remove(list.getKey());
                         logger.info("TOKEN disconnect: " + list.getValue());
                     }
-                } catch (IOException e1) {
+                } catch (Exception e1) {
                     ListConnection.getSocketMobileClientMap().remove(list.getKey());
                     logger.info("TOKEN disconnect: " + list.getValue());
                 }

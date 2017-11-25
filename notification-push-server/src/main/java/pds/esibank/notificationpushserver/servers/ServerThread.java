@@ -37,8 +37,8 @@ public class ServerThread extends Thread {
         // Initialize list of mobile connected to empty
         ListConnection.initializeList();
 
-        CheckThread checkThread = new CheckThread();
-        checkThread.start();
+        //CheckThread checkThread = new CheckThread();
+        //checkThread.start();
 
         // Initialize Socket server to null
         ServerSocket serverSocket = null;
@@ -60,6 +60,8 @@ public class ServerThread extends Thread {
                 counterError=0;
                 Socket socket = serverSocket.accept();
 
+                socket.setSoTimeout(500);
+
                 CommunicationThread communicationThread = new CommunicationThread();
                 communicationThread.setSocket(socket);
                 communicationThread.run();
@@ -71,7 +73,7 @@ public class ServerThread extends Thread {
                     logger.error("Socket accept throw exception 3 time. Server of socket shut down");
                     logger.error("Please restart server");
                     try {
-                        checkThread.stop();
+                        //checkThread.stop();
                         serverSocket.close();
                     } catch (IOException e1) {
                         logger.error("Can't stop server");
@@ -82,7 +84,7 @@ public class ServerThread extends Thread {
         }
 
         if(isStopped) {
-            checkThread.setIsStopped(true);
+            //checkThread.setIsStopped(true);
         }
 
     }
