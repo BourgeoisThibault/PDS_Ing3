@@ -32,7 +32,7 @@ import org.apache.log4j.Logger;
  * Time     17:08
  */
 @Scope("cucumber-glue")
-@Component("pds.esibank.testing.TestingGet")
+//@Component("pds.esibank.testing.TestingGet")
 public class ExampleThibaultGoogle {
 
     private Logger logger = Logger.getLogger(ExampleThibaultGoogle.class);
