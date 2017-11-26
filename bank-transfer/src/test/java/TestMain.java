@@ -1,18 +1,20 @@
 import Main.transactionBank;
-import ServiceXml.ParserXML;
-
+import Model.AccessDataTransaction;
+import Service.ParserXML;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-
+import pds.esibank.models.Transaction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import static org.mockito.Matchers.any;
 
 /**
  * Created by SarahAllouche on 19/11/2017.
@@ -21,23 +23,26 @@ import java.util.Date;
 @RunWith(MockitoJUnitRunner.class)
 public class TestMain {
 
-  /*  @Mock
+    @Mock
     Transaction transactionMock;
-    @Mock ParserXML parserMock;
-    @Mock modelJPA modelMock;
-
+    @Mock
+    ParserXML parserMock;
+    @Mock
+    AccessDataTransaction addTransactionMock;
     @InjectMocks
     transactionBank transferBankSUT;
-
 
     @Before
     public void setup() throws Exception {
         Mockito.mock(transactionBank.class);
-        ArrayList <Transaction> tabTransactionMock = new ArrayList <Transaction>();
-        Date d;
+
+        List<Transaction> tabTransactionMock = new ArrayList<Transaction>();
+        Date date;
         SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
-        d =  formatter.parse("2017-11-20");
-        //Create Transaction Mock
+
+
+        //Create Transaction list for mock
+        date =  formatter.parse("2017-11-20");
         Transaction transactionMocked = new Transaction();
         transactionMocked.setIdTransaction(12);
         transactionMocked.setLastNameCrediter("Dupont");
@@ -48,7 +53,7 @@ public class TestMain {
         transactionMocked.setFirstNameCustomer("Lulu");
         transactionMocked.setLastNameCustomer("Loli");
         transactionMocked.setDebitAccount("3");
-        transactionMocked.setDateTransaction(d);
+        transactionMocked.setDateTransaction(date);
 
         Transaction transactionMocked2 = new Transaction();
         transactionMocked2.setIdTransaction(13);
@@ -60,22 +65,24 @@ public class TestMain {
         transactionMocked2.setFirstNameCustomer("Lili");
         transactionMocked2.setLastNameCustomer("Lola");
         transactionMocked2.setDebitAccount("5");
-        transactionMocked2.setDateTransaction(d);
-        //ajout des virement a l'arraylist
+        transactionMocked2.setDateTransaction(date);
+
+        //add transaction in the list
         tabTransactionMock.add(transactionMocked);
         tabTransactionMock.add(transactionMocked2);
 
-		/*Comportement Mock for shouldSendTransaction*/
-     /*   Mockito.when(modelMock.getTransaction()).thenReturn(tabTransactionMock);
-        Mockito.when(parserMock.SetXmlDocument(Matchers.any(ArrayList.class))).thenReturn(true);
+		/* Mock methods for shouldSendTransaction */
+		 Mockito.when(addTransactionMock.getDBTransaction()).thenReturn(tabTransactionMock);
+         Mockito.when(parserMock.SetXmlDocument(any(List.class))).thenReturn(true);
 
 
-    }/*
-    /*test to send an XML*/
+    }
+    /* Test if the navigation is good*/
     @Test
     public void shouldSendTransaction() throws Exception {
-
-       // transferBankSUT.SendTransaction();
+        boolean success;
+        success = transferBankSUT.SendTransaction();
+        org.junit.Assert.assertEquals(true, success);
     }
 
 }

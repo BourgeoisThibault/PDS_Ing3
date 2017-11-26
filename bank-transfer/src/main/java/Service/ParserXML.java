@@ -1,17 +1,14 @@
-package ServiceXml;
-
-
+package Service;
 
 import org.jdom2.*;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import pds.esibank.models.Transaction;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by SarahAllouche on 17/11/2017.
@@ -20,7 +17,7 @@ import java.util.Date;
 public class ParserXML {
 
 
-    public Boolean SetXmlDocument(final ArrayList <Transaction> tabTransaction)
+    public Boolean SetXmlDocument(final List<Transaction> tabTransaction)
     {
         int i;
         Document document;

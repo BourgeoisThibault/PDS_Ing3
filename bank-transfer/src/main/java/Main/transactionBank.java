@@ -1,36 +1,27 @@
 package Main;
 
-import ServiceXml.ParserXML;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
+import Model.AccessDataTransaction;
+import Service.ParserXML;
 import pds.esibank.models.Transaction;
-
 import java.io.IOException;
-import java.net.URL;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by SarahAllouche on 22/11/2017.
  */
 public class transactionBank {
-   // private modelJPA Modele = new modelJPA();
     private ParserXML parser = new ParserXML();
-    private ArrayList<Transaction> tabTransaction;
+    private List<Transaction> tabTransaction;
+    private AccessDataTransaction addTransaction = new AccessDataTransaction();
 
-    public void SendTransaction() throws IOException{
+
+    public boolean SendTransaction() throws IOException{
 
         Boolean creationXml;
-        //Get Transaction from the model on ArrayList
-        final String uri = "http://data-access:8080/transaction/allByDate";
-        //final String uri = "http://localhost:8080/transaction/allByDate";
 
-        ArrayList<Transaction> list = new ObjectMapper().readValue(new URL(uri),
-                TypeFactory.defaultInstance().constructCollectionType(List.class, Transaction.class));
-
-
-        tabTransaction = list;
+        tabTransaction = addTransaction.getDBTransaction();
 		/*Test tab not Empty*/
         if(!tabTransaction.isEmpty())
         {
@@ -40,24 +31,32 @@ public class transactionBank {
             {
 				/*Error Create Xml File*/
                 System.out.println("Xml file not created");
+                return creationXml;
             }
             else
             {
 				/* Good XML*/
                 System.out.println("Good job ");
+                return creationXml;
             }
         }
         else
         {
 			/*Tab Transaction Empty*/
             System.out.println("Any Transaction for this date");
+
         }
+        return false;
     }
+
     public static void main(String[] args) throws ParseException, IOException {
 
         transactionBank integrationTest = new transactionBank();
-        integrationTest.SendTransaction();
-
+        boolean goodJob;
+        goodJob = integrationTest.SendTransaction();
+        if (goodJob){
+            // return in rest the document;
+        }
     }
 
 }

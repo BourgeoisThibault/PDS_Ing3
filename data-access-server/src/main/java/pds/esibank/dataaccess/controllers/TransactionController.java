@@ -9,6 +9,7 @@ import pds.esibank.dataaccess.services.TransactionService;
 
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,8 +25,8 @@ public class TransactionController {
 
     @RequestMapping(value="/allByDate", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
 
-    public @ResponseBody ArrayList <Transaction> getTransactionByDate() throws JsonProcessingException{
-        ArrayList<Transaction> list = transactionService.getTransactionByDate();
+    public @ResponseBody List <Transaction> getTransactionByDate() throws JsonProcessingException{
+        List<Transaction> list = transactionService.getTransactionByDate();
         return list;
    }
 }
