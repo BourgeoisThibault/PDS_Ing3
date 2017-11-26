@@ -94,38 +94,32 @@ public class ManagerThread extends Thread {
 
                 String msgGet = readString(reader);
 
-                if(msgGet.equals("run")) {
-                    if(serverPause.equals(true)) {
-                        serverThread = new ServerThread();
-                        serverThread.set_PORT(_PORT);
-                        serverThread.start();
+                if(msgGet.equals("START_LISTEN")) {
+                    if(!listenNotificationThread.listennerIsAlive()) {
 
-                        serverPause=false;
+                        listenNotificationThread = new QueueListenerThread();
+                        listenNotificationThread.start();
 
-                        sendString(writer, "New server running");
+                        sendString(writer, "START_OK");
                     } else {
-                        sendString(writer, "Server already running");
+                        sendString(writer, "ALREADY_START");
                     }
                 }
 
-                if(msgGet.equals("stop")) {
-                    if(serverPause.equals(false)) {
-                        serverThread.setStopped(true);
-                        serverThread.stop();
+                if(msgGet.equals("STOP_LISTEN")) {
+                    if(listenNotificationThread.listennerIsAlive()) {
 
-                        ListConnection.closeAllConnection();
-                        logger.info("All connection closed");
+                        listenNotificationThread.stopListenner();
+                        listenNotificationThread.stop();
 
-                        serverPause=true;
-
-                        sendString(writer, "Server is stopped");
+                        sendString(writer, "STOP_OK");
                     } else {
-                        sendString(writer, "Server already stopped");
+                        sendString(writer, "ALREADY_STOP");
                     }
                 }
 
-                if(!msgGet.equals("run") && !msgGet.equals("stop")) {
-                    sendString(writer, "Wrong message");
+                if(!msgGet.equals("STOP_LISTEN") && !msgGet.equals("START_LISTEN")) {
+                    sendString(writer, "MESSAGE_ERROR");
                 }
 
             } catch (IOException e) {

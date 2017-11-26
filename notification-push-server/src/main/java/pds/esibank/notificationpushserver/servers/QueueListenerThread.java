@@ -25,12 +25,28 @@ public class QueueListenerThread extends Thread {
 
     private static final String QUEUE_NAME = "test.queue.testttlday";
 
+    private Channel channel;
+
     @Override
     public void run() {
         try {
             testingConsum();
         } catch (IOException e) {
            logger.error("IOException with message: " + e.getMessage());
+        } catch (TimeoutException e) {
+            logger.error("TimeOutException with message: " + e.getMessage());
+        }
+    }
+
+    public Boolean listennerIsAlive() {
+        return channel.isOpen();
+    }
+
+    public void stopListenner() {
+        try {
+            channel.close();
+        } catch (IOException e) {
+            logger.error("IOException with message: " + e.getMessage());
         } catch (TimeoutException e) {
             logger.error("TimeOutException with message: " + e.getMessage());
         }
@@ -47,7 +63,7 @@ public class QueueListenerThread extends Thread {
         factory.setPort(5672);
 
         Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
+        channel = connection.createChannel();
 
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("x-message-ttl", 86400000);
