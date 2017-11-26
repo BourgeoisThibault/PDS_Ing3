@@ -133,6 +133,8 @@ public class NotificationToken {
         Boolean isReceive = false;
         int tryCount = 0;
 
+        _Socket.setSoTimeout(5000);
+
         while (!isReceive && tryCount<25) {
 
             System.out.println("Reception " + tryCount);
@@ -154,6 +156,8 @@ public class NotificationToken {
             tryCount++;
         }
 
+        Assert.assertTrue(isReceive);
+
     }
 
     @And("Check if title equal \"(.+?)\"")
@@ -164,6 +168,51 @@ public class NotificationToken {
     @And("Check if message equal \"(.+?)\"")
     public void notificationShouldHaveThisMessage(String message) {
         Assert.assertTrue(_Notification.getMessage().equals(message));
+    }
+
+    @And("Delete all token for uid \"(.+?)\"")
+    public void deleteAllTokenAdmin(String uid) {
+        final RestTemplate restTemplate = new RestTemplate();
+        _RESPONSE = restTemplate.postForEntity(_URI + "admin", null, String.class);
+        Assert.assertTrue(_RESPONSE.getStatusCode().equals(HttpStatus.OK));
+    }
+
+    @And("Stop listener of push server at \"(.+?)\" on port \"(.+?)\"")
+    public void stopListenerPushMom(String host, int port) throws IOException {
+        _Socket = new Socket(host, port);
+
+        writer = new PrintWriter(_Socket.getOutputStream(), true);
+        reader = new BufferedInputStream(_Socket.getInputStream());
+
+        writer.write("STOP_LISTEN");
+        writer.flush();
+
+        int stream;
+        byte[] b = new byte[4096];
+        stream = reader.read(b);
+        String response = new String(b, 0, stream);
+
+        Assert.assertTrue(response.equals("STOP_OK") || response.equals("ALREADY_STOP"));
+
+    }
+
+    @And("Start listener of push server at \"(.+?)\" on port \"(.+?)\"")
+    public void startListenerPushMom(String host, int port) throws IOException {
+        _Socket = new Socket(host, port);
+
+        writer = new PrintWriter(_Socket.getOutputStream(), true);
+        reader = new BufferedInputStream(_Socket.getInputStream());
+
+        writer.write("START_LISTEN");
+        writer.flush();
+
+        int stream;
+        byte[] b = new byte[4096];
+        stream = reader.read(b);
+        String response = new String(b, 0, stream);
+
+        Assert.assertTrue(response.equals("START_OK") || response.equals("ALREADY_START"));
+
     }
 
 

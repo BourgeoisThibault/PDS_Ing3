@@ -93,6 +93,7 @@ public class ManagerThread extends Thread {
                 reader = new BufferedInputStream(socket.getInputStream());
 
                 String msgGet = readString(reader);
+                logger.info("Receive " + msgGet + " on admin port");
 
                 if(msgGet.equals("START_LISTEN")) {
                     if(!listenNotificationThread.listennerIsAlive()) {
@@ -101,8 +102,10 @@ public class ManagerThread extends Thread {
                         listenNotificationThread.start();
 
                         sendString(writer, "START_OK");
+                        logger.info("Start listening queue");
                     } else {
                         sendString(writer, "ALREADY_START");
+                        logger.info("Already start listening queue");
                     }
                 }
 
@@ -113,8 +116,10 @@ public class ManagerThread extends Thread {
                         listenNotificationThread.stop();
 
                         sendString(writer, "STOP_OK");
+                        logger.info("Stop listening queue");
                     } else {
                         sendString(writer, "ALREADY_STOP");
+                        logger.info("Already stop listening queue");
                     }
                 }
 
