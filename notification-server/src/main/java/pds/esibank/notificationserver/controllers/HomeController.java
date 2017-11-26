@@ -76,42 +76,10 @@ public class HomeController {
                 HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/mq", method = RequestMethod.GET)
-    public ResponseEntity sendMessage() {
-
-        PushNotificationModel pushNotificationModel = new PushNotificationModel();
-
-        pushNotificationModel.setTitle("NotifThibault");
-        pushNotificationModel.setMessage("Message number ");
-        pushNotificationModel.setToken("TokenThibault");
-        rabbitTemplate.convertAndSend(pushNotificationModel);
-
-        pushNotificationModel.setTitle("NotifTest");
-        pushNotificationModel.setMessage("Message number ");
-        pushNotificationModel.setToken("TokenThibault");
-        rabbitTemplate.convertAndSend(pushNotificationModel);
-
-        pushNotificationModel.setTitle("NotifUsman");
-        pushNotificationModel.setMessage("Message number ");
-        pushNotificationModel.setToken("TokenThibault");
-        rabbitTemplate.convertAndSend(pushNotificationModel);
-
-        pushNotificationModel.setTitle("NotifRuben");
-        pushNotificationModel.setMessage("Message number ");
-        pushNotificationModel.setToken("TokenThibault");
-        rabbitTemplate.convertAndSend(pushNotificationModel);
-
-        pushNotificationModel.setTitle("NotifLinda");
-        pushNotificationModel.setMessage("Message number ");
-        pushNotificationModel.setToken("TokenThibault");
-        rabbitTemplate.convertAndSend(pushNotificationModel);
-
-        pushNotificationModel.setTitle("NotifTony");
-        pushNotificationModel.setMessage("Message number ");
-        pushNotificationModel.setToken("TokenThibault");
-        rabbitTemplate.convertAndSend(pushNotificationModel);
-
-        return new ResponseEntity("SUCCESS", HttpStatus.OK);
+    @RequestMapping(path = "/admin", method = RequestMethod.POST)
+    public ResponseEntity deleteTokenForUidTest() {
+        ListOfTokenGenerate.deleteAdminToken();
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

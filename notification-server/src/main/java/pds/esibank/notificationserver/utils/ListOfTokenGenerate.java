@@ -48,15 +48,17 @@ public class ListOfTokenGenerate {
         Date date = new Date();
         date.setDate(date.getDate()+1);
 
-        for (Map.Entry<String,Date> list : tokenExpireList.entrySet()) {
-            if(list.getValue().getDate() < date.getDate()) {
-                tokenExpireList.remove(list.getKey());
-                tokenUidList.remove(list.getKey());
+
+        for(Iterator<Map.Entry<String, Date>> it = tokenExpireList.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<String, Date> entry = it.next();
+            if(entry.getValue().getDate() < date.getDate()) {
+                it.remove();
+                tokenUidList.remove(entry.getKey());
             } else {
-                if(list.getValue().getDate() == date.getDate()) {
-                    if(list.getValue().getTime() < date.getTime()) {
-                        tokenExpireList.remove(list.getKey());
-                        tokenUidList.remove(list.getKey());
+                if(entry.getValue().getDate() == date.getDate()) {
+                    if(entry.getValue().getTime() < date.getTime()) {
+                        it.remove();
+                        tokenUidList.remove(entry.getKey());
                     }
                 }
             }
@@ -129,6 +131,21 @@ public class ListOfTokenGenerate {
             if(list.getKey().equals(token))
                 list.setValue(date);
         }
+    }
+
+    public static void deleteAdminToken() {
+
+        Long adminLong = 999999L;
+
+        for(Iterator<Map.Entry<String, Long>> it = tokenUidList.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<String, Long> entry = it.next();
+            if(entry.getValue().equals(adminLong)) {
+                it.remove();
+                tokenExpireList.remove(entry.getKey());
+            }
+        }
+
+        System.out.println("");
     }
 
 }
