@@ -24,10 +24,15 @@ maven_compile:
   stage: compile
   script:
     - mvn compile
-    - ls ~/.m2/repository
+  artifacts:
+      expire_in: 1 hrs
+      paths:
+      - ~/.m2/repository
 
 maven_test:
   stage: test
+  dependencies:
+    - maven_compile
   script:
     - mvn test
   when: on_success
