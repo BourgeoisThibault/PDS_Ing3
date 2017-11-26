@@ -1,3 +1,5 @@
+package pds.esibank.it.notification;
+
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
@@ -14,5 +16,5 @@ import org.junit.runner.RunWith;
         plugin = {"pretty", "html:target/cucumber" },
         features = "src/main/resources",
         glue = "pds/esibank/it/notification")
-public class NotificationIt {
+public class NotificationTokenTest {
 }
