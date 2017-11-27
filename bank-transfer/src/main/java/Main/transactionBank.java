@@ -2,10 +2,17 @@ package Main;
 
 import Model.AccessDataTransaction;
 import Service.ParserXML;
+
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
 import pds.esibank.models.Transaction;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+
+
 
 
 /**
@@ -13,15 +20,23 @@ import java.util.List;
  */
 public class transactionBank {
     private ParserXML parser = new ParserXML();
-    private List<Transaction> tabTransaction;
+    private List<Transaction> tabTransaction = new ArrayList<Transaction>();
     private AccessDataTransaction addTransaction = new AccessDataTransaction();
 
+    private final Logger logger = Logger.getLogger(transactionBank.class);
 
-    public boolean SendTransaction() throws IOException{
 
+
+    public boolean SendTransaction() {
+        BasicConfigurator.configure();
         Boolean creationXml;
-
-        tabTransaction = addTransaction.getDBTransaction();
+        logger.info("In SendTransaction method");
+        try {
+            tabTransaction = addTransaction.getDBTransaction();
+        } catch (IOException e) {
+            logger.error("Error in retrieve data");
+           // e.printStackTrace();
+        }
 		/*Test tab not Empty*/
         if(!tabTransaction.isEmpty())
         {
@@ -30,20 +45,21 @@ public class transactionBank {
             if (!creationXml)
             {
 				/*Error Create Xml File*/
-                System.out.println("Xml file not created");
+                logger.info("Xml file not created");
                 return creationXml;
             }
             else
             {
 				/* Good XML*/
-                System.out.println("Good job ");
+                logger.info("Good job");
+
                 return creationXml;
             }
         }
         else
         {
 			/*Tab Transaction Empty*/
-            System.out.println("Any Transaction for this date");
+            logger.info("Any Transaction for this date");
 
         }
         return false;
