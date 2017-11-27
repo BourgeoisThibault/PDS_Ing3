@@ -18,4 +18,10 @@ public class SharePrice {
         super();
     }
 
+    public SharePrice(String name, String symbol, String currency, BigDecimal price, BigDecimal change, LocalDateTime dateTTime) {
+        this.share = new Share(name, symbol, currency);
+        this.price = price;
+        this.change = change;
+        this.dateTTime = dateTTime;
+    }
 }

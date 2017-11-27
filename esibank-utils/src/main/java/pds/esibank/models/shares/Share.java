@@ -14,4 +14,9 @@ public class Share {
         super();
     }
 
+    public Share(String name, String symbol, String currency) {
+        this.name = name;
+        this.symbol = symbol;
+        this.currency = currency;
+    }
 }
