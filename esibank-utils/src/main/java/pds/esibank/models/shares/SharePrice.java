@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @ToString
@@ -12,16 +12,16 @@ public class SharePrice {
     private Share share;
     private BigDecimal price;
     private BigDecimal change;
-    private LocalDateTime dateTTime;
+    private Date time;
 
     public SharePrice() {
         super();
     }
 
-    public SharePrice(String name, String symbol, String currency, BigDecimal price, BigDecimal change, LocalDateTime dateTTime) {
+    public SharePrice(String name, String symbol, String currency, BigDecimal price, BigDecimal change, Date time) {
         this.share = new Share(name, symbol, currency);
         this.price = price;
         this.change = change;
-        this.dateTTime = dateTTime;
+        this.time = time;
     }
 }

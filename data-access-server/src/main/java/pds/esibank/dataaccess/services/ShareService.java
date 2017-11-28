@@ -1,36 +1,18 @@
 package pds.esibank.dataaccess.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pds.esibank.dataaccess.entities.Share;
 import pds.esibank.dataaccess.repositories.ShareRepository;
 
-import javax.annotation.Resource;
-import java.util.List;
-
 @Service
-public class ShareService implements ShareRepository {
+public class ShareService {
 
-    @Resource
+    @Autowired
     private ShareRepository shareRepository;
 
-    @Override
-    public List<Share> findAll() {
-        return shareRepository.findAll();
-    }
-
-    @Override
-    public Share findByName(String name) {
-        return shareRepository.findByName(name);
-    }
-
-    @Override
-    public void save(Share share) {
-        shareRepository.save(share);
-    }
-
-    @Override
-    public void update(Share share) {
-        shareRepository.update(share);
+    public void update(Share sp) {
+        shareRepository.save(sp);
     }
 
 }

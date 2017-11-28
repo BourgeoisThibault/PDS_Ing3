@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import pds.esibank.models.shares.SharePrice;
 import yahoofinance.Stock;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class StockShareConverter {
     private static Logger logger = LoggerFactory.getLogger(StockShareConverter.class);
@@ -20,7 +20,7 @@ public class StockShareConverter {
                     stock.getCurrency(),
                     stock.getQuote().getPrice(),
                     stock.getQuote().getChangeInPercent(),
-                    LocalDateTime.now());
+                    new Date());
 
             //add the created sharePrice to the list
             sharePriceList.add(sp);

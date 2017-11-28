@@ -1,9 +1,12 @@
 package pds.esibank.dataaccess.entities;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Collection;
 
+@Data
 @Entity
 @Table(name="shares")
 public class Share {
@@ -23,7 +26,7 @@ public class Share {
     private String currency;
 
     @OneToMany(mappedBy="share")
-    private Collection<SharePrice> sharePriceCollection ;
+    private Collection<SharePrice> sharePrices ;
 
     public Share()
     {

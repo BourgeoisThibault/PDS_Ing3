@@ -1,10 +1,13 @@
 package pds.esibank.dataaccess.entities;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalTime;
+import java.util.Date;
 
+@Data
 @Entity
 @Table(name="share_prices")
 public class SharePrice {
@@ -17,11 +20,11 @@ public class SharePrice {
     @Column( name = "price" )
     private BigDecimal price;
 
-    @Column( name = "change" )
+    @Column( name = "change_pourcent" )
     private BigDecimal change;
 
-    @Column( name = "time" )
-    private LocalTime time;
+    @Column( name = "change_time" )
+    private Date time;
 
     @ManyToOne
     private Share share;
@@ -30,5 +33,4 @@ public class SharePrice {
     {
         super();
     }
-
 }
