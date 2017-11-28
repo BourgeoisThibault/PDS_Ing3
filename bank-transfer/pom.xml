@@ -15,6 +15,8 @@
 
     <name>bank-transfer</name>
 
+
+
     <dependencies>
 
         <!-- https://mvnrepository.com/artifact/org.jdom/jdom -->
@@ -81,6 +83,17 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>Main.TransactionBank</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>
