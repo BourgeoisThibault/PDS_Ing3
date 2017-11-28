@@ -5,7 +5,6 @@ import Service.ParserXML;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
 import pds.esibank.models.Transaction;
 import java.io.IOException;
 import java.text.ParseException;
@@ -18,12 +17,12 @@ import java.util.List;
 /**
  * Created by SarahAllouche on 22/11/2017.
  */
-public class transactionBank {
+public class TransactionBank {
     private ParserXML parser = new ParserXML();
     private List<Transaction> tabTransaction = new ArrayList<Transaction>();
     private AccessDataTransaction addTransaction = new AccessDataTransaction();
 
-    private final Logger logger = Logger.getLogger(transactionBank.class);
+    private final Logger logger = Logger.getLogger(TransactionBank.class);
 
 
 
@@ -67,7 +66,7 @@ public class transactionBank {
 
     public static void main(String[] args) throws ParseException, IOException {
 
-        transactionBank integrationTest = new transactionBank();
+        TransactionBank integrationTest = new TransactionBank();
         boolean goodJob;
         goodJob = integrationTest.SendTransaction();
         if (goodJob){
