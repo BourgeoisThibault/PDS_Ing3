@@ -1,4 +1,4 @@
-import Main.transactionBank;
+import Main.TransactionBank;
 import Model.AccessDataTransaction;
 import Service.ParserXML;
 import org.junit.Before;
@@ -30,11 +30,12 @@ public class TestMain {
     @Mock
     AccessDataTransaction addTransactionMock;
     @InjectMocks
-    transactionBank transferBankSUT;
+    TransactionBank transferBankSUT;
+    
 
     @Before
     public void setup() throws Exception {
-        Mockito.mock(transactionBank.class);
+        Mockito.mock(TransactionBank.class);
 
         List<Transaction> tabTransactionMock = new ArrayList<Transaction>();
         Date date;
