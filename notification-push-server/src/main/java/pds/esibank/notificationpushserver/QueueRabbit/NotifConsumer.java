@@ -62,7 +62,7 @@ public class NotifConsumer extends DefaultConsumer {
                 logger.info("Sending push to " + pushNotificationModel.getToken());
                 channel.basicAck(envelope.getDeliveryTag(),false);
             } else {
-                if(pushNotificationModel.getToken().equals("allToken")) {
+                if(pushNotificationModel.getToken().equals("AllToken")) {
                     ListConnection.sendNotificationToAllDevice(notificationModel);
 
                     logger.info("Sending push to all device connected ");

@@ -60,7 +60,7 @@ public class ServerThread extends Thread {
                 counterError=0;
                 Socket socket = serverSocket.accept();
 
-                socket.setSoTimeout(500);
+                socket.setSoTimeout(5000);
 
                 CommunicationThread communicationThread = new CommunicationThread();
                 communicationThread.setSocket(socket);
