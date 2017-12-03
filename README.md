@@ -1,6 +1,5 @@
 # Projet de synthèse ING3
 
-
 # Project's  structure
   
 There are 7 modules :
