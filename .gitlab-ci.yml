@@ -52,6 +52,7 @@ maven_install:
       - web-app-server/target/serverweb.war
       - notification-server/target/notificationserver.jar
       - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
+      - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
   only:
     refs:
       - master
@@ -84,6 +85,8 @@ deploy_webapp:
     - maven_install
   script:
     - scp web-app-server/target/serverweb.war esibank@$IP_WEBAPP:/var/lib/tomcat8/webapps/serverweb.war
+    - scp bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar esibank@$IP_WEBAPP:/home/esibank/TransactionEsibank/bank-transfer-1.0-SNAPSHOT.jar
+
   when: on_success
   only:
     refs:
