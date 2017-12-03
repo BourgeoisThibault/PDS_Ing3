@@ -25,7 +25,9 @@ public class SendDataTransaction {
     public void postMessage(){
         try{
             logger.info("Start method postMessage ...");
-            URL url = new URL("http://localhost:8090/transaction/si-externe");
+            //final String uri = "http://192.154.88.?:8090/si-externe/transaction/si-externe";
+            final String uri = "http://localhost:8090/transaction/si-externe";
+            URL url = new URL(uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             logger.info("Start connexion to : " + url);
             connection.setDoOutput(true);
