@@ -14,7 +14,7 @@ public class AccessDataTransaction {
 
     public List<Transaction> getDBTransaction() throws IOException {
         //Get Transaction from the model on ArrayList
-        final String uri = "http://data-access:8080/transaction/allByDate";
+        final String uri = "http://192.154.88.161:8080/transaction/allByDate";
         //final String uri = "http://localhost:8080/transaction/allByDate";
 
         return(new ObjectMapper().readValue(new URL(uri),
