@@ -2,7 +2,6 @@ package Model;
 
 import Service.ParserXML;
 import org.apache.log4j.Logger;
-
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -26,13 +25,13 @@ public class SendDataTransaction {
     public void postMessage(){
         try{
             logger.info("Start method postMessage ...");
-            URL url = new URL("http://localhost:8089/transactions/si-externe");
+            URL url = new URL("http://localhost:8090/transaction/si-externe");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             logger.info("Start connexion to : " + url);
             connection.setDoOutput(true);
             connection.setInstanceFollowRedirects(false);
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/xml");
+            connection.setRequestProperty("Content-Type", "application/json");
 
             OutputStream os = connection.getOutputStream();
 
@@ -45,7 +44,7 @@ public class SendDataTransaction {
             transformer.transform(source, result);
 
             os.flush();
-            logger.info("Send Post Request");
+            logger.info("sending a request POST");
             connection.getResponseCode();
             logger.info("Response SI-Externe :"+connection.getResponseCode());
             logger.info("End connexion ... ");
