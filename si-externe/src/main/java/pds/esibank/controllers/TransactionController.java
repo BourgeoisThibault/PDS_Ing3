@@ -12,6 +12,8 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
@@ -34,9 +36,15 @@ public class TransactionController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @RequestMapping(value="/si-externe", method= RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
     public void acceptData(HttpServletRequest request) throws Exception {
-        logger.info("Receive");
+        logger.info("Received request from : "+ request.getServerName());
 
         Scanner s = new Scanner(request.getInputStream(), "UTF-8").useDelimiter("\\A");
-        logger.info(s.hasNext() ? s.next() : "");
+
+        PrintWriter file = new PrintWriter(new FileWriter("TransactionReceived.xml", true));
+        String line = (s.hasNext() ? s.next() : "");
+        file.write(line);
+        logger.info("File created");
+
+        file.close();
     }
 }
