@@ -16,9 +16,9 @@ There are 7 modules :
 # Deployment diagram 
 
 
-![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/ESIBANK-31/diagrammes/DeploymentDiagramPDS.jpg) 
+![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/master/diagrammes/DeploymentDiagramPDS.jpg) 
 
 # Component Diagram
 
 
-![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/ESIBANK-31/diagrammes/ComponentDiagramPDS.jpg) 
+![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/master/diagrammes/ComponentDiagramPDS.jpg) 
