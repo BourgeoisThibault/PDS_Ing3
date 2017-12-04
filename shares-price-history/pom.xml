@@ -11,5 +11,32 @@
 
     <artifactId>shares-price-history</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.yahoofinance-api</groupId>
+            <artifactId>YahooFinanceAPI</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>pds.esibank</groupId>
+            <artifactId>esibank-utils</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>4.3.4.RELEASE</version>
+        </dependency>
+    </dependencies>
 
 </project>
