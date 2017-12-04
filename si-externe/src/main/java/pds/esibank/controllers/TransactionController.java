@@ -34,7 +34,7 @@ public class TransactionController {
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @RequestMapping(value="/si-externe", method= RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
+    @RequestMapping(value="/send", method= RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
     public void acceptData(HttpServletRequest request) throws Exception {
         logger.info("Received request from : "+ request.getServerName());
 

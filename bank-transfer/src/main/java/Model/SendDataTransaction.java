@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -25,8 +26,8 @@ public class SendDataTransaction {
     public void postMessage(){
         try{
             logger.info("Start method postMessage ...");
-            //final String uri = "http://192.154.88.?:8090/si-externe/transaction/si-externe";
-            final String uri = "http://localhost:8090/transaction/si-externe";
+            final String uri = "http://192.154.88.155:9001/si-externe/transaction/send";
+            //final String uri = "http://localhost:9001/transaction/send";
             URL url = new URL(uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             logger.info("Start connexion to : " + url);
@@ -55,6 +56,9 @@ public class SendDataTransaction {
         }
         catch (FileNotFoundException e) {
             logger.error("File not found");
+            e.printStackTrace();
+        } catch (ConnectException e){
+            logger.error("Le si-externe est injoignable");
             e.printStackTrace();
         } catch (IOException e) {
             logger.error("Exception during execution");
