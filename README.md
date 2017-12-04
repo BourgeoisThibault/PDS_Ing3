@@ -21,4 +21,4 @@ There are 7 modules :
 # Component Diagram
 
 
-![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/ESIBANK-31/diagrammes/ComponentDiagramPDS.jpg) 
+![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/PE-31_GlobalDiagrams/diagrammes/ComponentDiagramPDS.jpg) 
