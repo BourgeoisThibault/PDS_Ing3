@@ -155,7 +155,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="" href="${contextPath}/resources/Free_Folder/appEsiBank.apk">
+                    <a class="" href="/downloadlastapk">
                         <i class="icon_download"></i>
                         <span>Android Application</span>
                     </a>

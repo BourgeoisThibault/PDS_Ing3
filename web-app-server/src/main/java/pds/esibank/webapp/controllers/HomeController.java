@@ -1,6 +1,8 @@
 package pds.esibank.webapp.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,8 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 import pds.esibank.models.notification.NotificationModel;
 import pds.esibank.models.notification.PushNotificationModel;
 import pds.esibank.webapp.services.LdapSvc;
+import sun.misc.IOUtils;
 
 import javax.ws.rs.FormParam;
+
+import java.io.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -83,5 +88,27 @@ public class HomeController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/downloadlastapk", method = GET, produces="application/apk")
+    public ResponseEntity getFile() throws IOException {
+
+        File file = new File("/home/esibank/repoAPK/newapk.apk");
+
+        if (!file.exists()) {
+            throw new FileNotFoundException("Oops! File not found");
+        }
+
+        InputStreamResource isResource = new InputStreamResource(new FileInputStream(file));
+        FileSystemResource fileSystemResource = new FileSystemResource(file);
+        String fileName = "EsiBankApp.apk";
+        fileName=new String(fileName.getBytes("UTF-8"),"iso-8859-1");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        headers.setContentLength(fileSystemResource.contentLength());
+        headers.setContentDispositionFormData("attachment", fileName);
+        return new ResponseEntity<InputStreamResource>(isResource, headers, HttpStatus.OK);
+    }
 
 }
