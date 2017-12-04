@@ -34,7 +34,7 @@ maven_test:
 maven_install_notmaster:
   stage: build
   script:
-    - mvn install
+    - mvn install -DskipTests
   when: on_success
   except:
     - master
@@ -42,7 +42,7 @@ maven_install_notmaster:
 maven_install:
   stage: build
   script:
-    - mvn install
+    - mvn install -DskipTests
   when: on_success
   artifacts:
       expire_in: 6 hrs
