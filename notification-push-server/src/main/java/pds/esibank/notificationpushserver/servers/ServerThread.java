@@ -64,7 +64,7 @@ public class ServerThread extends Thread {
 
                 CommunicationThread communicationThread = new CommunicationThread();
                 communicationThread.setSocket(socket);
-                communicationThread.run();
+                communicationThread.start();
 
             } catch (IOException e) {
                 logger.error("Socket accept throw exception with message: " + e.getMessage());

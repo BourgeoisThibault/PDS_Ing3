@@ -23,7 +23,7 @@ public class Test_MockMobile {
      * todo: delete after create service android. THIS IS ONLY FOR TEST
      */
 
-    private static String T_TOKEN = "thibault";
+    private static String T_TOKEN = "toto";
 
     private static PrintWriter writer = null;
     private static BufferedInputStream reader = null;
@@ -31,8 +31,8 @@ public class Test_MockMobile {
     public static void main(String[] args) {
 
         try {
-            Socket socket = new Socket("push.esibank.inside.esiag.info", 2702);
-            //Socket socket = new Socket("127.0.0.1", 9090);
+            //Socket socket = new Socket("push.esibank.inside.esiag.info", 2702);
+            Socket socket = new Socket("127.0.0.1", 9090);
 
             writer = new PrintWriter(socket.getOutputStream(), true);
             reader = new BufferedInputStream(socket.getInputStream());
