@@ -53,6 +53,7 @@ maven_install:
       - web-app-server/target/serverweb.war
       - notification-server/target/notificationserver.jar
       - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
+      - shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
       - si-externe/target/si-externe.war
   only:
@@ -88,6 +89,7 @@ deploy_webapp:
   script:
     - scp web-app-server/target/serverweb.war esibank@$IP_WEBAPP:/var/lib/tomcat8/webapps/serverweb.war
     - scp bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar esibank@$IP_WEBAPP:/home/esibank/transactionesibank/bank-transfer.jar
+    - scp shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar esibank@$IP_WEBAPP:/home/esibank/transactionesibank/shares-price-history.jar
 
   when: on_success
   only:
