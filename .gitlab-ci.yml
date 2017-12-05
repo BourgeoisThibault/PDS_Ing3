@@ -6,7 +6,6 @@ variables:
   IP_WEBAPP: "192.154.88.163"
   IP_NOTIFICATION: "192.154.88.164"
   IP_PUSH: "192.154.88.165"
-  IP_SIEXT: "192.154.88.155"
 
 stages:
   - compile
@@ -54,7 +53,6 @@ maven_install:
       - notification-server/target/notificationserver.jar
       - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
-      - si-externe/target/si-externe.war
   only:
     refs:
       - master
@@ -113,17 +111,6 @@ deploy_push:
   script:
     - scp notification-push-server/target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:/home/esibank/notificationpushserver.jar
     - ssh esibank@$IP_PUSH "sudo service pushserver restart"
-  when: on_success
-  only:
-    refs:
-      - master
-
-deploy_siext:
-  stage: deploy
-  dependencies:
-    - maven_install
-  script:
-    - scp si-externe/target/si-externe.war esibank@$IP_SIEXT:/var/lib/tomcat8/webapps/si-externe.war
   when: on_success
   only:
     refs:
