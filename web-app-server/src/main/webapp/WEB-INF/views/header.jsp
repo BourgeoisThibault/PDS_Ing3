@@ -155,7 +155,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="" href="http://file.esibank.inside.esiag.info/">
+                    <a class="" href="http://file.esibank.inside.esiag.info/app-debug.apk">
                         <i class="icon_download"></i>
                         <span>Android Application</span>
                     </a>
