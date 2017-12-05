@@ -155,7 +155,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="" href="/downloadlastapk">
+                    <a class="" href="http://file.esibank.inside.esiag.info/">
                         <i class="icon_download"></i>
                         <span>Android Application</span>
                     </a>
