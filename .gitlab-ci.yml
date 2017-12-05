@@ -6,7 +6,7 @@ variables:
   IP_WEBAPP: "192.154.88.163"
   IP_NOTIFICATION: "192.154.88.164"
   IP_PUSH: "192.154.88.165"
-  IP_SIEXT: "192.154.88.155"
+  IP_SIEXT: "192.154.88.151"
 
 stages:
   - compile
