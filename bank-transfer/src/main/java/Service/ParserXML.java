@@ -95,7 +95,7 @@ public class ParserXML {
     }
 
     //Return file name
-    private String getNameFile()
+    public String getNameFile()
     {
         //formater de date
         // set Today
