@@ -3,7 +3,6 @@ package Main;
 import Model.AccessDataTransaction;
 import Service.ParserXML;
 
-import Model.SendDataTransaction;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import pds.esibank.models.Transaction;
@@ -30,7 +29,6 @@ public class TransactionBank {
     public boolean SendTransaction() {
         BasicConfigurator.configure();
         Boolean creationXml;
-        logger.info("////////// LOGS BATCH BANK-TRANSFER \\\\\\\\\\\\\\");
         logger.info("In SendTransaction method");
         try {
             tabTransaction = addTransaction.getDBTransaction();
@@ -72,8 +70,8 @@ public class TransactionBank {
         boolean goodJob;
         goodJob = integrationTest.SendTransaction();
         if (goodJob){
-            SendDataTransaction send = new SendDataTransaction();
-            send.postMessage();
+            // return in rest the document;
         }
     }
+
 }
