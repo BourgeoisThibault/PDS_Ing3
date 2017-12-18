@@ -23,7 +23,9 @@ public class TransactionService {
     }
 
 
+
     public List<Transaction> getTransactionByDate(){
         return this.transactionRepository.getTransactionByDate();
     }
+    public void InputTransaction(final List <Transaction> tabTransaction){ this.transactionRepository.InputTransaction(tabTransaction);}
 }

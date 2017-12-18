@@ -10,6 +10,7 @@ import pds.esibank.models.Transaction;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -66,14 +67,47 @@ public class TransactionBank {
         return false;
     }
 
+
+    public void recoveryTransaction() throws IOException{
+
+        logger.info("recover Transaction of "+ new Date());
+        boolean insertIntoBD;
+
+        tabTransaction = parser.GetXmlDocument();
+		/*Test tab not Empty */
+        if(!tabTransaction.isEmpty())
+        {
+            logger.info("the XML file contains " + tabTransaction.size() + "Transaction");
+            insertIntoBD = true;
+            addTransaction.setDBTransaction(tabTransaction);
+            if(insertIntoBD)
+            {
+                logger.info("Transaction Insert Into DataBase");
+
+            }
+            else
+            {
+                logger.error("Bug Into Insert");
+            }
+        }
+        else
+        {
+			/*Tab Transaction Empty*/
+            logger.info("No Transaction for today");
+        }
+
+    }
+
     public static void main(String[] args) throws ParseException, IOException {
 
         TransactionBank integrationTest = new TransactionBank();
         boolean goodJob;
         goodJob = integrationTest.SendTransaction();
-        if (goodJob){
-            SendDataTransaction send = new SendDataTransaction();
-            send.postMessage();
-        }
+       // if (goodJob){
+           // SendDataTransaction send = new SendDataTransaction();
+            //send.postMessage();
+       // }
+        integrationTest.recoveryTransaction();
+
     }
 }
