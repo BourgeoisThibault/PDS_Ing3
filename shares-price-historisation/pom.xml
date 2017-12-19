@@ -42,6 +42,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+<<<<<<< HEAD
 
 		<dependency>
 			<groupId>org.springframework.amqp</groupId>
@@ -69,6 +70,8 @@
 		</dependency>
 
 
+=======
+>>>>>>> Creation of shares-price-historisation module to handle shares price storage with rabbit mq.
 	</dependencies>
 
 	<build>
