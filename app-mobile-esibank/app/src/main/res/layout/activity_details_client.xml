@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.esipe.esibankm.esibankm.DetailsClientActivity"
+    android:orientation="vertical">
+
+
+
+    <TextView
+        android:id="@+id/nameClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/nom"
+        />
+    <EditText
+        android:id="@+id/editable_nom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:id="@+id/emailClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/mail"
+        />
+    <EditText
+        android:id="@+id/editable_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+    <Button
+        android:onClick="editClickButton"
+        android:text="@string/editButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8dcf96"/>
+
+
+    <Button
+        android:onClick="deleteClickButton"
+        android:text="@string/deleteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff3c3c"/>
+
+
+</LinearLayout>

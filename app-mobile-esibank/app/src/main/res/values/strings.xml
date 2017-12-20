@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Esibank</string>
+    <string name="list_client">Lister clients</string>
+    <string name="add_client_button">Ajouter client</string>
+    <string name="nom">Nom</string>
+    <string name="mail">Email</string>
+    <string name="deleteButton">Supprimer</string>
+    <string name="editButton">Modifier</string>
+    <string name="addButton">Ajouter</string>
+    <string name="etatConnexion">Etat connexion</string>
+    <string name="demoText">Prototype</string>
+    <string name="esi">ESI</string>
+    <string name="bank">BANK</string>
+    <string name="about_us">A propos</string>
+    <string name="info_project">Projet de synthèse 2017-2018 - EsiBank</string>
+    <string name="local_service_stopped">tell user we stopped</string>
+    <string name="local_service_started">Service started !</string>
+    <string name="local_service_label">local_service_label</string>
+    <string name="stop_service">Déconnexion</string>
+    <string name="start_service">Démarrer service</string>
+    <string name="fiels_user">Se connecter en tant que :</string>
+    <string name="connexion">Se connecter</string>
+    <string name="welcomeLabel">Bienvenue</string>
+
+    <string-array name="users_list">
+        <item>Anonyme</item>
+        <item>Usman</item>
+        <item>Thibault</item>
+        <item>Grégory</item>
+        <item>Tarik</item>
+        <item>Sarah</item>
+        <item>Abdoulaye</item>
+        <item>Jérémy</item>
+        <item>Mariam</item>
+    </string-array>
+
+</resources>
