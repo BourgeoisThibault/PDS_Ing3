@@ -1,4 +1,4 @@
-package pds.esibank;
+package pds.esibank.historisation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
