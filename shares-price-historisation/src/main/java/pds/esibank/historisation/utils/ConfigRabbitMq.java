@@ -54,5 +54,5 @@ public class ConfigRabbitMq {
         template.setMessageConverter(jsonMessageConverter());
         return template;
     }
- 
+
 }
