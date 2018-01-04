@@ -25,6 +25,7 @@ import com.esipe.esibankm.esibankm.models.MobileToken;
 import com.esipe.esibankm.esibankm.services.ConnectSocket;
 import com.esipe.esibankm.esibankm.services.LocalService;
 import com.esipe.esibankm.esibankm.utils.JsonUtils;
+import com.esipe.esibankm.esibankm.utils.LoadProp;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.File;
@@ -116,7 +117,7 @@ public class HomeActivity extends AppCompatActivity {
             }
             else
             {
-                Toast.makeText(getApplicationContext(),"Merci d'accpeter les droits", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),LoadProp.getProperty("popup_thanks_rights",getApplicationContext(),"messages"), Toast.LENGTH_LONG).show();
 
             }
         }
@@ -128,9 +129,9 @@ public class HomeActivity extends AppCompatActivity {
                 LocalService.class));
 
         if(ConnectSocket.isRunning==false) {
-            mySnack = Snackbar.make(view, "Vous êtes déjà déconnecté", 2000);
+            mySnack = Snackbar.make(view, LoadProp.getProperty("popup_connected",getApplicationContext(),"messages"), 2000);
         }else
-            mySnack = Snackbar.make(view, "Déconnecté", 2000);
+            mySnack = Snackbar.make(view, LoadProp.getProperty("popup_disconnected",getApplicationContext(),"messages"), 2000);
 
         mySnack.show();
 

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.esipe.esibankm.esibankm.models.MobileToken;
 import com.esipe.esibankm.esibankm.utils.JsonUtils;
+import com.esipe.esibankm.esibankm.utils.LoadProp;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.BufferedInputStream;
@@ -39,9 +40,7 @@ public class ConnectSocket implements Runnable {
     private Bundle bundle;
     private Context contextService;
     private MobileToken mobileToken;
-
     private final String TAG="ConnectSocket";
-
 
     public ConnectSocket(Handler handler, Context context) {
         h = handler;
@@ -53,14 +52,14 @@ public class ConnectSocket implements Runnable {
         mobileToken = JsonUtils.MobileTokenFromJson(JsonUtils.getData(contextService,FILE_NAME));
         if(isOnline()) {
             tokenPushNotifServer(mobileToken);
-            sendMessageToService("connection_state_failed",mobileToken.getUid()+" est connecté ! ");
+            sendMessageToService("connection_state_failed",mobileToken.getUid()+" "+LoadProp.getProperty("conn_success",contextService,"messages"));
         }
         else
-            sendMessageToService("connection_state_failed","Connexion impossible !");
+            sendMessageToService("connection_state_failed",LoadProp.getProperty("conn_failed",contextService,"messages"));
 
         while (isRunning) {
             try {
-                socket = createSocket(SERVERIP, SERVERPORT);
+                socket = createSocket(LoadProp.getProperty("server_ip",contextService,"url"), SERVERPORT);
                 Log.i(TAG, "Socket created !!!");
                 writer = new PrintWriter(socket.getOutputStream(), true);
                 reader = new BufferedInputStream(socket.getInputStream());
@@ -90,7 +89,7 @@ public class ConnectSocket implements Runnable {
                     if (socket != null) {
                         socket.close();
                         Log.i(TAG, "Socket fermée  !");
-                        sendMessageToService("connection_state_failed","Tentative de connexion...");
+                        sendMessageToService("connection_state_failed",LoadProp.getProperty("conn_retry",contextService,"messages"));
                         Log.i(TAG, "Tentative de connexion niv1...");
                         Thread.sleep(3000);
                     }
@@ -106,7 +105,7 @@ public class ConnectSocket implements Runnable {
                     if (socket != null) {
                         socket.close();
                         Log.i(TAG, "Socket fermée  !");
-                        sendMessageToService("connection_state_failed","Tentative de connexion...");
+                        sendMessageToService("connection_state_failed",LoadProp.getProperty("conn_retry",contextService,"messages"));
                         Log.i(TAG, "Tentative  de connexion niv 2..." + e);
                         Thread.sleep(3000);
                     }
@@ -126,7 +125,7 @@ public class ConnectSocket implements Runnable {
 
     public void tokenPushNotifServer(MobileToken mobileToken){
         EsibankService esibankService = new RestAdapter.Builder()
-                .setEndpoint(EsibankService.ENDPOINT)
+                .setEndpoint(LoadProp.getProperty("notif_server",contextService,"url"))
                 .build()
                 .create(EsibankService.class);
         mobileToken = esibankService.postToken(mobileToken);
