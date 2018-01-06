@@ -11,7 +11,7 @@ import java.util.Map;
 public class SharePriceAccess {
     public static void save(ArrayList<SharePrice> sharePriceList) throws IOException {
         //Save new shares' prices
-        final String uri = "http://localhost:8080/shareprice/update";
+        final String uri = "http://192.154.88.161:8080/dataaccess/shareprice/update";
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(uri, sharePriceList, ArrayList.class);
