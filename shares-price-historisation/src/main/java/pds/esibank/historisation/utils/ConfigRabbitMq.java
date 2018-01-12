@@ -1,10 +1,17 @@
 package pds.esibank.historisation.utils;
 
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by maria on 20/12/2017.
@@ -14,6 +21,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan("pds.esibank.historisation")
 public class ConfigRabbitMq {
 
+    final static String queueTest = "spring-boot";
 
     @Bean
     public ConnectionFactory connectionFactory() {
@@ -24,13 +32,25 @@ public class ConfigRabbitMq {
         return connectionFactory;
     }
 
-    /* Channel channel = connectionFactory().createChannel();
+    @Bean
+    public Queue simpleQueue() {
+        Map<String, Object> args = new HashMap<String, Object>();
+        args.put("x-message-ttl", 86400000);
+        Queue queue = new Queue("MARIAM_QUEUE",true,false,false, args);
+        return queue;
+    }
 
-    channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-    String message = "Hello World!";
-    channel.basicPublish("", QUEUE_NAME, null, message.getBytes("UTF-8"));
-    System.out.println(" [x] Sent '" + message + "'");
+    @Bean
+    public MessageConverter jsonMessageConverter(){
+        return new JsonMessageConverter();
+    }
 
-    channel.close();
-    connection.close();*/
+    @Bean
+    public RabbitTemplate rabbitTemplate() {
+        RabbitTemplate template = new RabbitTemplate(connectionFactory());
+        template.setRoutingKey("MARIAM_QUEUE");
+        template.setMessageConverter(jsonMessageConverter());
+        return template;
+    }
+
 }
