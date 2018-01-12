@@ -55,6 +55,21 @@
 			<artifactId>amqp-client</artifactId>
 			<version>5.0.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>pds.esibank</groupId>
+			<artifactId>esibank-utils</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
