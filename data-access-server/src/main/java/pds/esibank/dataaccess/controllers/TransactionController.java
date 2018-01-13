@@ -23,24 +23,20 @@ import java.util.List;
 @RequestMapping(value="/transaction")
 public class TransactionController {
 
-    private final Logger logger = Logger.getLogger("BankTransaction");
     @Autowired
     TransactionService transactionService;
 
     @RequestMapping(value="/allByDate", method= RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
-
     public @ResponseBody List <Transaction> getTransactionByDate() throws JsonProcessingException{
         List<Transaction> list = transactionService.getTransactionByDate();
         return list;
    }
 
     @RequestMapping(value = "/InputTransaction", method = RequestMethod.POST)
-    public ResponseEntity<List<Transaction>>  InputTransaction(@RequestBody List<Transaction> TransactionList) {
-        logger.info("Dans controller de dataaccess");
-        transactionService.InputTransaction(TransactionList);
-        return new ResponseEntity<>(TransactionList, HttpStatus.OK);
+    public ResponseEntity<List<Transaction>> InputTransaction(@RequestBody List<Transaction> tabTransaction) {
+        transactionService.InputTransaction(tabTransaction);
+        return new ResponseEntity<List<Transaction>>(tabTransaction, HttpStatus.OK);
     }
-
 
 
 }
