@@ -102,8 +102,6 @@ public class ParserXML {
         }
     }
 
-
-
     //Return file name
     public String getNameFile()
     {
@@ -124,7 +122,7 @@ public class ParserXML {
         SAXBuilder sxb = new SAXBuilder();
         try
         {
-            //On crÃ©e un nouveau document JDOM avec en argument le fichier XML
+            //On creer un nouveau document JDOM avec en argument le fichier XML
             document = sxb.build(new File(getNameFile()));
             tabTransaction = GetXmlTransaction(document);
         }

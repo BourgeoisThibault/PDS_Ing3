@@ -79,7 +79,7 @@ public class TransactionBank {
         {
             logger.info("the XML file contains " + tabTransaction.size() + "Transaction");
             insertIntoBD = true;
-            addTransaction.setDBTransaction(tabTransaction);
+            addTransaction.InputTransaction(tabTransaction);
             if(insertIntoBD)
             {
                 logger.info("Transaction Insert Into DataBase");
