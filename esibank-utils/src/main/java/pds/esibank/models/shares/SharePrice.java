@@ -1,5 +1,6 @@
 package pds.esibank.models.shares;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
@@ -7,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
+@Builder
 @ToString
 public class SharePrice {
     private Share share;
@@ -14,14 +16,14 @@ public class SharePrice {
     private BigDecimal change;
     private Date time;
 
-    public SharePrice() {
+   /*public SharePrice() {
         super();
-    }
+   }
 
-    public SharePrice(String name, String symbol, String currency, BigDecimal price, BigDecimal change, Date time) {
-        this.share = new Share(name, symbol, currency);
-        this.price = price;
-        this.change = change;
-        this.time = time;
-    }
+  public SharePrice(String name, String symbol, String currency, BigDecimal price, BigDecimal change, Date time) {
+       this.share = new Share(name, symbol, currency);
+      this.price = price;
+      this.change = change;
+     this.time = time;
+  }*/
 }
