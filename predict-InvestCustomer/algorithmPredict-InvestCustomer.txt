@@ -1,0 +1,15 @@
+library(rpart)
+
+
+data = default_train2
+
+ad.data <- rpart (Invest ~ Salary + Sold + Sold1 + Sold2 + Status, data)
+
+View(data)
+data2 = default_test2
+
+predict(ad.data, data2) 
+
+ypred = (predict(ad.data, data2)>0.5)*1
+
+write.csv(ypred,"C:/Users/Sarah/Documents/Analysis/data_created3.csv")

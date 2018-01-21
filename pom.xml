@@ -23,6 +23,7 @@
         <module>it-thibault-example</module>
         <module>it-notification-send</module>
         <module>si-externe</module>
+        <module>predict-InvestCustomer</module>
     </modules>
 
     <properties>
