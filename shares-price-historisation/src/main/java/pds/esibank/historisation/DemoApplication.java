@@ -20,6 +20,8 @@ public class DemoApplication {
 
 		SpringApplication.run(DemoApplication.class, args);
 
+		//mycomment
+
 		/*SharePrice sharePrice = new SharePrice();
 		sharePrice.setChange(new BigDecimal(1111));
 		sharePrice.setPrice(new BigDecimal(9999));
