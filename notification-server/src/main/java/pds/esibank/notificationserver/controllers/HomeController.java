@@ -76,6 +76,12 @@ public class HomeController {
                 HttpStatus.OK);
     }
 
+
+    /**
+     *
+     * TO DELETE
+     * @return
+     */
     @RequestMapping(path = "/admin", method = RequestMethod.POST)
     public ResponseEntity deleteTokenForUidTest() {
         ListOfTokenGenerate.deleteAdminToken();
