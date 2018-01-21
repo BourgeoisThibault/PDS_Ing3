@@ -15,6 +15,7 @@ public class StockShareConverter {
     public static ArrayList<SharePrice> toSharePrice (ArrayList<Stock> stockList){
         stockList.forEach((stock) -> {
             //Create SharePrice (including Share data) from Stock data
+            /*
             SharePrice sp = new SharePrice(stock.getName(),
                     stock.getSymbol(),
                     stock.getCurrency(),
@@ -25,6 +26,7 @@ public class StockShareConverter {
             //add the created sharePrice to the list
             sharePriceList.add(sp);
             logger.info("SPH/StockShareConverter : stock added " +stock.getName());
+            */
         });
         return sharePriceList;
     }
