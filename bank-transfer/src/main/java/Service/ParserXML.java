@@ -134,7 +134,7 @@ public class ParserXML {
     }
 
     // traitement du xml
-    private List <Transaction> GetXmlTransaction(final Document docXmlTransaction) throws ParseException {
+    public List <Transaction> GetXmlTransaction(final Document docXmlTransaction) throws ParseException {
 
         List<Transaction> tableauTransaction = new ArrayList<Transaction>();
         Element Transaction = docXmlTransaction.getRootElement();
