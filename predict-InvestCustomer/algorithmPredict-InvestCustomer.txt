@@ -1,24 +1,16 @@
-/* R algorithm f classification CART that take an csv file which contains informations about customers: salary, sold of account , sold-1 of account sold -2 account and his status (employment, unemployment…) */
 
 library(rpart)
 
-// replace by the path of csv data extraction
-// our algorithm will learn with this data file (we load it first)
 data = default_train2
 
-//we call apart function to launch the learning with data train
 ad.data <- rpart (Invest ~ Salary + Sold + Sold1 + Sold2 + Status, data)
 
 View(data)
 
-// load the data that we want to have information about investment 
 data2 = default_test2
 
-// we apply the prediction made on this data test
 predict(ad.data, data2) 
 
-// pyrex will be use to separate the prediction in two groups: <0.5 will not invest, >0.5 will invest
 ypred = (predict(ad.data, data2)>0.5)*1
 
-//replace by destination path of the created csv
 write.csv(ypred,"C:/Users/Sarah/Documents/Analysis/data_created3.csv")
