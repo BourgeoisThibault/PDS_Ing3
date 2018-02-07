@@ -100,14 +100,14 @@ public class TransactionBank {
 
     public static void main(String[] args) throws ParseException, IOException {
 
-        TransactionBank integrationTest = new TransactionBank();
+        TransactionBank ConstructTransaction = new TransactionBank();
         boolean goodJob;
-        goodJob = integrationTest.SendTransaction();
+        goodJob = ConstructTransaction.SendTransaction();
        // if (goodJob){
            // SendDataTransaction send = new SendDataTransaction();
             //send.postMessage();
        // }
-        integrationTest.recoveryTransaction();
+        ConstructTransaction.recoveryTransaction();
 
     }
 }
