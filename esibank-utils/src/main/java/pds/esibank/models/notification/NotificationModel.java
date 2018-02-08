@@ -13,6 +13,7 @@ import lombok.ToString;
 public class NotificationModel {
     private String title;
     private String message;
+    private String target;
 
     public NotificationModel() {
         super();
