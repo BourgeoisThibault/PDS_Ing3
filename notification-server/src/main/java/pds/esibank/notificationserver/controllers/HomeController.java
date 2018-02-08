@@ -50,6 +50,7 @@ public class HomeController {
             pushNotificationModel.setTitle(notificationModel.getTitle());
             pushNotificationModel.setMessage(notificationModel.getMessage());
             pushNotificationModel.setToken("AllToken");
+            pushNotificationModel.setTarget(notificationModel.getTarget());
             rabbitTemplate.convertAndSend(pushNotificationModel);
 
             return new ResponseEntity<String>("SUCCESS - Send to all token connected",
@@ -66,6 +67,7 @@ public class HomeController {
 
                 pushNotificationModel.setTitle(notificationModel.getTitle());
                 pushNotificationModel.setMessage(notificationModel.getMessage());
+                pushNotificationModel.setTarget(notificationModel.getTarget());
                 pushNotificationModel.setToken(listToken.get(i));
 
                 rabbitTemplate.convertAndSend(pushNotificationModel);
