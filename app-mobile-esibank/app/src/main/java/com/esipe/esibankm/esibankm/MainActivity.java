@@ -79,11 +79,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_accounts) {
             intent = new Intent(getApplicationContext(),AccountsActivity.class);
         } else if (id == R.id.nav_home) {
-            intent = new Intent(getApplicationContext(),MainActivity.class);
-        } else if (id == R.id.nav_notif) {
             intent = new Intent(getApplicationContext(),HomeActivity.class);
+        } else if (id == R.id.nav_notif) {
+            intent = new Intent(getApplicationContext(),NotificationActivity.class);
         } else if (id == R.id.nav_exit) {
-            finish();
+            this.finish();
         }
         startActivity(intent);
 
