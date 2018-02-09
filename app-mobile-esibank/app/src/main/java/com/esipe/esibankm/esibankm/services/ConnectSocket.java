@@ -30,7 +30,7 @@ public class ConnectSocket implements Runnable {
     private static final String FILE_NAME = "data.json";
     private static PrintWriter writer;
     private static BufferedInputStream reader;
-    private static final String SERVERIP = "push.esibank.inside.esiag.info"; //computer IP address for testing
+    //private static final String SERVERIP = "push.esibank.inside.esiag.info"; //computer IP address for testing
     public static final int SERVERPORT = 2702;
     //private static final String SERVERIP = "172.16.0.11"; //computer IP address for testing
     //public static final int SERVERPORT = 9090;
@@ -88,7 +88,7 @@ public class ConnectSocket implements Runnable {
                 try {
                     if (socket != null) {
                         socket.close();
-                        Log.i(TAG, "Socket fermée  !");
+                        Log.i(TAG, "Socket is closed  !");
                         sendMessageToService("connection_state_failed",LoadProp.getProperty("conn_retry",contextService,"messages"));
                         Log.i(TAG, "Tentative de connexion niv1...");
                         Thread.sleep(3000);
@@ -104,7 +104,7 @@ public class ConnectSocket implements Runnable {
                 try {
                     if (socket != null) {
                         socket.close();
-                        Log.i(TAG, "Socket fermée  !");
+                        Log.i(TAG, "Socket is closed  !");
                         sendMessageToService("connection_state_failed",LoadProp.getProperty("conn_retry",contextService,"messages"));
                         Log.i(TAG, "Tentative  de connexion niv 2..." + e);
                         Thread.sleep(3000);
