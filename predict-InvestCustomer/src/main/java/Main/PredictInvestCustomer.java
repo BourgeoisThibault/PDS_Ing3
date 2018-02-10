@@ -45,8 +45,8 @@ public class PredictInvestCustomer {
         CsvFile = StartPrediction.MakeCsv();
         if (CsvFile)
         {
-          /*  try {
-                Runtime.getRuntime().exec("RScript leScriptIci.R  InvestCustomer.csv");
+          /* try {
+                Runtime.getRuntime().exec("RScript algorithmPredict_InvestCustomer.R");
             } catch (IOException e) {
                 e.printStackTrace();
             }*/
