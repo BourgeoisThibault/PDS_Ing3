@@ -47,14 +47,6 @@ public class StepDefinition {
                 listTransactionTest.get(1).getFirstNameCrediter(), "Emma");
     }
 
-    @When("^I receive the transactions from the database$")
-    public void i_receive_the_transactions_from_the_database() throws Throwable {
-        logger.info("Test Access Data Get Method");
-        System.out.println("Test Access Data Get Method");
-        List<Transaction> transactionFromADT = new ArrayList<Transaction>();
-        transactionFromADT = accessDataTest.getDBTransaction();
-        Assert.assertFalse("Test For method getDBTransaction not good", transactionFromADT.size() < 0);
-    }
 
     @Then("^Making an XML document$")
     public void making_an_XML_document() throws Throwable {
@@ -93,11 +85,5 @@ public class StepDefinition {
             listOfTransactionFromDoc.get(0).getFirstNameCrediter(), "Marie");
     }
 
-    @Then("^I insert them into the database$")
-    public void i_insert_them_into_the_database() throws Throwable {
-        logger.info("Then I Insert Transation Into the DataBase");
-        System.out.println("Then I Insert Transation Into the DataBase \n");
-        accessDataTest.InputTransaction(listOfTransactionFromDoc);
-    }
 
 }

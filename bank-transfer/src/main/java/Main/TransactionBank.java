@@ -6,6 +6,7 @@ import Service.ParserXML;
 import Model.SendDataTransaction;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.jdom2.Document;
 import pds.esibank.models.Transaction;
 import java.io.IOException;
 import java.text.ParseException;
@@ -68,12 +69,17 @@ public class TransactionBank {
     }
 
 
-    public void recoveryTransaction() throws IOException{
+    public void recoveryTransaction() throws IOException, ParseException{
 
         logger.info("recover Transaction of "+ new Date());
         boolean insertIntoBD;
 
-        tabTransaction = parser.GetXmlDocument();
+        //appel méthode jérémy pour donner un document
+        Document document = parser.GetXmlDocument();
+
+
+        // Ma méthode attend un document xml
+        tabTransaction = parser.GetXmlTransaction(document);
 		/*Test tab not Empty */
         if(!tabTransaction.isEmpty())
         {
@@ -107,6 +113,7 @@ public class TransactionBank {
            // SendDataTransaction send = new SendDataTransaction();
             //send.postMessage();
        // }
+
         ConstructTransaction.recoveryTransaction();
 
     }

@@ -14,14 +14,13 @@ Feature: Transaction Automated Test
       | firstNameCustomer | Louise     | Batiste    |
       | debitAccount      | 15ABCD     | 16EFGH     |
       | dateTransaction   | 2018-01-20 | 2018-01-20 |
-    When I receive the transactions from the database
     Then Making an XML document
 
 
   Scenario Outline: Transaction recovery from Xml document
     Given A Xml document "<xml>"
     When I receive the document I extract the transactions
-    Then I insert them into the database
+
 
     Examples:
       | xml                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |

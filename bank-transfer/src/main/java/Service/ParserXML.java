@@ -114,25 +114,28 @@ public class ParserXML {
     }
 
 
-    // recupere le xml et retourne le tableau des virement
-    public List <Transaction> GetXmlDocument(){
+    // recupere le xml et retourne un document xml
+    //méthode qui va disparaitre avec Implémentation Jérémy
+    public Document GetXmlDocument(){
 
-        Document document;
-        List <Transaction> tabTransaction = new ArrayList<Transaction>();
+        Document document = null;
         SAXBuilder sxb = new SAXBuilder();
         try
         {
             //On creer un nouveau document JDOM avec en argument le fichier XML
             document = sxb.build(new File(getNameFile()));
-            tabTransaction = GetXmlTransaction(document);
+
+            return document;
         }
         catch(Exception e){
 	    	/*Erreur recuperation fichier*/
             e.printStackTrace();
         }
-        return tabTransaction;
+        return document;
     }
 
+
+    // passe en paramètre un document xml
     // traitement du xml
     public List <Transaction> GetXmlTransaction(final Document docXmlTransaction) throws ParseException {
 
@@ -147,7 +150,6 @@ public class ParserXML {
         {
             Element noeud = (Element)i.next();
             Transaction recoverTransaction = new Transaction();
-            //recupVirement.setIdTransaction(Integer.parseInt(noeud.getAttributeValue("id")));
             recoverTransaction.setLastNameCrediter(noeud.getChild("lastname_crediter").getText());
             recoverTransaction.setFirstNameCrediter(noeud.getChild("firstname_crediter").getText());
             recoverTransaction.setCreditAccount(noeud.getChild("credit_account").getText());
