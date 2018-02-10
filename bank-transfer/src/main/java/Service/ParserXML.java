@@ -1,14 +1,22 @@
 package Service;
 
 import org.jdom2.*;
+import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import pds.esibank.models.Transaction;
+
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  * Created by SarahAllouche on 17/11/2017.
@@ -16,7 +24,7 @@ import java.util.List;
 
 public class ParserXML {
 
-
+    private static Logger logger = Logger.getLogger("BankTransaction");
     public Boolean SetXmlDocument(final List<Transaction> tabTransaction)
     {
         int i;
@@ -106,5 +114,54 @@ public class ParserXML {
     }
 
 
+    // recupere le xml et retourne un document xml
+    //méthode qui va disparaitre avec Implémentation Jérémy
+    public Document GetXmlDocument(){
+
+        Document document = null;
+        SAXBuilder sxb = new SAXBuilder();
+        try
+        {
+            //On creer un nouveau document JDOM avec en argument le fichier XML
+            document = sxb.build(new File(getNameFile()));
+
+            return document;
+        }
+        catch(Exception e){
+	    	/*Erreur recuperation fichier*/
+            e.printStackTrace();
+        }
+        return document;
+    }
+
+
+    // passe en paramètre un document xml
+    // traitement du xml
+    public List <Transaction> GetXmlTransaction(final Document docXmlTransaction) throws ParseException {
+
+        List<Transaction> tableauTransaction = new ArrayList<Transaction>();
+        Element Transaction = docXmlTransaction.getRootElement();
+        List<Element> listVirement = Transaction.getChildren("id_transaction");
+		/*creation iterator pour parcourir la list*/
+        Iterator<Element> i = listVirement.iterator();
+        logger.info("Get Transaction From XML");
+
+        while(i.hasNext())
+        {
+            Element noeud = (Element)i.next();
+            Transaction recoverTransaction = new Transaction();
+            recoverTransaction.setLastNameCrediter(noeud.getChild("lastname_crediter").getText());
+            recoverTransaction.setFirstNameCrediter(noeud.getChild("firstname_crediter").getText());
+            recoverTransaction.setCreditAccount(noeud.getChild("credit_account").getText());
+            recoverTransaction.setImpactedbank(noeud.getChild("impacted_bank").getText());
+            recoverTransaction.setAmountTransaction(Float.parseFloat(noeud.getChild("amount_transaction").getText()));
+            recoverTransaction.setLastNameCustomer(noeud.getChild("lastname_customer").getText());
+            recoverTransaction.setFirstNameCustomer(noeud.getChild("firstname_customer").getText());
+            recoverTransaction.setDebitAccount(noeud.getChild("debit_account").getText());
+            recoverTransaction.setDateTransaction(java.sql.Date.valueOf(noeud.getChild("date_transaction").getText()));
+            tableauTransaction.add(recoverTransaction);
+        }
+        return tableauTransaction;
+    }
 
 }
