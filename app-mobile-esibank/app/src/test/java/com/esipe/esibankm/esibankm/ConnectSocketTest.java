@@ -1,5 +1,7 @@
 package com.esipe.esibankm.esibankm;
 
+import android.util.Log;
+
 import com.esipe.esibankm.esibankm.services.ConnectSocket;
 
 import org.junit.Assert;
@@ -7,8 +9,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -52,32 +56,20 @@ public class ConnectSocketTest  {
     }
 
     @Test
-    public void testSendMessageToService(){
-
-    }
-    @Test
-    public void testSocketCommunicationToServer(){
-
-    }
-
-    @Test
     public void testSocketPingPong(){
 
     }
-    @Test
-    public void testSwitchedConnection(){
-        //test if retrying works or not
-        //test if socket was created or not
-    }
 
     @Test
-    public void testLostNetwork(){
-        //test if socket was created or not
-        //test if retrying works or not
+    public void reader() throws IOException {
+        final Socket s = mock(Socket.class);
+        final ConnectSocket connectSocket = mock(ConnectSocket.class);
+        InputStream anyInputStream = new ByteArrayInputStream("test".getBytes());
+
+        BufferedInputStream reader = new BufferedInputStream(anyInputStream);
+        when(connectSocket.read(reader)).thenReturn("test");
+        Assert.assertEquals("test",connectSocket.read(reader));
 
     }
-    @Test
-    public void testCheckTokendFormat(){
 
-    }
 }
