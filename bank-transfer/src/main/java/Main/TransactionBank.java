@@ -110,13 +110,12 @@ public class TransactionBank {
         TransactionBank ConstructTransaction = new TransactionBank();
         boolean goodJob;
         goodJob = ConstructTransaction.SendTransaction();
-        if (goodJob){
-            SendDataTransaction send = new SendDataTransaction();
-            send.sendFile();
-        }
+       if (goodJob){
+           SendDataTransaction send = new SendDataTransaction();
+           send.sendFile();
+       }
         GetDataTransaction get = new GetDataTransaction();
-
-        get.GetDataTransaction();
+       get.GetDataTransaction();
 
         ConstructTransaction.recoveryTransaction();
 
