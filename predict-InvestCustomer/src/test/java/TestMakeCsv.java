@@ -58,7 +58,7 @@ public class TestMakeCsv {
 
     @Test
     public void shouldMakeCsvFileFromList() throws Exception {
-        Path p = Paths.get("InvestCustomer.csv");
+        Path p = Paths.get("InvestCustomer_test.csv");
         Boolean exists = Files.exists(p);
         if (exists) {
             Files.delete(p);
@@ -66,7 +66,7 @@ public class TestMakeCsv {
         makeCsvMock.MakeCsvFromList(listMock);
         exists = Files.exists(p);
         Assert.assertTrue("BeanToRecord does not work", exists);
-       if (exists) {
+        if (exists) {
             Files.delete(p);
         }
     }

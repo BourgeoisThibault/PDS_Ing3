@@ -15,7 +15,7 @@ public class DataAccessInvestCustomer {
 
     public List<InvestCustomer> getInvestCustomer() throws IOException {
         
-        final String uri = "http://localhost:8080/investcustomer/allInvestCustomer";
+        final String uri = "http://192.154.88.161:8080/dataaccess/investcustomer/allInvestCustomer";
         List<InvestCustomer> data  = (new ObjectMapper().readValue(new URL(uri),
                 TypeFactory.defaultInstance().constructCollectionType(List.class, InvestCustomer.class)));
         return data;

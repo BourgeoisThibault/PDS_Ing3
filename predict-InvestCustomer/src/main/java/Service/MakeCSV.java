@@ -17,7 +17,7 @@ public class MakeCSV {
     {
         Integer i;
         //Csv Name
-        String csv = "InvestCustomer.csv";
+        String csv = "InvestCustomer_test.csv";
         //Create Csv File with ';' separators
         CSVWriter writer = new CSVWriter(new FileWriter(csv), ';');
         for(i = 0; i < listForCsv.size(); i++)
