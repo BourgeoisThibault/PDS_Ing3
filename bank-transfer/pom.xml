@@ -15,8 +15,6 @@
 
     <name>bank-transfer</name>
 
-
-
     <dependencies>
 
         <!-- https://mvnrepository.com/artifact/org.jdom/jdom -->
