@@ -1,13 +1,14 @@
 package Main;
 
 import Model.AccessDataTransaction;
-import Service.ParserXML;
-
+import Model.GetDataTransaction;
 import Model.SendDataTransaction;
+import Service.ParserXML;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.jdom2.Document;
 import pds.esibank.models.Transaction;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -109,10 +110,13 @@ public class TransactionBank {
         TransactionBank ConstructTransaction = new TransactionBank();
         boolean goodJob;
         goodJob = ConstructTransaction.SendTransaction();
-       // if (goodJob){
-           // SendDataTransaction send = new SendDataTransaction();
-            //send.postMessage();
-       // }
+        if (goodJob){
+            SendDataTransaction send = new SendDataTransaction();
+            send.sendFile();
+        }
+        GetDataTransaction get = new GetDataTransaction();
+
+        get.GetDataTransaction();
 
         ConstructTransaction.recoveryTransaction();
 
