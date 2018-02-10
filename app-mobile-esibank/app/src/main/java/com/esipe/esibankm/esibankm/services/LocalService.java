@@ -134,7 +134,7 @@ public class LocalService extends Service {
 
     }
 
-    private Intent switchTargetNotification(String target) {
+    public Intent switchTargetNotification(String target) {
         Intent targetIntent = null;
         if(target.equals("accounts")){
             targetIntent = new Intent(this, AccountsActivity.class);
