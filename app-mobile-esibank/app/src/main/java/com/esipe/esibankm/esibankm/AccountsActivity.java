@@ -15,6 +15,7 @@ public class AccountsActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         LayoutInflater inflater = (LayoutInflater) this
