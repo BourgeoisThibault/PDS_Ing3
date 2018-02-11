@@ -55,6 +55,9 @@ maven_install:
       - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
       - shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
+      - predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar
+      - predict-InvestCustomer/algo_InvestCustomer.R
+      - scp predict-InvestCustomer/default_train.csv
       - si-externe/target/si-externe.war
   only:
     refs:
