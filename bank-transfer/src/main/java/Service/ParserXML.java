@@ -125,7 +125,7 @@ public class ParserXML {
         {
             //On creer un nouveau document JDOM avec en argument le fichier XML
             document = sxb.build(new File("/home/esibank/transactionesibank/Output/"+getNameFile()));
-
+            //document = sxb.build(new File(getNameFile()));
             return document;
         }
         catch(Exception e){
