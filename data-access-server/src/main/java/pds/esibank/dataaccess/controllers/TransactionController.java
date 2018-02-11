@@ -32,7 +32,7 @@ public class TransactionController {
         return list;
    }
 
-    @RequestMapping(value = "/InputTransaction", method = RequestMethod.POST)
+    @RequestMapping(value = "/inputTransaction", method = RequestMethod.POST)
     public ResponseEntity<List<Transaction>> InputTransaction(@RequestBody List<Transaction> tabTransaction) {
         transactionService.InputTransaction(tabTransaction);
         return new ResponseEntity<List<Transaction>>(tabTransaction, HttpStatus.OK);
