@@ -24,10 +24,10 @@ public class SendDataTransaction {
 
     private final Logger logger = Logger.getLogger(SendDataTransaction.class);
 
-    public void postMessage(){
+    public void sendFile(){
         try{
-            logger.info("Start method postMessage ...");
-            final String uri = "http://192.154.88.155:9001/si-externe/transaction/send";
+            logger.info("Start method sendFile ...");
+            final String uri = "http://192.154.88.151:9001/si-externe/transaction/send";
             //final String uri = "http://localhost:9001/transaction/send";
             URL url = new URL(uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -48,7 +48,7 @@ public class SendDataTransaction {
             transformer.transform(source, result);
 
             os.flush();
-            logger.info("sending a request POST");
+            logger.info("sending file");
             connection.getResponseCode();
             logger.info("Response SI-Externe :"+connection.getResponseCode());
             logger.info("End connexion ... ");

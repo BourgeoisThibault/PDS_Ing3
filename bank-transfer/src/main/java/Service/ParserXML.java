@@ -1,6 +1,9 @@
 package Service;
 
-import org.jdom2.*;
+import org.apache.log4j.Logger;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
@@ -15,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
 
 /**
  * Created by SarahAllouche on 17/11/2017.
@@ -103,7 +104,7 @@ public class ParserXML {
     }
 
     //Return file name
-    public String getNameFile()
+    public static String getNameFile()
     {
         //formater de date
         // set Today
@@ -123,7 +124,7 @@ public class ParserXML {
         try
         {
             //On creer un nouveau document JDOM avec en argument le fichier XML
-            document = sxb.build(new File(getNameFile()));
+            document = sxb.build(new File("/home/esibank/transactionesibank/Output/"+getNameFile()));
 
             return document;
         }
