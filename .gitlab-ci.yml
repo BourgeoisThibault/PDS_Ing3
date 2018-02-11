@@ -66,7 +66,6 @@ deploy_database:
     - maven_install
   script:
     - scp -v data-access-server/target/dataaccess.war esibank@$IP_DATABASE:/var/lib/tomcat8/webapps/dataaccess.war
-    - scp shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar esibank@$IP_WEBAPP:/home/esibank/transactionesibank/shares-price-history.jar
   when: on_success
   only:
     refs:
@@ -78,6 +77,9 @@ deploy_rest:
     - maven_install
   script:
     - scp rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
+    - scp bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/bank-transfer.jar
+    - scp shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/shares-price-history.jar
+
   when: on_success
   only:
     refs:
@@ -89,7 +91,6 @@ deploy_webapp:
     - maven_install
   script:
     - scp web-app-server/target/serverweb.war esibank@$IP_WEBAPP:/var/lib/tomcat8/webapps/serverweb.war
-    - scp bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar esibank@$IP_WEBAPP:/home/esibank/transactionesibank/bank-transfer.jar
 
   when: on_success
   only:
