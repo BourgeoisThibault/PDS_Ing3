@@ -57,7 +57,7 @@ maven_install:
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
       - predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar
       - predict-InvestCustomer/algo_InvestCustomer.R
-      - scp predict-InvestCustomer/default_train.csv
+      - predict-InvestCustomer/default_train.csv
       - si-externe/target/si-externe.war
   only:
     refs:
