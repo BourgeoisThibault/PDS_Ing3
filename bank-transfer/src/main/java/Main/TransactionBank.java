@@ -76,15 +76,14 @@ public class TransactionBank {
 
         //appel méthode jérémy pour donner un document
         Document document = parser.GetXmlDocument();
-
-
         // Ma méthode attend un document xml
         tabTransaction = parser.GetXmlTransaction(document);
 		/*Test tab not Empty */
         if(!tabTransaction.isEmpty())
         {
-            logger.info("the XML file contains " + tabTransaction.size() + "Transaction");
+            logger.info("the XML file contains " + tabTransaction.size() + " Transaction");
             insertIntoBD = true;
+            logger.info("first transaction " + tabTransaction.get(0).getAmountTransaction());
             addTransaction.InputTransaction(tabTransaction);
             if(insertIntoBD)
             {

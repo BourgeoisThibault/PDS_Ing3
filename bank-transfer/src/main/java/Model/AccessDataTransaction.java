@@ -29,7 +29,7 @@ public class AccessDataTransaction {
     public static void InputTransaction(List<Transaction> tabTransaction) throws IOException {
         //Save transactions
         //final String uri = "http://localhost:8080/transaction/InputTransaction";
-        final String uri = "http://192.154.88.161:8080/dataaccess/transaction/InputTransaction";
+        final String uri = "http://192.154.88.161:8080/dataaccess/transaction/inputTransaction";
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(uri, tabTransaction, List.class);
