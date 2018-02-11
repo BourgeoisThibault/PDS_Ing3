@@ -38,7 +38,7 @@ public class TransactionBank {
             tabTransaction = addTransaction.getDBTransaction();
         } catch (IOException e) {
             logger.error("Error in retrieve data");
-            // e.printStackTrace();
+            e.printStackTrace();
         }
 		/*Test tab not Empty*/
         if(!tabTransaction.isEmpty())
@@ -112,7 +112,7 @@ public class TransactionBank {
          //  SendDataTransaction send = new SendDataTransaction();
            //send.sendFile();
        //}
-        GetDataTransaction get = new GetDataTransaction();
+       GetDataTransaction get = new GetDataTransaction();
        get.GetDataTransaction();
 
         ConstructTransaction.recoveryTransaction();
