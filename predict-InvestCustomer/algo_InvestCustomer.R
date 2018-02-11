@@ -1,11 +1,11 @@
 
 library(rpart)
 
-data = read.csv("/home/esibank/PredictInvest/default_train.csv",header = TRUE, sep = ";")
+data = read.csv("/home/esibank/default_train.csv",header = TRUE, sep = ";")
 
 ad.data <- rpart (Invest ~ Salary + Sold + Sold1 + Sold2 + Status, data)
 
-data2 = read.csv("/home/esibank/PredictInvest/InvestCustomer_test.csv",header = TRUE, sep = ";")
+data2 = read.csv("/home/esibank/InvestCustomer_test.csv",header = TRUE, sep = ";")
 
 predict(ad.data, data2) 
 
