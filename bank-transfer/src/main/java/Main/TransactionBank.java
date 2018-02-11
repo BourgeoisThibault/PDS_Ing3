@@ -2,7 +2,6 @@ package Main;
 
 import Model.AccessDataTransaction;
 import Model.GetDataTransaction;
-import Model.SendDataTransaction;
 import Service.ParserXML;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -110,10 +109,10 @@ public class TransactionBank {
         TransactionBank ConstructTransaction = new TransactionBank();
         boolean goodJob;
         goodJob = ConstructTransaction.SendTransaction();
-       if (goodJob){
-           SendDataTransaction send = new SendDataTransaction();
-           send.sendFile();
-       }
+       //if (goodJob){
+         //  SendDataTransaction send = new SendDataTransaction();
+           //send.sendFile();
+       //}
         GetDataTransaction get = new GetDataTransaction();
        get.GetDataTransaction();
 
