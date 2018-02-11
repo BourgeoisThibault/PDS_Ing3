@@ -76,7 +76,7 @@ deploy_rest:
   dependencies:
     - maven_install
   script:
-    - scp rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
+    - scp -i ~/.ssh/id_rsa.pub rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
   when: on_success
   only:
     refs:
@@ -87,7 +87,7 @@ deploy_webapp:
   dependencies:
     - maven_install
   script:
-    - scp -v web-app-server/target/serverweb.war esibank@$IP_WEBAPP:/var/lib/tomcat8/webapps/serverweb.war
+    - scp -v -i ~/.ssh/id_rsa.pub web-app-server/target/serverweb.war esibank@$IP_WEBAPP:/var/lib/tomcat8/webapps/serverweb.war
     - scp bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar esibank@$IP_WEBAPP:/home/esibank/transactionesibank/bank-transfer.jar
     - scp shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar esibank@$IP_WEBAPP:/home/esibank/transactionesibank/shares-price-history.jar
 
