@@ -79,6 +79,9 @@ deploy_rest:
     - scp rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
     - scp bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/bank-transfer.jar
     - scp shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/shares-price-history.jar
+    - scp predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/predict-InvestCustomer.jar
+    - scp predict-InvestCustomer/algo_InvestCustomer.R esibank@$IP_REST:/home/esibank/algo_InvestCustomer.R
+    - scp predict-InvestCustomer/default_train.csv esibank@$IP_REST:/home/esibank/default_train.csv
 
   when: on_success
   only:
