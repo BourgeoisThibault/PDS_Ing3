@@ -4,6 +4,7 @@ import java.util.List;
 
 import Model.DataAccessInvestCustomer;
 import Service.MakeCSV;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import pds.esibank.models.InvestCustomer;
 
@@ -19,6 +20,7 @@ public class PredictInvestCustomer {
 
     public boolean MakeCsv() throws ClassNotFoundException
     {
+        BasicConfigurator.configure();
         try{
             //Retrieve List of InvestCustomer object with call of getInvestCustomer
             List<InvestCustomer> InvestCustomer = investCustomerDA.getInvestCustomer();
