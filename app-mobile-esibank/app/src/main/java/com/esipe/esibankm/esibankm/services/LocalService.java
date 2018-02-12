@@ -125,8 +125,7 @@ public class LocalService extends Service {
                             .setContentIntent(contentIntent)
                             .build();
             int NOTIFICATION_ID = random.nextInt(9999 - 1000) + 1000;
-
-            System.out.println("I am in on showNotification");
+            Log.i("Notification","I am in on showNotification");
 
 
             mNM.notify(NOTIFICATION_ID, builder);
@@ -135,12 +134,14 @@ public class LocalService extends Service {
     }
 
     public Intent switchTargetNotification(String target) {
-        Intent targetIntent = null;
+        Log.i("target",target);
+        Intent targetIntent =  new Intent(this, HomeActivity.class);
         if(target.equals("accounts")){
             targetIntent = new Intent(this, AccountsActivity.class);
         }else if(target.equals("transfer")){
             targetIntent = new Intent(this, TransactionActivity.class);
-        }//add other target...
+        }//
+        //default target
         return targetIntent;
     }
 
