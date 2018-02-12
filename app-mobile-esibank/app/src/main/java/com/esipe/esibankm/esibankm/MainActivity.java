@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(getApplicationContext(),NotificationActivity.class);
         } else if (id == R.id.nav_exit) {
             this.finish();
+            //onDestroy();
+            return true;
         }
         startActivity(intent);
 
