@@ -54,7 +54,7 @@ maven_install:
       - notification-server/target/notificationserver.jar
       - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
       - shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar
-      - shares-price-historisation/target/shares-price-historisation-0.0.1-SNAPSHOT.jar
+      - shares-price-historisation/target/shares-price-historisation-0.0.1-SNAPSHOT.war
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
       - si-externe/target/si-externe.war
   only:
