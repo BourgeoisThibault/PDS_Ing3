@@ -1,4 +1,4 @@
-package model;
+package dataaccess;
 import java.io.IOException;
 import pds.esibank.models.LeavingCustomer;
 import java.net.URL;
