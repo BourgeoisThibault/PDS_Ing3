@@ -2,7 +2,7 @@ package main;
 import java.io.IOException;
 import java.util.List;
 
-import model.LPDA;
+import dataaccess.LPDA;
 import service.CSVMaker;
 import org.apache.log4j.Logger;
 import pds.esibank.models.LeavingCustomer;
@@ -14,7 +14,7 @@ public class Predict {
     private LPDA customersDA = new LPDA();
     private static Logger logger = Logger.getLogger("Predict");
 
-    public boolean makeCsv() throws ClassNotFoundException
+    public boolean makeCsv()
     {
         try{
             List<LeavingCustomer> customers = customersDA.getLeavingCustomer();
@@ -35,11 +35,8 @@ public class Predict {
     }
 
     public static void main(String[] args) throws ClassNotFoundException{
-
         Predict p = new Predict();
-        Boolean csvFile;
-        csvFile = p.makeCsv();
-        if (csvFile)
+        if (p.makeCsv())
         {
            try {
                 Runtime.getRuntime().exec("RScript customers_leaving.R");
