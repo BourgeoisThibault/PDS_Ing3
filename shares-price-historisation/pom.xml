@@ -6,7 +6,7 @@
 	<groupId>pds.esibank</groupId>
 	<artifactId>shares-price-historisation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>shares-price-historisation</name>
 	<description>Demo project for Spring Boot</description>
