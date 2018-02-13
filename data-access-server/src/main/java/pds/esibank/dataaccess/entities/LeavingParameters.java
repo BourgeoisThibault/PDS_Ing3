@@ -22,6 +22,9 @@ public class LeavingParameters {
     @Column( name = "balance" )
     private BigDecimal balance;
 
+    @Column( name = "csp" )
+    private BigDecimal csp;
+
     @Column( name = "made_transactions" )
     private int transactions;
 
