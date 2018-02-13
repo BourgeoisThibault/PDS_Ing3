@@ -17,7 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import pds.esibank.models.LeavingCustomer;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestPredict {
+public class PredictTest {
     @Mock
     CSVMaker makerMock;
     @Mock
@@ -26,14 +26,11 @@ public class TestPredict {
     @InjectMocks
     Predict predictMock;
 
+    private List<LeavingCustomer> lcList = new ArrayList<>();
+
     @Before
     public void setup() throws Exception {
         Mockito.mock(Predict.class);
-        //Mock a leaving customer
-        List<LeavingCustomer> lcList = new ArrayList<>();
-        LeavingCustomer lc = new LeavingCustomer();
-        lc.setConnections(10);
-        lcList.add(lc);
 
 		//Fixing mocked methods' behaviour
         Mockito.when(lpdaMock.getLeavingCustomer()).thenReturn(lcList);
@@ -42,7 +39,16 @@ public class TestPredict {
     }
 
     @Test
+    public void shouldFindNoLeavingCustomer() throws Exception {
+        Assert.assertFalse("Leaving customer found", predictMock.makeCsv());
+    }
+
+    @Test
     public void shouldFindALeavingCustomer() throws Exception {
+        //Mock a leaving customer
+        LeavingCustomer lc = new LeavingCustomer();
+        lc.setConnections(10);
+        lcList.add(lc);
         Assert.assertTrue("Leaving customer found", predictMock.makeCsv());
     }
 }
