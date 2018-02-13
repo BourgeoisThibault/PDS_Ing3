@@ -1,11 +1,5 @@
 package pds.esibank.historisation.utils;
 
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -14,9 +8,6 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by maria on 20/12/2017.
@@ -37,13 +28,13 @@ public class ConfigRabbitMq {
         return connectionFactory;
     }
 
-    @Bean
+   /* @Bean
     public Queue simpleQueue() {
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("x-message-ttl", 86400000);
         Queue queue = new Queue("MARIAM_QUEUE",true,false,false, args);
         return queue;
-    }
+    }*/
 
     @Bean
     public MessageConverter jsonMessageConverter(){
