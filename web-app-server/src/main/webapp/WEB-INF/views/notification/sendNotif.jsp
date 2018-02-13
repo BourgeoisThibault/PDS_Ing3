@@ -43,6 +43,13 @@
                                     <input name="message" type="text" class="form-control round-input">
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Cible</label>
+                                <div class="col-sm-10">
+                                    <input name="target" type="text" class="form-control round-input">
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="col-lg-offset-2 col-lg-10">
                                     <button class="btn btn-info" type="submit">Envoyer</button>

@@ -22,8 +22,9 @@ public class TransactionService {
         this.transactionRepository = transactionRepository;
     }
 
-
     public List<Transaction> getTransactionByDate(){
         return this.transactionRepository.getTransactionByDate();
     }
+
+    public void InputTransaction(final List <Transaction> tabTransaction){ this.transactionRepository.save(tabTransaction);}
 }

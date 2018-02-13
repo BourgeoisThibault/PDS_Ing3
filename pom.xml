@@ -17,10 +17,14 @@
         <module>data-access-server</module>
         <module>bank-transfer</module>
         <module>notification-push-server</module>
+        <module>shares-price-historisation</module>
+
 
         <module>it-thibault-example</module>
         <module>it-notification-send</module>
         <module>si-externe</module>
+        <module>predict-InvestCustomer</module>
+        <module>predict-client-leaving</module>
     </modules>
 
     <properties>

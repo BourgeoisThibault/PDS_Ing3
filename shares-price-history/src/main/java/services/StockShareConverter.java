@@ -2,6 +2,7 @@ package services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pds.esibank.models.shares.Share;
 import pds.esibank.models.shares.SharePrice;
 import yahoofinance.Stock;
 
@@ -15,9 +16,9 @@ public class StockShareConverter {
     public static ArrayList<SharePrice> toSharePrice (ArrayList<Stock> stockList){
         stockList.forEach((stock) -> {
             //Create SharePrice (including Share data) from Stock data
-            SharePrice sp = new SharePrice(stock.getName(),
+            SharePrice sp = new SharePrice(new Share(stock.getName(),
                     stock.getSymbol(),
-                    stock.getCurrency(),
+                    stock.getCurrency()),
                     stock.getQuote().getPrice(),
                     stock.getQuote().getChangeInPercent(),
                     new Date());

@@ -70,11 +70,13 @@ public class HomeController {
     @RequestMapping(value = "/notification", method = POST)
     public ModelAndView PostSendNotif(@RequestParam String uid,
                                 @RequestParam String title,
-                                @RequestParam String message) {
+                                @RequestParam String message,
+                                @RequestParam String target) {
 
         NotificationModel notificationModel = new NotificationModel();
         notificationModel.setTitle(title);
         notificationModel.setMessage(message);
+        notificationModel.setTarget(target);
 
         String myUri = "http://notification.esibank.inside.esiag.info/send/" + uid;
         //String myUri = "http://localhost:1234/send/" + uid;
