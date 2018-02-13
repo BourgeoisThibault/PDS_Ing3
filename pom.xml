@@ -24,6 +24,7 @@
         <module>it-notification-send</module>
         <module>si-externe</module>
         <module>predict-InvestCustomer</module>
+        <module>predict-client-leaving</module>
     </modules>
 
     <properties>
