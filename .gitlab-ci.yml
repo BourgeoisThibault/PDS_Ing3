@@ -56,6 +56,7 @@ maven_install:
       - shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
       - predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar
+      - predict-client-leaving/target/predict-client-leaving-1.0-SNAPSHOT.jar
       - si-externe/target/si-externe.war
   only:
     refs:
@@ -79,8 +80,9 @@ deploy_rest:
   script:
     - scp rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
     - scp bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/bank-transfer.jar
-    - scp shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/shares-price-history.jar
     - scp predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/predict-InvestCustomer.jar
+    - scp shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/shares-price-history.jar
+    - scp predict-client-leaving/target/predict-client-leaving-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/predict-client-leaving.jar
 
   when: on_success
   only:
