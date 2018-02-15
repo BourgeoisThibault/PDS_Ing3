@@ -15,7 +15,7 @@ import java.util.List;
 public class NotifAccess {
     private static Logger logger = LoggerFactory.getLogger(ShareAlertAccess.class);
     public static List<ClientNotifDTO> getList() throws IOException {
-        final String uri = "http://192.154.88.150:8080/dataaccess/notif/all";
+        final String uri = "http://192.154.88.161:8080/dataaccess/notif/all";
         List<ClientNotifDTO> notifClientList = new ObjectMapper().readValue(new URL(uri),
                 TypeFactory.defaultInstance().constructCollectionType(List.class, ClientNotifDTO.class));
         return notifClientList;

@@ -16,7 +16,7 @@ import java.util.List;
 public class ClientAccess {
     private static Logger logger = LoggerFactory.getLogger(ClientAccess.class);
     public static List<ClientDTO> getList() throws IOException {
-        final String uri = "http://192.154.88.150:8080/dataaccess/Clients/allClients";
+        final String uri = "http://192.154.88.161:8080/dataaccess/Clients/allClients";
         List<ClientDTO> clientList = new ObjectMapper().readValue(new URL(uri),
                 TypeFactory.defaultInstance().constructCollectionType(List.class, ClientDTO.class));
         return clientList;

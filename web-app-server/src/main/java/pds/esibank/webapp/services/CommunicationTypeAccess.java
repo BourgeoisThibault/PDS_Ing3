@@ -17,7 +17,7 @@ import java.util.List;
 public class CommunicationTypeAccess {
     private static Logger logger = LoggerFactory.getLogger(CommunicationTypeAccess.class);
     public static List<CommunicationTypeDTO> getList() throws IOException {
-        final String uri = "http://192.154.88.150:8080/dataaccess/communication/all";
+        final String uri = "http://192.154.88.161:8080/dataaccess/communication/all";
         List<CommunicationTypeDTO> communicationTypeList = new ObjectMapper().readValue(new URL(uri),
                 TypeFactory.defaultInstance().constructCollectionType(List.class, CommunicationTypeDTO.class));
         return communicationTypeList;
