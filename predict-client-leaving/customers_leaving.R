@@ -1,6 +1,6 @@
 #uploading train and test data
-train <- read.csv(file='./clients.csv', header=TRUE, sep=' ', encoding="UTF-8")
-test <- read.csv(file='./clients_test.csv', header=TRUE, sep=' ', encoding="UTF-8")
+train <- read.csv(file='/home/esibank/leaving_customers_train.csv', header=TRUE, sep=';', encoding="UTF-8")
+test <- read.csv(file='/home/esibank/leaving_customers_test.csv', header=TRUE, sep=';', encoding="UTF-8")
 
 #Uploading prediction library
 library(randomForest)
