@@ -20,8 +20,10 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.esipe.esibankm.esibankm.AccountsActivity;
 import com.esipe.esibankm.esibankm.HomeActivity;
 import com.esipe.esibankm.esibankm.R;
+import com.esipe.esibankm.esibankm.TransactionActivity;
 import com.esipe.esibankm.esibankm.models.NotificationModel;
 import com.esipe.esibankm.esibankm.utils.JsonUtils;
 
@@ -100,7 +102,14 @@ public class LocalService extends Service {
 //     */
     public void showNotification(String content) {
         NotificationModel notif = JsonUtils.objectFromJson(content,NotificationModel.class);
+        Log.i("Notification",notif.toString());
+
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        Intent targetIntent = switchTargetNotification(notif.getTarget());
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, targetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         if(notif!=null){
             Notification builder =
                     new NotificationCompat.Builder(this)
@@ -113,16 +122,27 @@ public class LocalService extends Service {
                             .setLights(Color.RED, 3000, 3000)
                             .setSound(alarmSound)
                             .setPriority(NotificationCompat.PRIORITY_HIGH)
+                            .setContentIntent(contentIntent)
                             .build();
             int NOTIFICATION_ID = random.nextInt(9999 - 1000) + 1000;
+            Log.i("Notification","I am in on showNotification");
 
-            System.out.println("I am in on showNotification");
 
-            Intent targetIntent = new Intent(this, HomeActivity.class);
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, targetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             mNM.notify(NOTIFICATION_ID, builder);
         }
 
+    }
+
+    public Intent switchTargetNotification(String target) {
+        Log.i("target",target);
+        Intent targetIntent =  new Intent(this, HomeActivity.class);
+        if(target.equals("accounts")){
+            targetIntent = new Intent(this, AccountsActivity.class);
+        }else if(target.equals("transfer")){
+            targetIntent = new Intent(this, TransactionActivity.class);
+        }//
+        //default target
+        return targetIntent;
     }
 
     public void _shutdownService() {

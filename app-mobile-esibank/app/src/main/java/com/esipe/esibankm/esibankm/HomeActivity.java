@@ -10,13 +10,18 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,17 +30,22 @@ import com.esipe.esibankm.esibankm.models.MobileToken;
 import com.esipe.esibankm.esibankm.services.ConnectSocket;
 import com.esipe.esibankm.esibankm.services.LocalService;
 import com.esipe.esibankm.esibankm.utils.JsonUtils;
+import com.esipe.esibankm.esibankm.utils.LoadProp;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
+
+import static android.content.ContentValues.TAG;
 
 
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends MainActivity {
     private static final String TAG = "HomeActivity";
     private static final String FILE_NAME = "data.json";
+    private DrawerLayout mDrawer;
 
     private TelephonyManager telephonyManager;
     private Spinner mySpinner;
@@ -53,12 +63,22 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        //setContentView(R.layout.activity_home);
+
+
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        LayoutInflater inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.activity_home, null, false);
+        mDrawer.addView(contentView, 0);
+
+
 
         telephonyManager = (TelephonyManager)getSystemService(this.TELEPHONY_SERVICE);
 
-        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+       // myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        //setSupportActionBar(myToolbar);
 
         Spinner mySpinner = (Spinner)findViewById(R.id.users_spinner);
         ArrayAdapter<String> spinnerCountShoesArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.users_list));
@@ -94,8 +114,15 @@ public class HomeActivity extends AppCompatActivity {
         }
 
 
+    }
 
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.aboutus, menu);
+        return true;
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -116,21 +143,23 @@ public class HomeActivity extends AppCompatActivity {
             }
             else
             {
-                Toast.makeText(getApplicationContext(),"Merci d'accpeter les droits", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),LoadProp.getProperty("popup_thanks_rights",getApplicationContext(),"messages"), Toast.LENGTH_LONG).show();
 
             }
         }
 
     }
 
+
+
     public void onStopButtonClick(View view) {
         this.stopService(new Intent(HomeActivity.this,
                 LocalService.class));
 
         if(ConnectSocket.isRunning==false) {
-            mySnack = Snackbar.make(view, "Vous êtes déjà déconnecté", 2000);
+            mySnack = Snackbar.make(view, LoadProp.getProperty("popup_connected",getApplicationContext(),"messages"), 2000);
         }else
-            mySnack = Snackbar.make(view, "Déconnecté", 2000);
+            mySnack = Snackbar.make(view, LoadProp.getProperty("popup_disconnected",getApplicationContext(),"messages"), 2000);
 
         mySnack.show();
 
@@ -190,6 +219,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.aboutus_action){
+            Log.i(TAG, "Action about us...");
+            Intent intent = new Intent(getApplicationContext(),AboutUsActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
 }

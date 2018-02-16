@@ -52,10 +52,13 @@ public class NotifConsumer extends DefaultConsumer {
             String message = new String(body, "UTF-8");
             PushNotificationModel pushNotificationModel = JsonUtils.objectFromJson(message,PushNotificationModel.class);
 
+            // Creating model for push server
             NotificationModel notificationModel = new NotificationModel();
             notificationModel.setTitle(pushNotificationModel.getTitle());
             notificationModel.setMessage(pushNotificationModel.getMessage());
+            notificationModel.setTarget(pushNotificationModel.getTarget());
 
+            // Check if notification is for all device
             if (ListConnection.searchToken(pushNotificationModel.getToken())) {
                 ListConnection.sendNotification(pushNotificationModel.getToken(), notificationModel);
 

@@ -13,6 +13,7 @@ import lombok.ToString;
 public class PushNotificationModel {
     private String title;
     private String message;
+    private String target;
     private String token;
 
     public PushNotificationModel() {

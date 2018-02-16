@@ -54,7 +54,10 @@ maven_install:
       - notification-server/target/notificationserver.jar
       - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
       - shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar
+      - shares-price-historisation/target/shares-price-historisation.war
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
+      - predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar
+      - predict-client-leaving/target/predict-client-leaving-1.0-SNAPSHOT.jar
       - si-externe/target/si-externe.war
   only:
     refs:
@@ -65,7 +68,7 @@ deploy_database:
   dependencies:
     - maven_install
   script:
-    - scp data-access-server/target/dataaccess.war esibank@$IP_DATABASE:/var/lib/tomcat8/webapps/dataaccess.war
+    - scp -v data-access-server/target/dataaccess.war esibank@$IP_DATABASE:/var/lib/tomcat8/webapps/dataaccess.war
   when: on_success
   only:
     refs:
@@ -77,6 +80,12 @@ deploy_rest:
     - maven_install
   script:
     - scp rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
+    - scp shares-price-historisation/target/shares-price-historisation.war esibank@$IP_REST:/var/lib/tomcat8/webapps/shares-price-historisation.war
+    - scp bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/bank-transfer.jar
+    - scp predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/predict-InvestCustomer.jar
+    - scp shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/shares-price-history.jar
+    - scp predict-client-leaving/target/predict-client-leaving-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/predict-client-leaving.jar
+
   when: on_success
   only:
     refs:
@@ -87,9 +96,7 @@ deploy_webapp:
   dependencies:
     - maven_install
   script:
-    - scp web-app-server/target/serverweb.war esibank@$IP_WEBAPP:/var/lib/tomcat8/webapps/serverweb.war
-    - scp bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar esibank@$IP_WEBAPP:/home/esibank/transactionesibank/bank-transfer.jar
-    - scp shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar esibank@$IP_WEBAPP:/home/esibank/transactionesibank/shares-price-history.jar
+    - scp web-app-server/target/serverweb.war esibank@$IP_DATABASE:/var/lib/tomcat8/webapps/serverweb.war
 
   when: on_success
   only:

@@ -38,7 +38,7 @@ public class HomeController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String getTest(){
-        return "<h1>NOTIFICATION TEST</h1>";
+        return "<h1>NOTIFICATION SERVER</h1>";
     }
 
     @RequestMapping(path = "/send/{uid}", method = RequestMethod.POST)
@@ -50,6 +50,7 @@ public class HomeController {
             pushNotificationModel.setTitle(notificationModel.getTitle());
             pushNotificationModel.setMessage(notificationModel.getMessage());
             pushNotificationModel.setToken("AllToken");
+            pushNotificationModel.setTarget(notificationModel.getTarget());
             rabbitTemplate.convertAndSend(pushNotificationModel);
 
             return new ResponseEntity<String>("SUCCESS - Send to all token connected",
@@ -66,6 +67,7 @@ public class HomeController {
 
                 pushNotificationModel.setTitle(notificationModel.getTitle());
                 pushNotificationModel.setMessage(notificationModel.getMessage());
+                pushNotificationModel.setTarget(notificationModel.getTarget());
                 pushNotificationModel.setToken(listToken.get(i));
 
                 rabbitTemplate.convertAndSend(pushNotificationModel);
@@ -79,7 +81,7 @@ public class HomeController {
 
     /**
      *
-     * TO DELETE
+     * Method for cucumber test
      * @return
      */
     @RequestMapping(path = "/admin", method = RequestMethod.POST)

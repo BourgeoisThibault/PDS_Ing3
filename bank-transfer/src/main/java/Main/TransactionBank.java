@@ -1,15 +1,17 @@
 package Main;
 
 import Model.AccessDataTransaction;
+import Model.GetDataTransaction;
 import Service.ParserXML;
-
-import Model.SendDataTransaction;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.jdom2.Document;
 import pds.esibank.models.Transaction;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -36,7 +38,7 @@ public class TransactionBank {
             tabTransaction = addTransaction.getDBTransaction();
         } catch (IOException e) {
             logger.error("Error in retrieve data");
-            // e.printStackTrace();
+            e.printStackTrace();
         }
 		/*Test tab not Empty*/
         if(!tabTransaction.isEmpty())
@@ -66,14 +68,54 @@ public class TransactionBank {
         return false;
     }
 
+
+    public void recoveryTransaction() throws IOException, ParseException{
+
+        logger.info("recover Transaction of "+ new Date());
+        boolean insertIntoBD;
+
+        //appel méthode jérémy pour donner un document
+        Document document = parser.GetXmlDocument();
+        // Ma méthode attend un document xml
+        tabTransaction = parser.GetXmlTransaction(document);
+		/*Test tab not Empty */
+        if(!tabTransaction.isEmpty())
+        {
+            logger.info("the XML file contains " + tabTransaction.size() + " Transaction");
+            insertIntoBD = true;
+            logger.info("first transaction " + tabTransaction.get(0).getAmountTransaction());
+            addTransaction.InputTransaction(tabTransaction);
+            if(insertIntoBD)
+            {
+                logger.info("Transaction Insert Into DataBase");
+
+            }
+            else
+            {
+                logger.error("Bug Into Insert");
+            }
+        }
+        else
+        {
+			/*Tab Transaction Empty*/
+            logger.info("No Transaction for today");
+        }
+
+    }
+
     public static void main(String[] args) throws ParseException, IOException {
 
-        TransactionBank integrationTest = new TransactionBank();
+        TransactionBank ConstructTransaction = new TransactionBank();
         boolean goodJob;
-        goodJob = integrationTest.SendTransaction();
-        if (goodJob){
-            SendDataTransaction send = new SendDataTransaction();
-            send.postMessage();
-        }
+        goodJob = ConstructTransaction.SendTransaction();
+       //if (goodJob){
+         //  SendDataTransaction send = new SendDataTransaction();
+           //send.sendFile();
+       //}
+       GetDataTransaction get = new GetDataTransaction();
+       get.GetDataTransaction();
+
+        ConstructTransaction.recoveryTransaction();
+
     }
 }
