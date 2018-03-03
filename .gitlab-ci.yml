@@ -15,7 +15,9 @@ deploy_notification:
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
-    - cd notification-server/
+    - cd esibank-utils/
+    - mvn install
+    - cd ~/notification-server/
     - mvn install -DskipTests
     - scp target/notificationserver.jar esibank@$IP_NOTIFICATION:/home/esibank/notificationserver.jar
     - ssh esibank@$IP_NOTIFICATION "sudo service notifserver restart"
@@ -28,7 +30,9 @@ deploy_push:
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "TIBO_SSH_HOST" > ~/.ssh/known_hosts
-    - cd notification-push-server/
+    - cd esibank-utils/
+    - mvn install
+    - cd ~/notification-push-server/
     - mvn install -DskipTests
     - scp target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:/home/esibank/notificationpushserver.jar
     - ssh esibank@$IP_PUSH "sudo service pushserver restart"
