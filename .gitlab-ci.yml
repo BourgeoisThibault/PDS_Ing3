@@ -10,8 +10,6 @@ stages:
 
 deploy_notification:
   stage: deploy
-  dependencies:
-    - maven_install
   script:
     - mkdir ~/.ssh
     - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
@@ -23,8 +21,6 @@ deploy_notification:
 
 deploy_push:
   stage: deploy
-  dependencies:
-    - maven_install
   script:
     - mkdir ~/.ssh
     - echo "TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
