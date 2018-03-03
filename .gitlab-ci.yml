@@ -17,7 +17,7 @@ deploy_notification:
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - touch mytest
-    - scp mytest esibank@$IP_NOTIFICATION:mytest.jar
+    - scp mytest $IP_NOTIFICATION:mytest.jar
 
 deploy_push:
   stage: deploy
@@ -28,4 +28,4 @@ deploy_push:
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - touch mytest
-    - scp mytest esibank@$IP_PUSH:mytest
+    - scp mytest $IP_PUSH:mytest
