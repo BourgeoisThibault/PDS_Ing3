@@ -5,36 +5,43 @@ variables:
   IP_PUSH: "192.154.88.165"
 
 stages:
+  - build
   - deploy
+
+maven_install:
+  stage: build
+  script:
+    - mvn install -DskipTests
+  when: on_success
+  artifacts:
+      expire_in: 1 hrs
+      paths:
+      - data-access-server/target/dataaccess.war
+      - notification-server/target/notificationserver.jar
+      - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
 
 deploy_notification:
   stage: deploy
+  dependencies:
+    - maven_install
   script:
     - mkdir ~/.ssh
     - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
-    - cd esibank-utils/
-    - mvn install
-    - cd ..
-    - cd notification-server/
-    - mvn install -DskipTests
-    - scp target/notificationserver.jar esibank@$IP_NOTIFICATION:/home/esibank/notificationserver.jar
+    - scp notification-server/target/notificationserver.jar esibank@$IP_NOTIFICATION:/home/esibank/notificationserver.jar
     - ssh esibank@$IP_NOTIFICATION "sudo service notifserver restart"
 
 deploy_push:
   stage: deploy
+  dependencies:
+    - maven_install
   script:
     - mkdir ~/.ssh
     - echo "TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "TIBO_SSH_HOST" > ~/.ssh/known_hosts
-    - cd esibank-utils/
-    - mvn install
-    - cd ..
-    - cd notification-push-server/
-    - mvn install -DskipTests
-    - scp target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:/home/esibank/notificationpushserver.jar
+    - scp notification-push-server/target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:/home/esibank/notificationpushserver.jar
     - ssh esibank@$IP_PUSH "sudo service pushserver restart"
