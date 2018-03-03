@@ -11,10 +11,10 @@ deploy_notification:
   stage: deploy
   script:
     - mkdir ~/.ssh
-    - echo "TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
+    - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "TIBO_SSH_HOST" > ~/.ssh/known_hosts
+    - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - cd notification-server/
     - mvn install -DskipTests
     - scp target/notificationserver.jar esibank@$IP_NOTIFICATION:/home/esibank/notificationserver.jar
