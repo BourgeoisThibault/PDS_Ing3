@@ -25,11 +25,11 @@ deploy_notification:
   dependencies:
     - maven_install
   script:
-    - mkdir ~/.ssh
-    - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/id_rsa
-    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
+    - mkdir .ssh
+    - echo "TIBO_SSH_PRIVATE" > .ssh/id_rsa
+    - chmod 700 .ssh/id_rsa
+    - ssh-keygen -f .ssh/id_rsa -y > .ssh/id_rsa.pub
+    - echo "TIBO_SSH_HOST" > .ssh/known_hosts
     - scp notification-server/target/notificationserver.jar esibank@$IP_NOTIFICATION:notificationserver.jar
     - ssh esibank@$IP_NOTIFICATION "sudo service notifserver restart"
 
@@ -38,10 +38,10 @@ deploy_push:
   dependencies:
     - maven_install
   script:
-    - mkdir ~/.ssh
-    - echo "TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/id_rsa
-    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "TIBO_SSH_HOST" > ~/.ssh/known_hosts
+    - mkdir .ssh
+    - echo "TIBO_SSH_PRIVATE" > .ssh/id_rsa
+    - chmod 700 .ssh/id_rsa
+    - ssh-keygen -f .ssh/id_rsa -y > .ssh/id_rsa.pub
+    - echo "TIBO_SSH_HOST" > .ssh/known_hosts
     - scp notification-push-server/target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:notificationpushserver.jar
     - ssh esibank@$IP_PUSH "sudo service pushserver restart"
