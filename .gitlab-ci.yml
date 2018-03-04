@@ -38,10 +38,10 @@ deploy_rest:
     - maven_install
   script:
     - mkdir ~/.ssh
-    - echo "SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "SSH_HOST_KEYS" > ~/.ssh/known_hosts
+    - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
     - scp rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
 
 deploy_webapp:
@@ -50,10 +50,10 @@ deploy_webapp:
     - maven_install
   script:
     - mkdir ~/.ssh
-    - echo "SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "SSH_HOST_KEYS" > ~/.ssh/known_hosts
+    - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
     - scp web-app-server/target/serverweb.war esibank@IP_WEBAPP:/var/lib/tomcat8/webapps/serverweb.war
 
 deploy_siext:
@@ -62,10 +62,10 @@ deploy_siext:
     - maven_install
   script:
     - mkdir ~/.ssh
-    - echo "SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "SSH_HOST_KEYS" > ~/.ssh/known_hosts
+    - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
     - scp si-externe/target/si-externe.war esibank@$IP_SIEXT:/var/lib/tomcat8/webapps/si-externe.war
 
 deploy_notification:
