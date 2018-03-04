@@ -8,12 +8,122 @@ variables:
   IP_SIEXT: "192.154.88.151"
   IP_DOCKER: "192.154.88.167"
 
-
 stages:
+  - compile
+  - test
   - build
   - deploy
 
+maven_compile:
+  stage: compile
+  script:
+    - mvn compile
+
+maven_test:
+  stage: test
+  script:
+    - mvn test
+  when: on_success
+
+maven_install:
+  stage: build
+  script:
+    - mvn install -DskipTests
+  when: on_success
+  artifacts:
+      expire_in: 2 hrs
+      paths:
+      - data-access-server/target/dataaccess.war
+      - rest-server/target/serverrest.war
+      - web-app-server/target/serverweb.war
+      - notification-server/target/notificationserver.jar
+      - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
+      - si-externe/target/si-externe.war
+      - shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar
+      - shares-price-historisation/target/shares-price-historisation.war
+      - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
+      - predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar
+      - predict-client-leaving/target/predict-client-leaving-1.0-SNAPSHOT.jar
+  only:
+    refs:
+      - master
+
+deploy_webapp:
+  stage: deploy
+  dependencies:
+    - maven_install
+  script:
+    - mkdir ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+    - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
+    - scp web-app-server/target/serverweb.war esibank@$IP_WEBAPP:/var/lib/tomcat8/webapps/serverweb.war
+  only:
+    refs:
+      - master
+
+deploy_siext:
+  stage: deploy
+  dependencies:
+    - maven_install
+  script:
+    - mkdir ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+    - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
+    - scp si-externe/target/si-externe.war esibank@$IP_SIEXT:/var/lib/tomcat8/webapps/si-externe.war
+  only:
+    refs:
+      - master
+
+deploy_notification:
+  stage: deploy
+  dependencies:
+    - maven_install
+  script:
+    - mkdir ~/.ssh
+    - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+    - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
+    - scp notification-server/target/notificationserver.jar esibank@$IP_NOTIFICATION:notificationserver.jar
+    - ssh esibank@$IP_NOTIFICATION "sudo service notifserver restart"
+  only:
+    refs:
+      - master
+
 deploy_push:
+  stage: deploy
+  dependencies:
+    - maven_install
+  script:
+    - mkdir ~/.ssh
+    - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+    - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
+    - scp notification-push-server/target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:notificationpushserver.jar
+    - ssh esibank@$IP_PUSH "sudo service pushserver restart"
+  only:
+    refs:
+      - master
+
+deploy_rest:
+  stage: deploy
+  script:
+    - mkdir ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+    - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
+    - scp rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
+  only:
+    refs:
+      - master
+
+deploy_esibank_lab:
   stage: deploy
   script:
     - mkdir ~/.ssh
@@ -22,3 +132,6 @@ deploy_push:
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
+  only:
+    refs:
+      - master
