@@ -3,6 +3,10 @@ image: maven:3.3.9-jdk-8
 variables:
   IP_NOTIFICATION: "192.154.88.164"
   IP_PUSH: "192.154.88.165"
+  IP_REST: "192.154.88.162"
+  IP_WEBAPP: "192.154.88.163"
+  IP_SIEXT: "192.154.88.151"
+
 
 stages:
   - build
@@ -14,11 +18,55 @@ maven_install:
     - mvn install -DskipTests
   when: on_success
   artifacts:
-      expire_in: 1 hrs
+      expire_in: 6 hrs
       paths:
       - data-access-server/target/dataaccess.war
+      - rest-server/target/serverrest.war
+      - web-app-server/target/serverweb.war
       - notification-server/target/notificationserver.jar
       - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
+      - si-externe/target/si-externe.war
+      - shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar
+      - shares-price-historisation/target/shares-price-historisation.war
+      - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
+      - predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar
+      - predict-client-leaving/target/predict-client-leaving-1.0-SNAPSHOT.jar
+
+deploy_rest:
+  stage: deploy
+  dependencies:
+    - maven_install
+  script:
+    - mkdir ~/.ssh
+    - echo "SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+    - echo "SSH_HOST_KEYS" > ~/.ssh/known_hosts
+    - scp rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
+
+deploy_webapp:
+  stage: deploy
+  dependencies:
+    - maven_install
+  script:
+    - mkdir ~/.ssh
+    - echo "SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+    - echo "SSH_HOST_KEYS" > ~/.ssh/known_hosts
+    - scp web-app-server/target/serverweb.war esibank@IP_WEBAPP:/var/lib/tomcat8/webapps/serverweb.war
+
+deploy_siext:
+  stage: deploy
+  dependencies:
+    - maven_install
+  script:
+    - mkdir ~/.ssh
+    - echo "SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+    - echo "SSH_HOST_KEYS" > ~/.ssh/known_hosts
+    - scp si-externe/target/si-externe.war esibank@$IP_SIEXT:/var/lib/tomcat8/webapps/si-externe.war
 
 deploy_notification:
   stage: deploy
