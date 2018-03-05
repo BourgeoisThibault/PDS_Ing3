@@ -14,27 +14,25 @@ stages:
   - build
   - deploy
 
-#maven_compile:
-#  stage: compile
-#  script:
-#    - mvn compile
+maven_compile:
+  stage: compile
+  script:
+    - mvn compile
 
-#maven_test:
-#  stage: test
-#  script:
-#    - mvn test
-#  when: on_success
+maven_test:
+  stage: test
+  script:
+    - mvn test
+  when: on_success
 
 maven_install:
   stage: build
   script:
     - mvn install -DskipTests
+  when: on_success
   artifacts:
       expire_in: 2 hrs
       paths:
-      - data-access-server/target/dataaccess.war
-      - rest-server/target/serverrest.war
-      - web-app-server/target/serverweb.war
       - notification-server/target/notificationserver.jar
       - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
       - si-externe/target/si-externe.war
@@ -75,6 +73,7 @@ deploy_notification:
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - scp notification-server/target/notificationserver.jar esibank@$IP_NOTIFICATION:notificationserver.jar
     - ssh esibank@$IP_NOTIFICATION "sudo service notifserver restart"
+  when: on_success
   only:
     refs:
       - master
@@ -91,6 +90,7 @@ deploy_push:
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - scp notification-push-server/target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:notificationpushserver.jar
     - ssh esibank@$IP_PUSH "sudo service pushserver restart"
+  when: on_success
   only:
     refs:
       - master
@@ -104,6 +104,7 @@ deploy_esibank_lab:
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
+  when: on_success
   only:
     refs:
       - master
