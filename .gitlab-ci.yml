@@ -14,22 +14,21 @@ stages:
   - build
   - deploy
 
-maven_compile:
-  stage: compile
-  script:
-    - mvn compile
+#maven_compile:
+#  stage: compile
+#  script:
+#    - mvn compile
 
-maven_test:
-  stage: test
-  script:
-    - mvn test
-  when: on_success
+#maven_test:
+#  stage: test
+#  script:
+#    - mvn test
+#  when: on_success
 
 maven_install:
   stage: build
   script:
     - mvn install -DskipTests
-  when: on_success
   artifacts:
       expire_in: 2 hrs
       paths:
