@@ -47,20 +47,21 @@ maven_install:
     refs:
       - master
 
-deploy_siext:
-  stage: deploy
-  dependencies:
-    - maven_install
-  script:
-    - mkdir ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/id_rsa
-    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
-    - scp si-externe/target/si-externe.war esibank@$IP_SIEXT:/var/lib/tomcat8/webapps/si-externe.war
-  only:
-    refs:
-      - master
+# NE FONCTIONNE PAS
+#deploy_siext:
+#  stage: deploy
+#  dependencies:
+#    - maven_install
+#  script:
+#    - mkdir ~/.ssh
+#    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+#    - chmod 700 ~/.ssh/id_rsa
+#    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+#    - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
+#    - scp si-externe/target/si-externe.war esibank@$IP_SIEXT:/var/lib/tomcat8/webapps/si-externe.war
+#  only:
+#    refs:
+#      - master
 
 deploy_notification:
   stage: deploy
@@ -90,19 +91,6 @@ deploy_push:
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - scp notification-push-server/target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:notificationpushserver.jar
     - ssh esibank@$IP_PUSH "sudo service pushserver restart"
-  only:
-    refs:
-      - master
-
-deploy_rest:
-  stage: deploy
-  script:
-    - mkdir ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/id_rsa
-    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
-    - scp rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
   only:
     refs:
       - master
