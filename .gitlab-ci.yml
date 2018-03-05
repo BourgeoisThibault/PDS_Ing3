@@ -48,21 +48,6 @@ maven_install:
     refs:
       - master
 
-deploy_webapp:
-  stage: deploy
-  dependencies:
-    - maven_install
-  script:
-    - mkdir ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/id_rsa
-    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
-    - scp web-app-server/target/serverweb.war esibank@$IP_WEBAPP:/var/lib/tomcat8/webapps/serverweb.war
-  only:
-    refs:
-      - master
-
 deploy_siext:
   stage: deploy
   dependencies:
