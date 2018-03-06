@@ -43,7 +43,6 @@ esibank_lab:
   stage: deploy
   script:
     - mvn install -DskipTests -pl data-access-server,rest-server,web-app-server -am
-  when: on_success
   only:
     refs:
       - master
@@ -52,7 +51,6 @@ notif_lab:
   stage: deploy
   script:
     - mvn install -DskipTests -pl notification-server,notification-push-server -am
-  when: on_success
   only:
     refs:
       - master
