@@ -46,10 +46,12 @@ esibank_lab:
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
-    - mvn install -pl data-access-server -am
-    - mvn install -pl rest-server -am
-    - mvn install -pl web-app-server -am
+    #- mvn install -pl data-access-server -am
+    #- mvn install -pl rest-server -am
+    #- mvn install -pl web-app-server -am
+    - mvn install
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
+    - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   when: on_success
   only:
     refs:
@@ -63,9 +65,9 @@ notif_lab:
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
-    - mvn install -pl notification-server -am
-    - mvn install -pl notification-push-server -am
-    - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
+    #- mvn install -pl notification-server -am
+    #- mvn install -pl notification-push-server -am
+    #- ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   when: on_success
   only:
     refs:
