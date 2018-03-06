@@ -130,7 +130,7 @@
                         <goals>
                             <goal>build</goal>
                         </goals>
-                        <phase>deploy</phase>
+                        <phase>install</phase>
                         <configuration>
                             <imageName>dataaccess</imageName>
                             <dockerDirectory>${basedir}/src/main/docker</dockerDirectory>

@@ -30,7 +30,7 @@ TestAll:
 PackageAll:
   stage: build
   script:
-    - mvn install -DskipTests
+    - mvn package -DskipTests
   when: on_success
   artifacts:
       expire_in: 2 hrs
@@ -74,7 +74,9 @@ esibank_lab:
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
-    - mvn deploy -DskipTests -pl data-access-server, rest-server, web-app-server -am
+    - mvn install -pl data-access-server -am
+    - mvn install -pl rest-server -am
+    - mvn install -pl web-app-server -am
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
   when: on_success
   only:
