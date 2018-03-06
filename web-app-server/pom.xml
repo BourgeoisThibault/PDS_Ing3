@@ -82,7 +82,7 @@
                         <goals>
                             <goal>build</goal>
                         </goals>
-                        <phase>install</phase>
+                        <phase>deploy</phase>
                         <configuration>
                             <imageName>serverweb</imageName>
                             <dockerDirectory>${basedir}/src/main/docker</dockerDirectory>

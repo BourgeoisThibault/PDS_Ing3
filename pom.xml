@@ -13,7 +13,6 @@
         <module>web-app-server</module>
         <module>esibank-utils</module>
         <module>notification-server</module>
-        <module>shares-price-history</module>
         <module>data-access-server</module>
         <module>bank-transfer</module>
         <module>notification-push-server</module>
@@ -24,7 +23,6 @@
         <module>it-notification-send</module>
         <module>si-externe</module>
         <module>predict-InvestCustomer</module>
-        <module>predict-client-leaving</module>
     </modules>
 
     <properties>

@@ -14,18 +14,20 @@ stages:
   - build
   - deploy
 
-maven_compile:
+CompileAll:
   stage: compile
   script:
-    - mvn compile
+    - echo "COMPILE"
+    #- mvn compile
 
-maven_test:
+TestAll:
   stage: test
   script:
-    - mvn test
+    - echo "TEST"
+    #- mvn test
   when: on_success
 
-maven_install:
+PackageAll:
   stage: build
   script:
     - mvn install -DskipTests
@@ -36,43 +38,27 @@ maven_install:
       - notification-server/target/notificationserver.jar
       - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
       - si-externe/target/si-externe.war
-      - shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar
       - shares-price-historisation/target/shares-price-historisation.war
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
       - predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar
-      - predict-client-leaving/target/predict-client-leaving-1.0-SNAPSHOT.jar
   only:
     refs:
       - master
 
-# NE FONCTIONNE PAS
-#deploy_siext:
-#  stage: deploy
-#  dependencies:
-#    - maven_install
-#  script:
-#    - mkdir ~/.ssh
-#    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-#    - chmod 700 ~/.ssh/id_rsa
-#    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-#    - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
-#    - scp si-externe/target/si-externe.war esibank@$IP_SIEXT:/var/lib/tomcat8/webapps/si-externe.war
-#  only:
-#    refs:
-#      - master
-
 notif_push:
   stage: deploy
   dependencies:
-    - maven_install
+    - PackageAll
   script:
     - mkdir ~/.ssh
     - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
+    - echo "DEPLOY NOTIFICATION SERVER"
     - scp notification-server/target/notificationserver.jar esibank@$IP_NOTIFICATION:notificationserver.jar
     - ssh esibank@$IP_NOTIFICATION "sudo service notifserver restart"
+    - echo "DEPLOY PUSH SERVER"
     - scp notification-push-server/target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:notificationpushserver.jar
     - ssh esibank@$IP_PUSH "sudo service pushserver restart"
   when: on_success
@@ -88,6 +74,7 @@ esibank_lab:
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
+    - mvn deploy -DskipTests -pl data-access-server, rest-server, web-app-server -am
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
   when: on_success
   only:
