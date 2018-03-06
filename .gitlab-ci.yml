@@ -10,6 +10,7 @@ stages:
   - test
   - build
   - deploy
+  - final
 
 CompileAll:
   stage: compile
@@ -41,17 +42,7 @@ PackageAll:
 esibank_lab:
   stage: deploy
   script:
-    - mkdir ~/.ssh
-    - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/id_rsa
-    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-    - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
-    #- mvn install -pl data-access-server -am
-    #- mvn install -pl rest-server -am
-    #- mvn install -pl web-app-server -am
-    - mvn install
-    - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
-    - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
+    - mvn install -DskipTests -pl data-access-server,rest-server,web-app-server -am
   when: on_success
   only:
     refs:
@@ -60,14 +51,22 @@ esibank_lab:
 notif_lab:
   stage: deploy
   script:
+    - mvn install -DskipTests -pl notification-server,notification-push-server -am
+  when: on_success
+  only:
+    refs:
+      - master
+
+Exec_script:
+  stage: final
+  script:
     - mkdir ~/.ssh
     - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
-    #- mvn install -pl notification-server -am
-    #- mvn install -pl notification-push-server -am
-    #- ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
+    - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
+    - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   when: on_success
   only:
     refs:
