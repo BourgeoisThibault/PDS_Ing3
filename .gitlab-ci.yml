@@ -1,10 +1,6 @@
 image: maven:3.3.9-jdk-8
 
 variables:
-  IP_NOTIFICATION: "192.154.88.164"
-  IP_PUSH: "192.154.88.165"
-  IP_REST: "192.154.88.162"
-  IP_WEBAPP: "192.154.88.163"
   IP_SIEXT: "192.154.88.151"
   IP_DOCKER: "192.154.88.167"
   IP_NOTIF: "192.154.88.168"
@@ -18,27 +14,22 @@ stages:
 CompileAll:
   stage: compile
   script:
-    - echo "COMPILE"
-    #- mvn compile
+    - mvn compile
 
 TestAll:
   stage: test
   script:
-    - echo "TEST"
-    #- mvn test
+    - mvn test
   when: on_success
 
 PackageAll:
   stage: build
   script:
-    - echo "BUILD"
-    #- mvn package -DskipTests
+    - mvn package -DskipTests
   when: on_success
   artifacts:
       expire_in: 2 hrs
       paths:
-      - notification-server/target/notificationserver.jar
-      - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
       - si-externe/target/si-externe.war
       - shares-price-historisation/target/shares-price-historisation.war
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
@@ -55,9 +46,9 @@ esibank_lab:
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
-    #- mvn install -pl data-access-server -am
-    #- mvn install -pl rest-server -am
-    #- mvn install -pl web-app-server -am
+    - mvn install -pl data-access-server -am
+    - mvn install -pl rest-server -am
+    - mvn install -pl web-app-server -am
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
   when: on_success
   only:
@@ -74,7 +65,7 @@ notif_lab:
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - mvn install -pl notification-server -am
     - mvn install -pl notification-push-server -am
-    #- ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
+    - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   when: on_success
   only:
     refs:
