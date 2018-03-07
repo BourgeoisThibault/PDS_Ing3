@@ -20,12 +20,14 @@ CompileAll:
 TestAll:
   stage: test
   script:
+    - echo "SKIP"
     #- mvn test
   when: on_success
 
 PackageAll:
   stage: build
   script:
+    - echo "SKIP"
     #- mvn package -DskipTests
   when: on_success
   artifacts:
