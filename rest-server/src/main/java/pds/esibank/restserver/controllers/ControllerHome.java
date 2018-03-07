@@ -13,7 +13,7 @@ public class ControllerHome {
         return "<H1>REST ESIBANK HOME NEW</H1>";
     }
 
-    private static final String URI_DATA_ACCESS = "http://10.10.2.1:8080/";
+    private static final String URI_DATA_ACCESS = "http://esibanklab_dataaccess:8080/";
     private RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/test")
