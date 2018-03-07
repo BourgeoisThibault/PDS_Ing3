@@ -20,13 +20,13 @@ CompileAll:
 TestAll:
   stage: test
   script:
-    - mvn test
+    #- mvn test
   when: on_success
 
 PackageAll:
   stage: build
   script:
-    - mvn package -DskipTests
+    #- mvn package -DskipTests
   when: on_success
   artifacts:
       expire_in: 2 hrs
@@ -65,7 +65,6 @@ Exec_script:
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
     - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
-  when: on_success
   only:
     refs:
       - master
