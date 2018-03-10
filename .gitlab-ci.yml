@@ -1,10 +1,8 @@
 image: maven:3.3.9-jdk-8
 
 variables:
-  IP_SIEXT: "192.154.88.151"
   IP_DOCKER: "192.154.88.167"
   IP_NOTIF: "192.154.88.168"
-
 stages:
   - compile
   - test
@@ -16,14 +14,12 @@ CompileAll:
   stage: compile
   script:
     - mvn compile
-
 TestAll:
   stage: test
   script:
     - echo "SKIP"
     #- mvn test
   when: on_success
-
 PackageAll:
   stage: build
   script:
@@ -41,6 +37,9 @@ PackageAll:
     refs:
       - master
 
+#################################
+##  NE PAS TOUCHER (THIBAULT)  ##
+#################################
 esibank_lab:
   stage: deploy
   script:
@@ -48,7 +47,6 @@ esibank_lab:
   only:
     refs:
       - master
-
 notif_lab:
   stage: deploy
   script:
@@ -56,7 +54,6 @@ notif_lab:
   only:
     refs:
       - master
-
 Exec_script:
   stage: final
   script:
