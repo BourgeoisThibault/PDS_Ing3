@@ -43,7 +43,7 @@ PackageAll:
 esibank_lab:
   stage: deploy
   script:
-    - mvn install -DskipTests -pl data-access-server,rest-server,web-app-server -am
+    - mvn install -DskipTests -pl data-access-server,rest-server,web-app-server,rest-secure -am
   only:
     refs:
       - master
