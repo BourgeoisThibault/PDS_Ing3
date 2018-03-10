@@ -29,7 +29,8 @@ public class ControllerHome {
 
         String mypass = "esibank";
 
-        ClassPathResource classPathResource = new ClassPathResource("ssl/client-truststore.jks");
+        //ClassPathResource classPathResource = new ClassPathResource("ssl/client-truststore.jks");
+        ClassPathResource classPathResource = new ClassPathResource("ssl/trustEsibank");
         SSLContext sslContext = SSLContexts
                 .custom()
                 .loadTrustMaterial(classPathResource.getFile(),mypass.toCharArray())
@@ -41,7 +42,8 @@ public class ControllerHome {
         return new RestTemplate(new HttpComponentsClientHttpRequestFactory(client));
     }
 
-    private static final String URI_DATA_ACCESS = "https://localhost:1234/";
+    private static final String URI_DATA_ACCESS = "https://ws.esibank.inside.esiag.info/";
+    //private static final String URI_DATA_ACCESS = "https://localhost:1234/";
     private RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/test")
