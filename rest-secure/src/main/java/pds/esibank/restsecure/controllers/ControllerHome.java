@@ -13,5 +13,10 @@ public class ControllerHome {
         return "<H1>REST SECURE ESIBANK HOME NEW</H1>";
     }
 
+    @GetMapping("/test")
+    public String testing(@RequestHeader(value = "user-id") String userId) {
+        return userId;
+    }
+
 }
 

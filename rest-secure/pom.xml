@@ -44,7 +44,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>pds.esibank.restsecure.App</mainClass>
+                    <mainClass>pds.esibank.restsecure.AppSecure</mainClass>
                 </configuration>
                 <executions>
                     <execution>
