@@ -29,7 +29,8 @@ public class App {
 		HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
 			@Override
 			public boolean verify(String hostname, SSLSession sslSession) {
-				if (hostname.equals("ws.esibank.inside.esiag.info")) {
+				if (hostname.equals("ws.esibank.inside.esiag.info") ||
+						hostname.equals("localhost")) {
 					return true;
 				}
 				return false;

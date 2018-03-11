@@ -42,8 +42,8 @@ public class ControllerHome {
         return new RestTemplate(new HttpComponentsClientHttpRequestFactory(client));
     }
 
-    private static final String URI_DATA_ACCESS = "https://ws.esibank.inside.esiag.info/";
-    //private static final String URI_DATA_ACCESS = "https://localhost:1234/";
+    //private static final String URI_DATA_ACCESS = "https://ws.esibank.inside.esiag.info/";
+    private static final String URI_DATA_ACCESS = "https://localhost:1234/";
     private RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/test")
