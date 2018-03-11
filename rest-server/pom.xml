@@ -64,7 +64,7 @@
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
                     <configuration>
-                        <mainClass>pds.esibank.restserver.App</mainClass>
+                        <mainClass>pds.esibank.restserver.AppRest</mainClass>
                     </configuration>
 					<executions>
 						<execution>

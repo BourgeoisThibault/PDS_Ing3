@@ -51,7 +51,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>pds.esibank.payfreeclient.App</mainClass>
+                    <mainClass>pds.esibank.payfreeclient.AppPayFree</mainClass>
                 </configuration>
                 <executions>
                     <execution>

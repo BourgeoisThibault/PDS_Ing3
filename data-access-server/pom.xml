@@ -109,7 +109,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>pds.esibank.dataaccess.App</mainClass>
+                    <mainClass>pds.esibank.dataaccess.AppDataAccess</mainClass>
                 </configuration>
                 <executions>
                     <execution>
