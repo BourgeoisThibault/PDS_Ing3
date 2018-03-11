@@ -1,1 +1,1 @@
-INSERT INTO pf_client (pseudo, encrypted_pass, first_name, last_name) VALUES ('ncna', 'HFc9/rOItWK1WUivlUp7NE3eHMIJnpeKmSeQQp58AaQgVQapPZrvO6sy1vBtdbd3enrYhZ5nL+22 oJauNpJU0g==', 'Thibault', 'BOURGEOIS');
+INSERT INTO pf_client (pseudo, encrypted_pass, first_name, last_name) VALUES ('ncna', '1c573dfeb388b562b55948af954a7b344dde1cc2099e978a992790429e7c01a4205506a93d9aef3bab32d6f06d75b7777a7ad8859e672fedb6a096ae369254d2', 'Thibault', 'BOURGEOIS');
