@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class TypeCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column( name = "id_TypeCard" )
+    @Column( name = "id_typecard" )
     private Long id_TypeCard;
 
     @Column( name = "label" )

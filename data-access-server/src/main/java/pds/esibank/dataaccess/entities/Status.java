@@ -11,11 +11,13 @@ import javax.persistence.*;
 @Entity
 @Table(name="Status")
 public class Status {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column( name = "status_id" )
-    private Long status_id;
+    @Column( name = "id_status" )
+    private Long id_status;
 
+    @Basic(optional = false)
     @Column( name = "label" )
     private String label;
 

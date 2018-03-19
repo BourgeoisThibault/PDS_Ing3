@@ -13,12 +13,20 @@ import javax.persistence.*;
 public class AccountTmp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column( name = "account_id" )
-    private Long account_id;
+    @Column( name = "id_account" )
+    private Long id_account;
 
-    @Column( name = "id_customer" )
-    private long id_customer;
+    @OneToOne
+    @JoinColumn(name="id_customer")
+    private CustomerTmp customer;
 
+    @OneToOne
+    @JoinColumn(name="id_cardtype")
+    private TypeCard typeCard;
+
+    @Basic(optional = false)
     @Column( name = "sold" )
-    private long sold;
+    private float sold;
+
+
 }

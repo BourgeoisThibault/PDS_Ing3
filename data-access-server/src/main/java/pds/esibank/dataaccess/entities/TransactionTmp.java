@@ -12,36 +12,30 @@ import java.util.Date;
 @Entity
 @Table(name="TransactionTmp")
 public class TransactionTmp {
-
-    /*
-    id_Transaction INTEGER AUTO_INCREMENT PRIMARY KEY,
-id_Customer integer,
-id_Compte integer,
-date_Operation datetime,
-amount float null,
-type_payment varchar(20),
-CONSTRAINT fk_Customer_Transaction FOREIGN KEY (id_Customer) REFERENCES client(id_Customer),
-CONSTRAINT fk_Compte_Transaction FOREIGN KEY (id_Compte) REFERENCES Compte(id_Compte)
-     */
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column( name = "id_transaction" )
     private long idTransaction;
 
-    @Column( name = "id_Customer" )
-    private Long id_Customer;
+    @OneToOne
+    @JoinColumn(name="id_customer")
+    private CustomerTmp customer;
 
-    @Column( name = "id_Compte" )
-    private Long id_Compte;
+    @OneToOne
+    @JoinColumn(name="id_account")
+    private AccountTmp account;
 
+    @Basic(optional = false)
     @Column( name = "amount" )
     private float amount;
 
-    @Basic(optional = true)
-    @Column( name = "date_transaction" )
+    @Basic(optional = false)
+    @Column( name = "date_operation" )
     @Temporal(TemporalType.DATE)
-    private Date dateTransaction;
+    private Date date_operation;
 
+    @Basic(optional = false)
     @Column( name = "type_payment" )
     private String type_payment;
 }

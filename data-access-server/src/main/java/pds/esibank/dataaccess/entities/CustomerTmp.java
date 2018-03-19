@@ -9,26 +9,24 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="ClientTmp")
-public class ClientTmp {
+@Table(name="CustomerTmp")
+public class CustomerTmp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( name = "id_Customer" )
     private Long id_Customer;
 
-    @Column( name = "adress" )
-    private String adress;
+    @OneToOne
+    @JoinColumn(name="id_status")
+    private Status status;
+
+    @Basic(optional = true)
+    @Column( name = "address" )
+    private String address;
 
     @Basic(optional = true)
     @Column( name = "phone" )
     private String phone;
-
-    @Column( name = "id_Status" )
-    private long id_Status;
-
-    @Column( name = "id_CardType" )
-    private long id_CardType;
-
 
 }
