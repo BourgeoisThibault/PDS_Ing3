@@ -1,11 +1,8 @@
 package pds.esibank.dataaccess.entities;
 
 import lombok.Data;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Set;
 
 @Data
 @Entity(name = "account")
@@ -13,19 +10,23 @@ public class Account implements  java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column( name = "account_id" )
-    private Long account_id;
+    @Column( name = "id_account" )
+    private Long id_account;
 
+    @OneToOne
+    @JoinColumn(name="id_customer")
+    private Customer customer;
 
-    @Column( name = "amount" )
-    private long amount;
+    @OneToOne
+    @JoinColumn(name="id_cardtype")
+    private TypeCard typeCard;
 
+    @Basic(optional = false)
+    @Column( name = "sold" )
+    private float sold;
 
-    //@OneToMany(mappedBy = "account")
-    //private Set<Card> card ;
-
-
+    @Basic(optional = false)
     @Column( name = "card_id_fk" )
-    private long card_id_fk;
+    private float card_id_fk;
 
 }

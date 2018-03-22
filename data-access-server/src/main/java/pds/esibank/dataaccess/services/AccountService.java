@@ -24,13 +24,13 @@ public class AccountService {
         this.accountRepository=accountRepository;
     }
 
-    public List<AccountDto> getListAccountByCardId(long card_id){
+   public List<AccountDto> getListAccountByCardId(long card_id){
         return accountRepository.getAccountByAccountId(card_id)
                 .stream()
                 .map(
                         u -> AccountDto.builder()
-                                .account_id(String.valueOf(u.getAccount_id()))
-                                .amount(String.valueOf(u.getAmount()))
+                                .account_id(String.valueOf(u.getId_account()))
+                                .amount(String.valueOf(u.getSold()))
                                 .build()
                 )
                 .collect(Collectors.toList());
