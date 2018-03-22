@@ -13,19 +13,20 @@ public class Account implements  java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column( name = "account_id" )
-    private Long account_id;
+    @Column( name = "id_account" )
+    private Long id_account;
 
+    @OneToOne
+    @JoinColumn(name="id_customer")
+    private CustomerTmp customer;
 
-    @Column( name = "amount" )
-    private long amount;
+    @OneToOne
+    @JoinColumn(name="id_cardtype")
+    private TypeCard typeCard;
 
+    @Basic(optional = false)
+    @Column( name = "sold" )
+    private float sold;
 
-    //@OneToMany(mappedBy = "account")
-    //private Set<Card> card ;
-
-
-    @Column( name = "card_id_fk" )
-    private long card_id_fk;
 
 }
