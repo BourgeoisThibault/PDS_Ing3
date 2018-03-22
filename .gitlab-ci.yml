@@ -54,6 +54,17 @@ notif_lab:
   only:
     refs:
       - master
+payfree_clt:
+  stage: deploy
+  script:
+    - mvn package -DskipTests -pl payfree-client -am
+  artifacts:
+      expire_in: 1 hrs
+      paths:
+      - payfree-client/target/payfreeclt.jar
+  only:
+    refs:
+      - master
 Exec_script:
   stage: final
   script:
@@ -64,6 +75,7 @@ Exec_script:
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - ssh esibank@$IP_DOCKER "rm -r public-html/"
     - scp -r api/ esibank@$IP_DOCKER:public-html/
+    - scp payfree-client/target/payfreeclt.jar esibank@$IP_DOCKER:public-html/payfreeclt.jar
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
     - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   only:

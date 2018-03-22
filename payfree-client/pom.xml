@@ -64,7 +64,7 @@
 
         </plugins>
 
-        <finalName>payfreeclient</finalName>
+        <finalName>payfreeclt</finalName>
 
     </build>
 
