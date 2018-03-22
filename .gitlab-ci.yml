@@ -62,6 +62,8 @@ Exec_script:
     - chmod 700 ~/.ssh/id_rsa
     - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
+    - ssh esibank@$IP_DOCKER "rm -r public-html/"
+    - scp -r api/ esibank@$IP_DOCKER:public-html/
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
     - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   only:
