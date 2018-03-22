@@ -24,7 +24,7 @@ public class AccountService {
         this.accountRepository=accountRepository;
     }
 
-    public List<AccountDto> getListAccountByCardId(long card_id){
+   /* public List<AccountDto> getListAccountByCardId(long card_id){
         return accountRepository.getAccountByAccountId(card_id)
                 .stream()
                 .map(
@@ -36,7 +36,7 @@ public class AccountService {
                 .collect(Collectors.toList());
     }
 
-
+*/
 
 
 }
