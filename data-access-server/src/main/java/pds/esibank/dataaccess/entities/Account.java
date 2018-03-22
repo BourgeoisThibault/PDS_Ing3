@@ -1,11 +1,8 @@
 package pds.esibank.dataaccess.entities;
 
 import lombok.Data;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Set;
 
 @Data
 @Entity(name = "account")
@@ -18,7 +15,7 @@ public class Account implements  java.io.Serializable {
 
     @OneToOne
     @JoinColumn(name="id_customer")
-    private CustomerTmp customer;
+    private Customer customer;
 
     @OneToOne
     @JoinColumn(name="id_cardtype")

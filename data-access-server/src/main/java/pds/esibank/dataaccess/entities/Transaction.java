@@ -20,11 +20,11 @@ public class Transaction {
 
     @OneToOne
     @JoinColumn(name="id_customer")
-    private CustomerTmp customer;
+    private Customer customer;
 
     @OneToOne
     @JoinColumn(name="id_account")
-    private AccountTmp account;
+    private Account account;
 
     @Basic(optional = false)
     @Column( name = "amount" )
