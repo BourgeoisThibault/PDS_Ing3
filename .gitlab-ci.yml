@@ -67,6 +67,8 @@ payfree_clt:
       - master
 Exec_script:
   stage: final
+  dependencies:
+    - payfree_clt
   script:
     - mkdir ~/.ssh
     - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
