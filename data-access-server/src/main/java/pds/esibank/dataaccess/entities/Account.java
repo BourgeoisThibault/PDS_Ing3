@@ -25,5 +25,8 @@ public class Account implements  java.io.Serializable {
     @Column( name = "sold" )
     private float sold;
 
+    @Basic(optional = false)
+    @Column( name = "card_id_fk" )
+    private float card_id_fk;
 
 }

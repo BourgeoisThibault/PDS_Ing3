@@ -21,11 +21,18 @@ public class AccountController {
     AccountService accountService;
 
 
-  /*  @GetMapping("/accountsByCardId/{card_id}")
+
+    @GetMapping("/accountsByCardId/{card_id}")
     public ResponseEntity<?> getAccountsByCardId(
             @PathVariable long card_id){
         List<AccountDto> list= accountService.getListAccountByCardId(card_id);
         return new ResponseEntity<List<AccountDto>>(list, HttpStatus.OK);
     }
-    */
+
+    @GetMapping("/test")
+    public String test(){
+                return "ok";
+    }
+
+
 }
