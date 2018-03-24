@@ -22,16 +22,16 @@ wget http://api.esibank.inside.esiag.info/install/payfreeclt.jar
 wget http://api.esibank.inside.esiag.info/install/Dockerfile
 
 # Stop all container
-docker stop $(docker ps -a -q)
+docker container stop payfreecontainer
 
 # Remove all container
-docker rm $(docker ps -a -q)
+docker container rm payfreecontainer
 
 # Build image and remove older
 docker build --rm -t clientpayfree:1.0 .
 
 # Run container PayFree
-docker run -d -p 1234:1234 clientpayfree:1.0
+docker run --name=payfreecontainer -d -p 1234:1234 clientpayfree:1.0
 
 echo "#######################";
 echo "# Waiting start       #";
