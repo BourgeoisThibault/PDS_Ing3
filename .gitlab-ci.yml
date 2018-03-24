@@ -1,139 +1,85 @@
 image: maven:3.3.9-jdk-8
 
 variables:
-  IP_DATABASE: "192.154.88.161"
-  IP_REST: "192.154.88.162"
-  IP_WEBAPP: "192.154.88.163"
-  IP_NOTIFICATION: "192.154.88.164"
-  IP_PUSH: "192.154.88.165"
-  IP_SIEXT: "192.154.88.151"
-
+  IP_DOCKER: "192.154.88.167"
+  IP_NOTIF: "192.154.88.168"
 stages:
   - compile
   - test
   - build
   - deploy
+  - final
 
-before_script:
-  - mkdir ~/.ssh
-  - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-  - chmod 700 ~/.ssh/id_rsa
-  - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
-  - echo "$SSH_HOST_KEYS" > ~/.ssh/known_hosts
-
-maven_compile:
+CompileAll:
   stage: compile
   script:
     - mvn compile
-
-maven_test:
+TestAll:
   stage: test
   script:
-    - mvn test
+    - echo "SKIP"
+    #- mvn test
   when: on_success
-
-maven_install_notmaster:
+PackageAll:
   stage: build
   script:
-    - mvn install -DskipTests
-  when: on_success
-  except:
-    - master
-
-maven_install:
-  stage: build
-  script:
-    - mvn install -DskipTests
+    - echo "SKIP"
+    #- mvn package -DskipTests
   when: on_success
   artifacts:
-      expire_in: 6 hrs
+      expire_in: 2 hrs
       paths:
-      - data-access-server/target/dataaccess.war
-      - rest-server/target/serverrest.war
-      - web-app-server/target/serverweb.war
-      - notification-server/target/notificationserver.jar
-      - notification-push-server/target/notificationpushserver-jar-with-dependencies.jar
-      - shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar
+      - si-externe/target/si-externe.war
       - shares-price-historisation/target/shares-price-historisation.war
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
       - predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar
-      - predict-client-leaving/target/predict-client-leaving-1.0-SNAPSHOT.jar
-      - si-externe/target/si-externe.war
   only:
     refs:
       - master
 
-deploy_database:
+#################################
+##  NE PAS TOUCHER (THIBAULT)  ##
+#################################
+esibank_lab:
   stage: deploy
-  dependencies:
-    - maven_install
   script:
-    - scp -v data-access-server/target/dataaccess.war esibank@$IP_DATABASE:/var/lib/tomcat8/webapps/dataaccess.war
-  when: on_success
+    - mvn install -DskipTests -pl data-access-server,rest-server,web-app-server,rest-secure -am
   only:
     refs:
       - master
-
-deploy_rest:
+notif_lab:
   stage: deploy
-  dependencies:
-    - maven_install
   script:
-    - scp rest-server/target/serverrest.war esibank@$IP_REST:/var/lib/tomcat8/webapps/serverrest.war
-    - scp shares-price-historisation/target/shares-price-historisation.war esibank@$IP_REST:/var/lib/tomcat8/webapps/shares-price-historisation.war
-    - scp bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/bank-transfer.jar
-    - scp predict-InvestCustomer/target/predict-InvestCustomer-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/predict-InvestCustomer.jar
-    - scp shares-price-history/target/shares-price-history-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/shares-price-history.jar
-    - scp predict-client-leaving/target/predict-client-leaving-1.0-SNAPSHOT.jar esibank@$IP_REST:/home/esibank/predict-client-leaving.jar
-
-  when: on_success
+    - mvn install -DskipTests -pl notification-server,notification-push-server -am
   only:
     refs:
       - master
-
-deploy_webapp:
+payfree_clt:
   stage: deploy
-  dependencies:
-    - maven_install
   script:
-    - scp web-app-server/target/serverweb.war esibank@$IP_DATABASE:/var/lib/tomcat8/webapps/serverweb.war
-
-  when: on_success
+    - mvn package -DskipTests -pl payfree-client -am
+  artifacts:
+      expire_in: 1 hrs
+      paths:
+      - payfree-client/target/payfreeclt.jar
   only:
     refs:
       - master
-
-deploy_notification:
-  stage: deploy
+Exec_script:
+  stage: final
   dependencies:
-    - maven_install
+    - payfree_clt
   script:
-    - scp notification-server/target/notificationserver.jar esibank@$IP_NOTIFICATION:/home/esibank/notificationserver.jar
-    - ssh esibank@$IP_NOTIFICATION "sudo service notifserver restart"
-  when: on_success
-  only:
-    refs:
-      - master
-
-deploy_push:
-  stage: deploy
-  dependencies:
-    - maven_install
-  script:
-    - scp notification-push-server/target/notificationpushserver-jar-with-dependencies.jar esibank@$IP_PUSH:/home/esibank/notificationpushserver.jar
-    - ssh esibank@$IP_PUSH "sudo service pushserver restart"
-  when: on_success
-  only:
-    refs:
-      - master
-
-deploy_siext:
-  stage: deploy
-  dependencies:
-    - maven_install
-  script:
-    - scp si-externe/target/si-externe.war esibank@$IP_SIEXT:/var/lib/tomcat8/webapps/si-externe.war
-  when: on_success
+    - mkdir ~/.ssh
+    - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - ssh-keygen -f ~/.ssh/id_rsa -y > ~/.ssh/id_rsa.pub
+    - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
+    - ssh esibank@$IP_DOCKER "rm -r public-html/"
+    - scp -r api/ esibank@$IP_DOCKER:public-html/
+    - scp payfree-client/target/payfreeclt.jar esibank@$IP_DOCKER:public-html/payfreeclt.jar
+    - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
+    - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   only:
     refs:
       - master

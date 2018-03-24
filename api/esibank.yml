@@ -1,0 +1,44 @@
+#swagger: '2.0'
+info:
+  description: Description d'utilisation de l'API de l'application REST de Esibank.
+
+
+              Vous pouvez télécharger le client PayFree [ICI](http://api.esibank.inside.esiag.info/payfreeclt.jar)
+
+  version: 1.0.0
+  title: API Esibank
+  contact:
+    name: BOURGEOIS Thibault
+    email: thibault.bourgeois@etu.u-pec.fr
+host: localhost:1111
+basePath: /
+tags:
+  - name: sample
+    description: operation sample
+paths:
+  '/sample':
+    get:
+      tags:
+        - sample
+      summary: Get all sample
+      description: ''
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Sample'
+definitions:
+  Sample:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      myString:
+        type: string
+        example: test

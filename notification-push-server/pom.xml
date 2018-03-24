@@ -91,6 +91,7 @@
                             <mainClass>pds.esibank.notificationpushserver.App</mainClass>
                         </manifest>
                     </archive>
+
                 </configuration>
                 <executions>
                     <execution>
@@ -99,9 +100,45 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
+
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <id>container</id>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <phase>install</phase>
+                        <configuration>
+                            <imageName>pushserver</imageName>
+                            <dockerDirectory>${basedir}/src/main/docker</dockerDirectory>
+                            <dockerHost>http://192.154.88.168:2376</dockerHost>
+                            <dockerCertPath></dockerCertPath>
+                            <resources>
+                                <resource>
+                                    <targetPath>/</targetPath>
+                                    <directory>${project.build.directory}</directory>
+                                    <include>${project.build.finalName}.jar</include>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
 
         <finalName>notificationpushserver</finalName>
