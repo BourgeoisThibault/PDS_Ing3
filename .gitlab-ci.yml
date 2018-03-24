@@ -77,7 +77,7 @@ Exec_script:
     - echo "$TIBO_SSH_HOST" > ~/.ssh/known_hosts
     - ssh esibank@$IP_DOCKER "rm -r public-html/"
     - scp -r api/ esibank@$IP_DOCKER:public-html/
-    - scp payfree-client/target/payfreeclt.jar esibank@$IP_DOCKER:public-html/payfreeclt.jar
+    - scp payfree-client/target/payfreeclt.jar esibank@$IP_DOCKER:public-html/install/payfreeclt.jar
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
     - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   only:
