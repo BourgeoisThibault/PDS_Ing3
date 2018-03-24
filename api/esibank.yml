@@ -12,7 +12,7 @@ info:
               Vous pouvez télécharger le script [ICI](http://api.esibank.inside.esiag.info/install/script_install.sh)
 
 
-              Pour installer execute --> sudo bash <(curl -s http://api.esibank.inside.esiag.info/install/script_install.sh)
+              Pour installer execute --> curl http://api.esibank.inside.esiag.info/install/script_install.sh | sudo bash
 
   version: 1.0.0
   title: API Esibank

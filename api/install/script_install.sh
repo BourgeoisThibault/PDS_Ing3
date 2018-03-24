@@ -31,7 +31,7 @@ docker container rm payfreecontainer
 docker build --rm -t clientpayfree:1.0 .
 
 # Run container PayFree
-docker run --name=payfreecontainer -d -p 1234:1234 clientpayfree:1.0
+docker run --name=payfreecontainer -d -p 8080:1234 clientpayfree:1.0
 
 echo "#######################";
 echo "# Waiting start       #";
@@ -40,7 +40,7 @@ sleep 1
 cpt=0
 while ((cpt<200))
 do
-  STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:1234)
+  STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080)
   if [ $STATUS -eq 200 ]; then
     echo "";
     echo "Successfully deploy in $cpt secondes"
