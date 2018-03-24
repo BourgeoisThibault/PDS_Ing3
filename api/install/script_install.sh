@@ -31,7 +31,7 @@ docker container rm payfreecontainer
 docker build --rm -t clientpayfree:1.0 .
 
 # Run container PayFree
-docker run --name=payfreecontainer -d -p 8080:1234 clientpayfree:1.0
+docker run --name=payfreecontainer -d -p 8080:4321 clientpayfree:1.0
 
 echo "#######################";
 echo "# Waiting start       #";
