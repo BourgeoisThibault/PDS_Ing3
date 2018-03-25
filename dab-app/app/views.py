@@ -133,6 +133,12 @@ def accueil():
     return render_template('accueil.html')
 
 
+@app.route('/first_loading')
+def first_contact():
+    socketio.emit('newnumber', {'number': 1}, namespace='/test')
+    return "ok"
+
+
 @app.route('/pin')
 def pinui():
     d = "Entrez code pin"
