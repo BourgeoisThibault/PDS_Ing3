@@ -22,3 +22,9 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+
+### Python ###
+*.pyc
+/venv/
+dab-app/venv/
