@@ -3,7 +3,16 @@ info:
   description: Description d'utilisation de l'API de l'application REST de Esibank.
 
 
-              Vous pouvez télécharger le client PayFree [ICI](http://api.esibank.inside.esiag.info/payfreeclt.jar)
+              Vous pouvez télécharger le client PayFree [ICI](http://api.esibank.inside.esiag.info/install/payfreeclt.jar)
+
+
+              Vous pouvez télécharger le Dockerfile [ICI](http://api.esibank.inside.esiag.info/install/Dockerfile)
+
+
+              Vous pouvez télécharger le script [ICI](http://api.esibank.inside.esiag.info/install/script_install.sh)
+
+
+              Pour installer execute --> curl http://api.esibank.inside.esiag.info/install/script_install.sh | sudo bash
 
   version: 1.0.0
   title: API Esibank

@@ -26,6 +26,10 @@ public class Transaction {
     @JoinColumn(name="id_account")
     private Account account;
 
+    @OneToOne
+    @JoinColumn( name = "fk_id_region" )
+    private Region region;
+
     @Basic(optional = false)
     @Column( name = "amount" )
     private float amount;
