@@ -46,6 +46,18 @@ def card_exists():
         return False
 
 
+@app.route('/card_checking')
+def card_checking():
+    if rest_utils.check_valid_card("214", "215"):
+        socketio.emit('newnumber', {'number': 1}, namespace='/test')
+    else:
+        print("Envoi de ko ")
+        socketio.emit('newnumber', {'number': 2}, namespace='/test')
+
+    return "ok"
+
+
+
 def valid_transac():
     if os.path.isfile(PATH):
         with open(PATH) as location_data:
