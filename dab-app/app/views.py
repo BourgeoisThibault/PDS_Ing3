@@ -46,19 +46,42 @@ def card_exists():
         return False
 
 
-def valid_transac():
-    if os.path.isfile(PATH):
-        with open(PATH) as location_data:
-            FILE = json.load(location_data)
-            for value in FILE:
-                if value['nfc2'] == 1:
-                    return True
-                else:
-                    return False
-                print "Contenu : "+str(value['server2'])
+@app.route('/card_checking')
+def card_checking():
+    if rest_utils.check_valid_card("214", "215"):
+        socketio.emit('newnumber', {'number': 1}, namespace='/test')
     else:
-        logging.warning('Fichier introuvable !')
-    return False
+        print("Envoi de ko ")
+        socketio.emit('newnumber', {'number': 2}, namespace='/test')
+
+    return "ok"
+
+
+
+# def valid_transac():
+#     if os.path.isfile(PATH):
+#         with open(PATH) as location_data:
+#             FILE = json.load(location_data)
+#             for value in FILE:
+#                 if value['nfc2'] == 1:
+#                     return True
+#                 else:
+#                     return False
+#                 print "Contenu : "+str(value['server2'])
+#     else:
+#         logging.warning('Fichier introuvable !')
+#     return False
+
+@app.route('/valid_transac')
+def valid_transac():
+    if rest_utils.check_valid_transac("214", "215", 214):
+        socketio.emit('valid_transac', {'conf': 'VALID'}, namespace='/valid_transac')
+
+    else:
+        print("Envoi de ko ")
+        socketio.emit('valid_transac', {'conf': 'NOT_VALID'}, namespace='/valid_transac')
+
+    return "ok"
 
 
 def remove_card():
@@ -80,11 +103,6 @@ def error_handler(e):
 def default_error_handler(e):
     logging.warning(request.event["args"])
     logging.warning(request.event["message"])
-
-
-@app.route('/la')
-def ici():
-    return "Le chemin de 'ici' est : " + request.path
 
 
 @app.route('/pinui/_check_data')
@@ -112,25 +130,22 @@ def last_check():
         return jsonify(result="ko")
 
 
-@app.route('/_add_numbers')
-@cross_origin(origin='*',headers=['Content-Type','Authorization'])
-def add_numbers():
-    a = request.args.get('a', 0, type=int)
-    b = request.args.get('b', 0, type=int)
-    return jsonify(result=a + b)
-
-
 @app.route('/pinui')
 def punui():
     mots = "test"
     return render_template('pinui.html')
 
 
-
 @app.route('/')
 def accueil():
     d = date.today().isoformat()
     return render_template('accueil.html')
+
+
+@app.route('/first_loading')
+def first_contact():
+    socketio.emit('newnumber', {'number': 1}, namespace='/test')
+    return "ok"
 
 
 @app.route('/pin')
