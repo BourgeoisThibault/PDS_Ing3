@@ -37,23 +37,24 @@ echo "#######################";
 echo "# Waiting start       #";
 echo "#######################";
 sleep 1
-cpt=0
-while ((cpt<200))
-do
+
+endtime=$((now + 1000))
+boolsuccess=false
+while (( $(date +%s) < $endtime )) ; do
   STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080)
   if [ $STATUS -eq 200 ]; then
+    timetoend=$((1000-$(($endtime - $(date +%s)))))
     echo "";
-    echo "Successfully deploy in $cpt secondes"
+    echo "Successfully deploy in $timetoend secondes"
+    boolsuccess=true
     break
   else
-    ((cpt+=1))
-    echo -n .;
+    echo -ne "\r$(($endtime - $(date +%s))) secondes before error";
   fi
-  sleep 1
 done
 
-if [ $cpt == 200 ]; then
+if [ $boolsuccess == false ]; then
   echo ""
-  echo "ERROR: Application not completely deploy" >&2
+  echo "ERROR: Application not completely deploy (1000 seconds)" >&2
   exit 1
 fi
