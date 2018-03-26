@@ -26,13 +26,13 @@ class CheckThread(Thread):
                     print("Envoi de ko ")
                     views.socketio.emit('newnumber', {'number': 2}, namespace='/test')
             
-            valid_transac = views.valid_transac()
-            if valid_transac:
-                views.socketio.emit('valid_transac', {'conf': 'VALID'}, namespace='/valid_transac')
-                views.remove_card()
-            else:
-                views.socketio.emit('valid_transac', {'conf': 'NOT_VALID'}, namespace='/valid_transac')
-            sleep(2)
+            # valid_transac = views.valid_transac()
+            # if valid_transac:
+            #     views.socketio.emit('valid_transac', {'conf': 'VALID'}, namespace='/valid_transac')
+            #     views.remove_card()
+            # else:
+            #     views.socketio.emit('valid_transac', {'conf': 'NOT_VALID'}, namespace='/valid_transac')
+            sleep(5)
 
     def run(self):
         self.file_checking_thread()

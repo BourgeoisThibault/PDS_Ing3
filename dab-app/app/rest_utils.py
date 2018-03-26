@@ -19,6 +19,12 @@ def check_valid_card(card_id,pin):
     # TODO Add resquest to PayFREE
     return True
 
+
+def check_valid_transac(card_id,pin,amount):
+    # TODO Add resquest to PayFREE with amount
+    return True
+
+
 def remove_card():
     #FILE["server1"] = 0
     #FILE["server2"] = 0
