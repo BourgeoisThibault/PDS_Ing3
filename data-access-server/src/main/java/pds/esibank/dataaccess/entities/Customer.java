@@ -22,6 +22,14 @@ public class Customer {
     private Status status;
 
     @Basic(optional = true)
+    @Column( name = "last_name" )
+    private String lastName;
+
+    @Basic(optional = true)
+    @Column( name = "first_name" )
+    private String firstName;
+
+    @Basic(optional = true)
     @Column( name = "address" )
     private String address;
 
