@@ -15,7 +15,7 @@ public class Loan implements java.io.Serializable{
     private Long loan_id;
     @Column(name = "loan_type")
     private String loan_type;
-    @Column( name = "laon_rate" )
+    @Column( name = "loan_rate" )
     private String loan_rate;
     @Column( name = "loan_assurance" )
     private String loan_assurance;
