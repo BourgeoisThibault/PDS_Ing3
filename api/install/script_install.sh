@@ -44,17 +44,17 @@ while (( $(date +%s) < $endtime )) ; do
   if [ $STATUS -eq 200 ]; then
     timetoend=$((1000-$(($endtime - $(date +%s)))))
     echo "";
-    echo "Successfully deploy in $timetoend secondes"
+    echo "Successfully deploy in $(($timetoend/60)) minutes and $(($timetoend%60)) seconds"
     boolsuccess=true
     break
   else
     timebeforeend=$(($endtime - $(date +%s)))
-    echo -ne "\r$(($timebeforeend/60)) minutes and $(($timebeforeend%60)) seconds before error";
+    echo -ne "\rWaiting during $(($timebeforeend/60)) minutes and $(($timebeforeend%60)) seconds";
   fi
 done
 
 if [ $boolsuccess == false ]; then
   echo ""
-  echo "ERROR: Application not completely deploy (1000 seconds)" >&2
+  echo "ERROR: Application not completely deploy" >&2
   exit 1
 fi
