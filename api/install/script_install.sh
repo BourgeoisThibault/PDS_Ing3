@@ -36,9 +36,8 @@ docker run --name=payfreecontainer -d -p 8080:4321 clientpayfree:1.0
 echo "#######################";
 echo "# Waiting start       #";
 echo "#######################";
-sleep 1
 
-endtime=$((now + 1000))
+endtime=$(($(date +%s) + 1000))
 boolsuccess=false
 while (( $(date +%s) < $endtime )) ; do
   STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080)
