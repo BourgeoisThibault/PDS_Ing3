@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Data
 @Entity(name = "receivable")
-public class Receivable {
+public class Receivable implements java.io.Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( name = "receivable_id" )
@@ -22,4 +22,12 @@ public class Receivable {
     private String receivable_assurance;
     @Column( name = "receivable_duration" )
     private String receivable_duration;
+
+    @OneToMany
+    private Loan loan;
+    @OneToMany
+    private Client client;
+
+
+
 }
