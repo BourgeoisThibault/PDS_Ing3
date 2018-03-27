@@ -23,11 +23,12 @@ public class Receivable implements java.io.Serializable{
     @Column( name = "receivable_duration" )
     private String receivable_duration;
 
-    @OneToMany
-    private Loan loan;
-    @OneToMany
+    @OneToOne
+    @JoinColumn(name="id_client")
     private Client client;
 
-
+    @OneToOne
+    @JoinColumn(name="id_loan")
+    private Loan loan;
 
 }
