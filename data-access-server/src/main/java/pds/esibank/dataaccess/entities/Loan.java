@@ -20,6 +20,6 @@ public class Loan implements java.io.Serializable{
     @Column( name = "loan_assurance" )
     private String loan_assurance;
     @Column( name = "loan_duration" )
-    private String loan_duration;
+    private int loan_duration;
 
 }
