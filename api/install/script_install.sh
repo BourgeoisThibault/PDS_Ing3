@@ -48,7 +48,8 @@ while (( $(date +%s) < $endtime )) ; do
     boolsuccess=true
     break
   else
-    echo -ne "\r$(($endtime - $(date +%s))) secondes before error";
+    timebeforeend=$(($endtime - $(date +%s)))
+    echo -ne "\r$(($timebeforeend/60)) minutes and $(($timebeforeend%60)) seconds before error";
   fi
 done
 
