@@ -15,13 +15,13 @@ public class Receivable implements java.io.Serializable{
     @Column( name = "receivable_id" )
     private Long receivable_id;
     @Column(name = "receivable_amount")
-    private String receivable_type;
+    private int receivable_amount;
     @Column( name = "receivable_rate" )
     private String receivable_rate;
     @Column( name = "receivable_assurance" )
     private String receivable_assurance;
     @Column( name = "receivable_duration" )
-    private String receivable_duration;
+    private int receivable_duration;
 
     @OneToOne
     @JoinColumn(name="id_client")
