@@ -4,6 +4,9 @@ INSERT INTO status (id_status,label) VALUES (1, 'Agriculteurs exploitants'), (2,
 
 INSERT INTO type_card (id_cardtype,label) VALUES (1, 'Master Card'), (2, 'Visa'),(3, 'Visa Electron');
 
+INSERT INTO loan(loan_id, loan_type, loan_rate, loan_assurance, loan_duration) VALUES(1, 'Emprunt etudiant','2%', 'Non',12),(2, 'Plan epargne logement','1,5%', 'Non',48);
+INSERT INTO receivable(receivable_id,receivable_type,receivable_rate,receivable_assurance,receivable_duration,id_client,id_loan) VALUES (1,'Emprunt etudiant','2%','Non',12,1,1);
+
 INSERT INTO region (id_region, name_region) VALUES (1, 'Auvergne-Rhone-Alpes'),(2, 'Bourgogne-Franche-Comté'),(3, 'Bretagne'),(4, 'Centre-Val de Loire');
 INSERT INTO region (id_region, name_region) VALUES (5, 'Corse'),(6, 'Grand Est'),(7, 'Hauts-de-France'),(8, 'Île-de-France'),(9, 'Normandie'),(10, 'Nouvelle-Aquitaine');
 INSERT INTO region (id_region, name_region) VALUES (11, 'Occitanie'),(12, 'Pays de la Loire'),(13, 'Provence-Alpes-Côte d Azur');
