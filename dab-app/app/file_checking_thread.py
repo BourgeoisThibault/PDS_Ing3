@@ -1,3 +1,7 @@
+#
+#@author ABID BUTT Usman
+#
+
 #from views import remove_card, socketio, thread_stop_event, valid_transac
 from threading import Thread, Event
 
