@@ -16,8 +16,10 @@ public class Card implements java.io.Serializable{
     @Column( name = "card_id" )
     private Long card_id;
 
+    @Column( name = "card_num" )
+    private String cardNum;
 
-  //  @ManyToOne
-//    private Account account;
+    @Column( name = "card_pass" )
+    private String cardPass;
 
 }

@@ -31,7 +31,7 @@ docker container rm payfreecontainer
 docker build --rm -t clientpayfree:1.0 .
 
 # Run container PayFree
-docker run --name=payfreecontainer -d -p 8080:4321 clientpayfree:1.0
+docker run --name=payfreecontainer -d -p 4321:4321 clientpayfree:1.0
 
 echo "#######################";
 echo "# Waiting start       #";
@@ -40,7 +40,7 @@ echo "#######################";
 endtime=$(($(date +%s) + 1000))
 boolsuccess=false
 while (( $(date +%s) < $endtime )) ; do
-  STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080)
+  STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:4321)
   if [ $STATUS -eq 200 ]; then
     timetoend=$((1000-$(($endtime - $(date +%s)))))
     echo "";

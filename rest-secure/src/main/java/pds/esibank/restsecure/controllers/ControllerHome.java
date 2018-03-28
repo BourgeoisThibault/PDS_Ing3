@@ -48,9 +48,9 @@ public class ControllerHome {
         if(pfClientDto == null)
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 
-        if (MySHA.checkSign(pfClientDto.getEncryptedPass(),"",cryptSignType,requestSign))
-            return new ResponseEntity(pfClientDto,HttpStatus.OK);
-        else
+        //if (MySHA.checkSign(pfClientDto.getEncryptedPass(),"",cryptSignType,requestSign))
+        //    return new ResponseEntity(pfClientDto,HttpStatus.OK);
+        //else
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 
 
