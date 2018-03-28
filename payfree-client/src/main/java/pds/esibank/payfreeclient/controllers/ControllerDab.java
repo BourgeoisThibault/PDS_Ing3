@@ -47,7 +47,7 @@ public class ControllerDab {
             @RequestParam("pin") String pin
     ){
 
-        String finalUrl = URL_SECURE + "/verify";
+        String finalUrl = URL_SECURE + "verify";
 
         String encryptedPass = MySHA.passToSHA(pin, cryptPassType);
         String signature = MySHA.generateSign(encryptedPass, "", cryptSignType);
@@ -74,7 +74,7 @@ public class ControllerDab {
             @RequestParam("amount") String amount
     ){
 
-        String finalUrl = URL_SECURE + "/checking";
+        String finalUrl = URL_SECURE + "checking";
 
         String encryptedPass = MySHA.passToSHA(pin, cryptPassType);
         String signature = MySHA.generateSign(encryptedPass, amount, cryptSignType);
@@ -101,7 +101,7 @@ public class ControllerDab {
             @RequestParam("pin") String pin,
             @RequestParam("amount") String amount){
 
-        String finalUrl = URL_SECURE + "/confirm";
+        String finalUrl = URL_SECURE + "confirm";
 
         String encryptedPass = MySHA.passToSHA(pin, cryptPassType);
         String signature = MySHA.generateSign(encryptedPass, card + amount, cryptSignType);
