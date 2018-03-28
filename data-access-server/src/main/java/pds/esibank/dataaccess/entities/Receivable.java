@@ -23,9 +23,9 @@ public class Receivable implements java.io.Serializable{
     @Column( name = "receivable_duration" )
     private int receivable_duration;
 
-    @OneToMany
-    @JoinColumn(name="id_Customer")
-    private Customer customer;
+    //@OneToMany
+    //@JoinColumn(name="id_Customer")
+    //private Customer customer;
 
     @OneToOne
     @JoinColumn(name="id_loan")

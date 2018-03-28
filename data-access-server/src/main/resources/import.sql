@@ -1,4 +1,5 @@
 INSERT INTO pf_client (pseudo, encrypted_pass, first_name, last_name) VALUES ('ncna', '1c573dfeb388b562b55948af954a7b344dde1cc2099e978a992790429e7c01a4205506a93d9aef3bab32d6f06d75b7777a7ad8859e672fedb6a096ae369254d2', 'Thibault', 'BOURGEOIS');
+INSERT INTO card (card_num, card_pass) VALUES ('1234567890', '1c573dfeb388b562b55948af954a7b344dde1cc2099e978a992790429e7c01a4205506a93d9aef3bab32d6f06d75b7777a7ad8859e672fedb6a096ae369254d2');
 
 INSERT INTO status (id_status,label) VALUES (1, 'Agriculteurs exploitants'), (2, 'Artisans, commerçants et chefs d entreprise'),(3, 'Cadres et professions intellectuelles supérieures'),(4, 'Professions Intermédiaires'),(5, 'Employés'),(6, 'Ouvriers'),(7, 'Retraités'),(8,'Autres personnes sans activité professionnelle');
 
