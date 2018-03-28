@@ -10,7 +10,7 @@ class CheckThread(Thread):
         self.delay = 1
         super(CheckThread, self).__init__()
 
-    def file_checking_thread(self):
+    def pooling_Thread(self):
         #logging.info('Dans le Thread....')
 
         while not views.thread_stop_event.isSet():
@@ -25,14 +25,9 @@ class CheckThread(Thread):
                 else:
                     print("Envoi de ko ")
                     views.socketio.emit('newnumber', {'number': 2}, namespace='/test')
-            
-            # valid_transac = views.valid_transac()
-            # if valid_transac:
-            #     views.socketio.emit('valid_transac', {'conf': 'VALID'}, namespace='/valid_transac')
-            #     views.remove_card()
-            # else:
-            #     views.socketio.emit('valid_transac', {'conf': 'NOT_VALID'}, namespace='/valid_transac')
-            sleep(5)
+            sleep(1)
+            views.socketio.emit('valid_transac', {'conf': 'NOT_VALID'}, namespace='/valid_transac')
+            views.socketio.emit('newnumber', {'number': 0}, namespace='/test')
 
     def run(self):
-        self.file_checking_thread()
+        self.pooling_Thread()

@@ -106,7 +106,7 @@ def default_error_handler(e):
 
 
 @app.route('/pinui/_check_data')
-@cross_origin(origin='*',headers=['Content-Type','Authorization'])
+#@cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def check():
     data = True
     print("en attente ....")
