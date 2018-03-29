@@ -18,20 +18,9 @@ class CheckThread(Thread):
         #logging.info('Dans le Thread....')
 
         while not views.thread_stop_event.isSet():
-            value = views.card_exists()
-            if value == "ok":
-                views.socketio.emit('newnumber', {'number': 1}, namespace='/test')
-
-            else:
-                if value == "none":
-                    views.socketio.emit('newnumber', {'number': 0}, namespace='/test')
-                    print "none"
-                else:
-                    print("Envoi de ko ")
-                    views.socketio.emit('newnumber', {'number': 2}, namespace='/test')
+            views.socketio.emit('newnumber', {'number': 0}, namespace='/home_pool')
             sleep(1)
-            views.socketio.emit('valid_transac', {'conf': 'NOT_VALID'}, namespace='/valid_transac')
-            views.socketio.emit('newnumber', {'number': 0}, namespace='/test')
+            views.socketio.emit('confirm_transac', {'conf': 'NOT_VALID'}, namespace='/confirm_transac')
 
     def run(self):
         self.pooling_Thread()

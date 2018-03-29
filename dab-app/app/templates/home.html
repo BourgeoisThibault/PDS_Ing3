@@ -24,10 +24,16 @@
     <div class="container main-content-err">
         <div class="starter-template">
             <div class="alert alert-warning">
-                <strong>Erreur contact NFC - Merci de ré-essayer</strong>
+                <strong>Aucun compte n'est associé à ce numéro de carte. </strong>
             </div>
         </div>
 
+    </div>
+    <div>
+            <form  action="http://localhost:5000/pinui" method="POST" id="form_info_home">
+                <input type="hidden" id="var1" name="card_id" value=""/>
+                <input type="hidden" id="var2" name="pin" value=""/>
+            </form>
     </div>
 <div class="loading"></div>
 
@@ -37,10 +43,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-<script type="text/javascript" charset="utf-8">
+<script  type="text/javascript" src="{{url_for('.static', filename='js/home.js')}}"></script>
 
-</script>
-    <!--</body>-->
 
 <!--</html>-->
 {% endblock %}

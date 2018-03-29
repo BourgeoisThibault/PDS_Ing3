@@ -43,6 +43,14 @@
       </tbody>
    </table>
    </div>
+
+       <div>
+           <form  action="http://localhost:5000/pinui" method="POST" id="form_info_pinui">
+               <input type="hidden" id="var1" name="card" value={{ card_id }}/>
+               <input type="hidden" id="var2" name="pin" value={{ pin_id }}/>
+           </form>
+       </div>
+
 </div>
 </div>
 
@@ -94,49 +102,11 @@
 
 {% block scripts %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script  type="text/javascript" src="{{url_for('.static', filename='js/pinui.js')}}"></script>
 
 
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-    var socket = io.connect('http://localhost:' + location.port + '/valid_transac');
-     //var numbers_received = [];
-     var numbers_received = '';
-
-
-     //receive details from server
-    socket.on('valid_transac', function(msg) {
-        console.log("Received conf" + msg.conf);
-        var response =msg.conf;
-        if(response=="VALID"){
-            //socket.disconnect();
-            //window.location.href = '/pinui';
-            console.log('OK valid_transac !');
-                    $(".loading").css('visibility', 'visible');
-
-            $.getJSON("http://localhost:5000" + '/pinui/_last_checking', {
-
-            }, function(data) {
-                if(data.result = "ok"){
-                    console.log("Félicication :...")
-                    $(".loading").css('visibility', 'hidden');
-                    $(".main-content-conf").hide();
-                    $(".main-content-validation").css('visibility', 'visible');
-                    setTimeout(function(){
-                      console.log("Boom!");
-                    }, 2000);
-                    $(".loading").css('visibility', 'visible');
-                    window.location.href = '/';
-
-                }
-                else
-                    console.log("Erreur...")
-
-                console.log(data.result);
-            });
-        }
-    });
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 
 </script>
 {% endblock %}
