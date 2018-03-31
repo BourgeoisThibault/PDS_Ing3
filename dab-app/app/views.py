@@ -14,48 +14,22 @@ from flask.ext.cors import CORS, cross_origin
 from datetime import date
 from flask_socketio import SocketIO,send,emit
 
-from random import random
 from time import sleep
 from threading import Thread, Event
 
-from app.file_checking_thread import CheckThread
+from app.pooling_socket_thread import CheckThread
 
 from app import socketio, app
 
-logging.basicConfig(filename='dap-app.log',level=logging.DEBUG)
-
-
-
-
-PATH = "card_file.json"
-FILE = {}
+logging.basicConfig(filename='dap-app.log', level=logging.DEBUG)
 
 
 thread = Thread()
 thread_stop_event = Event()
 
 
-
-def card_exists():
-    if os.path.isfile(PATH):
-        with open(PATH) as location_data:
-            FILE = json.load(location_data)
-            for value in FILE:
-                if value["nfc1"] != 0:
-                    print "AVANT APPEL getAccountsList"
-                    print "Reponse accountList : "+str(rest_utils.getAccountsList(value["nfc1"]))
-                    return rest_utils.getAccountsList(value["nfc1"])
-                else:
-                    return "none"
-                print "Contenu : "+str(value['nfc1'])
-
-    else:
-        logging.warning('Fichier introuvable !')
-        return False
-
-
 @app.route('/card_checking')
-@cross_origin(origin='*',headers=['Content-Type','Authorization'])
+#@cross_origin(origin='*',headers=['Content-Type', 'Authorization'])
 def card_checking():
     card_id = request.args.get('card_id')
     pin = request.args.get('pin')
@@ -68,23 +42,6 @@ def card_checking():
         socketio.emit('newnumber', {'number': 2}, namespace='/home_pool')
         return "ko", 401
 
-
-
-
-
-# def valid_transac():
-#     if os.path.isfile(PATH):
-#         with open(PATH) as location_data:
-#             FILE = json.load(location_data)
-#             for value in FILE:
-#                 if value['nfc2'] == 1:
-#                     return True
-#                 else:
-#                     return False
-#                 print "Contenu : "+str(value['server2'])
-#     else:
-#         logging.warning('Fichier introuvable !')
-#     return False
 
 @app.route('/confirm_transac')
 def confirm_transac():
@@ -105,16 +62,6 @@ def confirm_transac():
         return "ko", 401
 
 
-def remove_card():
-    #FILE["server1"] = 0
-    #FILE["server2"] = 0
-    print("Removing card...")
-    FILE = [{"nfc1": 0, "nfc2": 0}]
-    with open(PATH, "w") as jsonFile:
-        json.dump(FILE, jsonFile)
-    print("Remove card : OK")
-
-
 @socketio.on_error()
 def error_handler(e):
     pass
@@ -127,7 +74,7 @@ def default_error_handler(e):
 
 
 @app.route('/pinui/_check_data')
-@cross_origin(origin='*',headers=['Content-Type','Authorization'])
+#@cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def check_valid_transac():
     print("en attente ....")
     sleep(2)
@@ -145,9 +92,8 @@ def check_valid_transac():
         return jsonify(result="ko")
 
 
-
 @app.route('/pinui/_last_checking')
-@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
+#@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 def last_check():
     data = True
     logging.info('en attente de last_checking....')

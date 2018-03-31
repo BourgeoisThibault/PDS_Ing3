@@ -7,18 +7,6 @@ import logging
 import json
 logging.basicConfig(filename='dap-app.log',level=logging.DEBUG)
 
-PATH = "card_file.json"
-
-
-def getAccountsList(card_id):
-    logging.info("APPEL method rest getAccountsList")
-    response = requests.get("http://ws.esibank.inside.esiag.info/checkAccountValid/"+str(card_id))
-    logging.info("Message recu : "+str(response.text))
-    remove_card()
-    return response.text
-
-
-
 
 def check_valid_card(card_id,pin):
     url = "http://localhost:4321/check?card="+str(card_id)+"&&pin="+str(pin)
@@ -67,14 +55,3 @@ def check_confirm_transac(card_id, pin, amount):
         return False
     else:
         return None
-
-def remove_card():
-    #FILE["server1"] = 0
-    #FILE["server2"] = 0
-    print("Removing card...")
-    FILE = [{"nfc1": 0, "nfc2": 0}]
-    with open(PATH, "w") as jsonFile:
-        json.dump(FILE, jsonFile)
-    print("Remove card : OK")
-
-

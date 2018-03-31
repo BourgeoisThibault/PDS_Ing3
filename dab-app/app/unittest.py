@@ -4,6 +4,9 @@
 
 import unittest
 
+from app import socketio, app
+
+
 class DabAppTestCase(unittest.TestCase):
 
 
