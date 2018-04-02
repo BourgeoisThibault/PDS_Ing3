@@ -78,7 +78,7 @@ Exec_script:
     - ssh esibank@$IP_DOCKER "rm -r public-html/"
     - scp -r api/ esibank@$IP_DOCKER:public-html/
     - scp payfree-client/target/payfreeclt.jar esibank@$IP_DOCKER:public-html/install/payfreeclt.jar
-    - scp dab-app.tgz esibank@$IP_DOCKER:public-html/install/dab-app.tgz
+    - scp dab-app/dab-app.tgz esibank@$IP_DOCKER:public-html/install/dab-app.tgz
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
     - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   only:
