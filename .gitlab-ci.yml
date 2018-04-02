@@ -94,7 +94,7 @@ dap_app:
   artifacts:
       expire_in: 1 hrs
       paths:
-      - dab-app/dab-app.tgz
+      - dab-app.tgz
   only:
     refs:
       - master
