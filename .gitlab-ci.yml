@@ -69,6 +69,7 @@ Exec_script:
   stage: final
   dependencies:
     - payfree_clt
+    - dab-app
   script:
     - mkdir ~/.ssh
     - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
@@ -87,7 +88,7 @@ Exec_script:
 #################################
 ##  NE PAS TOUCHER (USMAN)  ##
 #################################
-dap_app:
+dab_app:
   stage: deploy
   script:
     - tar -zcvf dab-app.tgz dab-app/
