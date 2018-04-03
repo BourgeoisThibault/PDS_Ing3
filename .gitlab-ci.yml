@@ -57,6 +57,7 @@ nfc_lib_c:
   stage: deploy
   script:
     - mkdir nfc-reader-lib-repo/
+    - mkdir nfc-reader-lib/build/
     - cd nfc-reader-lib/build
     - cmake ../source
     - make
