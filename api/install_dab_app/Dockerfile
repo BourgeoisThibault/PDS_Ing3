@@ -1,11 +1,6 @@
-FROM python:2.7
+FROM openjdk:8-jdk-alpine
 
-ADD dab-app.tgz ./
-RUN tar -xvf dab-app.tgz
-WORKDIR /dab-app
+ADD payfreeclt.jar myapp.jar
+RUN sh -c 'touch /myapp.jar'
 
-RUN python import-dependencies.py
-
-ENTRYPOINT [ "python" ]
-
-CMD [ "application.py" ]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/myapp.jar","--url.secure=https://ws.esibank.inside.esiag.info/"]

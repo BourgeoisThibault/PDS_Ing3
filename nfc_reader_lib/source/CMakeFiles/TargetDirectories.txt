@@ -1,1 +1,0 @@
-/home/pi/explore-nfc/card-emulation/CardEmulation-FB/source/CMakeFiles/cardEmulation-fb.dir
