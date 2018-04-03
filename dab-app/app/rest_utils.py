@@ -5,8 +5,7 @@
 import requests
 import logging
 import json
-logging.basicConfig(filename='dap-app.log',level=logging.DEBUG)
-
+from app import logging
 
 def check_valid_card(card_id,pin):
     url = "http://localhost:4321/check?card="+str(card_id)+"&&pin="+str(pin)

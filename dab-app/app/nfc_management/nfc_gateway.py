@@ -5,8 +5,8 @@
 import sys
 import nfc_rest
 import logging
+from app import logging
 
-logging.basicConfig(filename='nfc_management.log', level=logging.DEBUG)
 
 CARD_NUMBER_SIZE = 16
 CARD_PIN_SIZE = 4
@@ -31,9 +31,9 @@ def handle_card_checking_contact():
         nfc_rest.send_contact_info(card_id, pin_id)
         print("Tests are ok")
     else:
-        print("############################################")
-        print("<---> /!\ BAD Information from device /!\ <--->")
-        print("############################################")
+        logging.error("############################################")
+        logging.error("<---> /!\ BAD Information from device /!\ <--->")
+        logging.error("############################################")
 
 
 def has_numbers_only(inputCardNumber, length):
@@ -42,14 +42,14 @@ def has_numbers_only(inputCardNumber, length):
         if char.isdigit() and len(inputCardNumber) == length:
             print("is ok")
         else:
-            print("is ko")
+            logging.error("is ko")
             correct = False
     return correct
 
 
 if __name__ == '__main__':
-    print("############################################")
-    print("<---> !!! Contact from client device!!! <--->")
-    print("############################################")
+    logging.info("############################################")
+    logging.info("<---> !!! Contact from client device!!! <--->")
+    logging.info("############################################")
 
     handle_card_checking_contact()

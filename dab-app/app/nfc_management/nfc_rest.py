@@ -6,8 +6,7 @@ import logging
 import datetime
 import requests
 
-logging.basicConfig(filename='nfc_management.log', level=logging.DEBUG)
-
+import logging
 
 LOALHOST_DAB_URL = "http://localhost:5000/card_checking"
 
