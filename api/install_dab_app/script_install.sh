@@ -7,19 +7,31 @@ if [ "$UID" -ne "0" ]; then
 fi
 
 # Remove folder
-rm -r payfree_client
+rm -r dab-app
 
 # Create folder
-mkdir payfree_client
+mkdir dab-app
 
 # Enter in folder
-cd payfree_client
+cd dab-app
 
 # Download compress dab-app application file
 wget http://api.esibank.inside.esiag.info/install_dab_app/dab-app.tgz
 
 # Download Dockerfile
 wget http://api.esibank.inside.esiag.info/install_dab_app/Dockerfile
+
+
+# Download nef reader C lib
+wget http://api.esibank.inside.esiag.info/install_dab_app/nfc-reader-lib.zip
+
+unzip nfc-reader-lib.zip
+
+cd nfc-reader-lib/build
+
+cmake ../source
+
+make ./cardEmulation-fb &
 
 # Stop all container
 docker container stop dabappcontainer
@@ -28,33 +40,33 @@ docker container stop dabappcontainer
 docker container rm dabappcontainer
 
 # Build image and remove older
-#docker build --rm -t dabappcontainer:1.0 .
+docker build --rm -t dabappcontainer:1.0 .
 
-# Run container PayFree
-#docker run --name=dabappcontainer -d -p 4321:4321 dabappcontainer:1.0
+# Run container dab-app
+docker run --name=dabappcontainer -d -p 5000:5000 dabappcontainer:1.0
 
-#echo "#######################";
-#echo "# Waiting start       #";
-#echo "#######################";
+echo "#######################";
+echo "# Waiting start       #";
+echo "#######################";
 
-#endtime=$(($(date +%s) + 1000))
-#boolsuccess=false
-#while (( $(date +%s) < $endtime )) ; do
-#  STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:5000)
-#  if [ $STATUS -eq 200 ]; then
-#    timetoend=$((1000-$(($endtime - $(date +%s)))))
-#    echo "";
-#    echo "Successfully deploy in $(($timetoend/60)) minutes and $(($timetoend%60)) seconds"
-#    boolsuccess=true
-#    break
-#  else
-#    timebeforeend=$(($endtime - $(date +%s)))
-#    echo -ne "\rWaiting during $(($timebeforeend/60)) minutes and $(($timebeforeend%60)) seconds";
-#  fi
-#done
-#
-#if [ $boolsuccess == false ]; then
-#  echo ""
-#  echo "ERROR: Application not completely deploy" >&2
-#  exit 1
-#fi
+endtime=$(($(date +%s) + 1000))
+boolsuccess=false
+while (( $(date +%s) < $endtime )) ; do
+  STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:5000)
+  if [ $STATUS -eq 200 ]; then
+    timetoend=$((1000-$(($endtime - $(date +%s)))))
+    echo "";
+    echo "Successfully deploy in $(($timetoend/60)) minutes and $(($timetoend%60)) seconds"
+    boolsuccess=true
+    break
+  else
+    timebeforeend=$(($endtime - $(date +%s)))
+    echo -ne "\rWaiting during $(($timebeforeend/60)) minutes and $(($timebeforeend%60)) seconds";
+  fi
+done
+
+if [ $boolsuccess == false ]; then
+  echo ""
+  echo "ERROR: Application not completely deploy" >&2
+  exit 1
+fi
