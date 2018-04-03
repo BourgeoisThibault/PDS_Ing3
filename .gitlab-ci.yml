@@ -58,6 +58,7 @@ nfc_lib_c:
   script:
     - mkdir nfc-reader-lib-repo/
     - mkdir nfc-reader-lib/build/
+    - cp nfc-reader-lib/source/Makefile nfc-reader-lib/build/
     - cd nfc-reader-lib/build
     - cmake ../source
     - make
