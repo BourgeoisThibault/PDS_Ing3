@@ -26,5 +26,9 @@ nbdist/
 
 ### Python ###
 *.pyc
+dab-app/*.pyc
+dab-app/app/*.pyc
 /venv/
 dab-app/venv/
+dab-app/dap-app.log
+nfc-reader-lib/.idea

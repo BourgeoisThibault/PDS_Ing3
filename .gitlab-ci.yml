@@ -53,6 +53,22 @@ dab_app:
     refs:
       - master
 
+nfc_lib_c:
+  stage: deploy
+  script:
+    - mkdir nfc-reader-lib-repo/
+    - cd nfc-reader-lib/build
+    - cmake ../source
+    - make
+    - cd ../../
+    - tar -zcvf nfc-reader-lib-repo/nfc-reader-lib.tgz nfc-reader-lib/
+  artifacts:
+      expire_in: 1 hrs
+      paths:
+      - nfc-reader-lib-repo/nfc-reader-lib.tgz
+  only:
+    refs:
+      - master
 
 #################################
 ##  NE PAS TOUCHER (THIBAULT)  ##
@@ -96,6 +112,7 @@ Exec_script:
     - ssh esibank@$IP_DOCKER "rm -r public-html/"
     - scp -r api/ esibank@$IP_DOCKER:public-html/
     - scp payfree-client/target/payfreeclt.jar esibank@$IP_DOCKER:public-html/install/payfreeclt.jar
+    - scp nfc-reader-lib-repo/nfc-reader-lib.tgz esibank@$IP_DOCKER:public-html/install_dab_app/nfc-reader-lib.tgz
     - scp dab-app-tgz-repo/dab-appdab-app.tgz esibank@$IP_DOCKER:public-html/install_dab_app/dab-app.tgz
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
     - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
