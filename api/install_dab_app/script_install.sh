@@ -18,9 +18,11 @@ cd dab-app
 # Download compress dab-app application file
 wget http://api.esibank.inside.esiag.info/install_dab_app/dab-app.tgz
 
+# Extract dab-app
+tar -xvf dab-app.tgz
+
 # Download Dockerfile
 wget http://api.esibank.inside.esiag.info/install_dab_app/Dockerfile
-
 
 # Download nef reader C lib
 wget http://api.esibank.inside.esiag.info/install_dab_app/nfc-reader-lib.zip
