@@ -1,9 +1,0 @@
-INFO:root:########################################
-INFO:root:Contact NFC, catch information from device  : 4523456789254789;1234
-INFO:root:########################################
-INFO:root:###########################################################
-INFO:root:##### Sending URL from nfc_gateway : http://localhost:5000/card_checking?card_id=4523456789254789&&pin=1234
-INFO:root:###########################################################
-DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): localhost
-DEBUG:urllib3.connectionpool:http://localhost:5000 "GET /card_checking?card_id=4523456789254789&&pin=1234 HTTP/1.1" 500 291
-ERROR:root:##### Error sending information to DAB : http://localhost:5000/card_checking?card_id=4523456789254789&&pin=1234

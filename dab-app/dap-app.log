@@ -307,3 +307,41 @@ INFO:werkzeug:127.0.0.1 - - [01/Apr/2018 00:13:15] "GET /socket.io/?EIO=3&transp
 INFO:werkzeug:127.0.0.1 - - [01/Apr/2018 00:13:16] "GET /socket.io/?EIO=3&transport=polling&t=1522534395761-36&sid=0bbe4e5802be4462b8f1a9aeb1323781 HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [01/Apr/2018 00:13:17] "GET /socket.io/?EIO=3&transport=polling&t=1522534396780-37&sid=0bbe4e5802be4462b8f1a9aeb1323781 HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [01/Apr/2018 00:13:18] "GET /socket.io/?EIO=3&transport=polling&t=1522534397801-38&sid=0bbe4e5802be4462b8f1a9aeb1323781 HTTP/1.1" 200 -
+INFO:engineio:Server initialized for threading.
+INFO:werkzeug: * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+INFO:engineio:Server initialized for threading.
+INFO:werkzeug: * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+INFO:engineio:Server initialized for threading.
+INFO:engineio:Server initialized for threading.
+INFO:werkzeug: * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [02/Apr/2018 16:43:08] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Apr/2018 16:43:08] "GET /static/css/pinui.css HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [02/Apr/2018 16:43:08] "GET /static/js/home.js HTTP/1.1" 304 -
+INFO:engineio:a4a1d804a8fe40d3a8cbdc8447413de3: Sending packet OPEN data {'pingInterval': 25000, 'pingTimeout': 60000, 'upgrades': [], 'sid': 'a4a1d804a8fe40d3a8cbdc8447413de3'}
+INFO:engineio:a4a1d804a8fe40d3a8cbdc8447413de3: Sending packet MESSAGE data 0
+INFO:werkzeug:127.0.0.1 - - [02/Apr/2018 16:43:08] "GET /socket.io/?EIO=3&transport=polling&t=1522680188560-0 HTTP/1.1" 200 -
+INFO:engineio:a4a1d804a8fe40d3a8cbdc8447413de3: Received packet MESSAGE data 0/home_pool
+INFO:root:Starting Thread
+INFO:socketio:emitting event "newnumber" to all [/home_pool]
+INFO:engineio:a4a1d804a8fe40d3a8cbdc8447413de3: Sending packet MESSAGE data 0/home_pool
+INFO:engineio:a4a1d804a8fe40d3a8cbdc8447413de3: Sending packet MESSAGE data 2/home_pool,["newnumber",{"number":0}]
+INFO:werkzeug:127.0.0.1 - - [02/Apr/2018 16:43:08] "POST /socket.io/?EIO=3&transport=polling&t=1522680188568-1&sid=a4a1d804a8fe40d3a8cbdc8447413de3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Apr/2018 16:43:08] "GET /socket.io/?EIO=3&transport=polling&t=1522680188569-2&sid=a4a1d804a8fe40d3a8cbdc8447413de3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Apr/2018 16:43:08] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:socketio:emitting event "confirm_transac" to all [/confirm_transac]
+INFO:socketio:emitting event "newnumber" to all [/home_pool]
+INFO:engineio:a4a1d804a8fe40d3a8cbdc8447413de3: Sending packet MESSAGE data 2/home_pool,["newnumber",{"number":0}]
+INFO:werkzeug:127.0.0.1 - - [02/Apr/2018 16:43:09] "GET /socket.io/?EIO=3&transport=polling&t=1522680188579-3&sid=a4a1d804a8fe40d3a8cbdc8447413de3 HTTP/1.1" 200 -
+INFO:socketio:emitting event "confirm_transac" to all [/confirm_transac]
+INFO:socketio:emitting event "newnumber" to all [/home_pool]
+INFO:engineio:a4a1d804a8fe40d3a8cbdc8447413de3: Sending packet MESSAGE data 2/home_pool,["newnumber",{"number":0}]
+INFO:werkzeug:127.0.0.1 - - [02/Apr/2018 16:43:10] "GET /socket.io/?EIO=3&transport=polling&t=1522680189608-4&sid=a4a1d804a8fe40d3a8cbdc8447413de3 HTTP/1.1" 200 -
+INFO:socketio:emitting event "confirm_transac" to all [/confirm_transac]
+INFO:socketio:emitting event "newnumber" to all [/home_pool]
+INFO:engineio:a4a1d804a8fe40d3a8cbdc8447413de3: Sending packet MESSAGE data 2/home_pool,["newnumber",{"number":0}]
+INFO:socketio:emitting event "confirm_transac" to all [/confirm_transac]
+INFO:socketio:emitting event "newnumber" to all [/home_pool]
+INFO:engineio:a4a1d804a8fe40d3a8cbdc8447413de3: Sending packet MESSAGE data 2/home_pool,["newnumber",{"number":0}]
+INFO:socketio:emitting event "confirm_transac" to all [/confirm_transac]
+INFO:socketio:emitting event "newnumber" to all [/home_pool]
+INFO:engineio:a4a1d804a8fe40d3a8cbdc8447413de3: Sending packet MESSAGE data 2/home_pool,["newnumber",{"number":0}]

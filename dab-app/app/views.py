@@ -20,8 +20,7 @@ from threading import Thread, Event
 from app.pooling_socket_thread import CheckThread
 
 from app import socketio, app
-
-logging.basicConfig(filename='dap-app.log', level=logging.DEBUG)
+from app import logging
 
 
 thread = Thread()
@@ -135,6 +134,7 @@ def test_message(message):  # test_message() is the event callback function.
 def test_connect():
     logging.info('Client 2nd front page connected !')
 
+
 @socketio.on('connect', namespace='/home_pool')
 def test_connect2():
     # need visibility of the global thread object
@@ -144,6 +144,7 @@ def test_connect2():
     #  Start the thread which loop
     if not thread.isAlive():
         print "Starting Thread"
+        logging.info("Starting Thread")
         thread = CheckThread()
         thread.start()
 
