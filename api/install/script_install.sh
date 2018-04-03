@@ -31,7 +31,7 @@ docker container rm payfreecontainer
 docker build --rm -t clientpayfree:1.0 .
 
 # Run container PayFree
-docker run --name=payfreecontainer -d -p 4321:4321 clientpayfree:1.0
+docker run --add-host ws.esibank.inside.esiag.info:192.168.20.3 --name=payfreecontainer -d -p 4321:4321 clientpayfree:1.0
 
 echo "#######################";
 echo "# Waiting start       #";
