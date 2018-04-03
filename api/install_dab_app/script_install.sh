@@ -16,7 +16,7 @@ mkdir dab-app
 cd dab-app
 
 # Download compress dab-app application file
-wget http://api.esibank.inside.esiag.info/install_dab_app/dap-app.tgz
+wget http://api.esibank.inside.esiag.info/install_dab_app/dab-app.tgz
 
 # Download Dockerfile
 wget http://api.esibank.inside.esiag.info/install_dab_app/Dockerfile
