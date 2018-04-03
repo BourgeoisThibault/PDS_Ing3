@@ -1,9 +1,0 @@
-# Define the email address of the Facebook account to be used.
-User=neonigmatests@gmail.com
-
-# Define the password of the Facebook account.
-Pass=smartguide
-
-# Define the Privacy setting of the Status Update to be used.
-# Possible values: Public, Friends, Only Me
-#Privacy=Only Me
