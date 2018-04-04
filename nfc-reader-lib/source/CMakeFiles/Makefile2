@@ -50,7 +50,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = ${READER_PATH}/source
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = ${READER_PATH}/source
+CMAKE_BINARY_DIR = ${READER_PATH}/build
 
 #=============================================================================
 # Target rules for target CMakeFiles/cardEmulation-fb.dir
