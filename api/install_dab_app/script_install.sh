@@ -32,6 +32,11 @@ wget http://api.esibank.inside.esiag.info/install_dab_app/Dockerfile
 # Download nef reader C lib
 wget http://api.esibank.inside.esiag.info/install_dab_app/nfc-reader-lib.tgz
 
+echo "#######################";
+echo "# Manage NFC LIB step  #";
+echo "#######################";
+
+
 echo "tar -xvf nfc-reader-lib.tgz"
 tar -xvf nfc-reader-lib.tgz
 
@@ -50,7 +55,6 @@ mkdir  $HOME_PATH/explore-nfc
 echo "cp -r nfc-reader-lib/* ~/explore-nfc"
 cp -r nfc-reader-lib/*  $HOME_PATH/explore-nfc
 
-
 echo "Chemin courant : "`pwd`
 cd $HOME_PATH/explore-nfc/build
 
@@ -67,7 +71,18 @@ cmake ../source
 
 echo "make"
 echo "Chemin courant"`pwd`
+cd $HOME_PATH/explore-nfc/source
 make
+
+echo "chmod 777 ./cardEmulation-fb"
+chmod 777 ./cardEmulation-fb
+
+echo "./cardEmulation-fb"
+./cardEmulation-fb &
+
+echo "#######################";
+echo "#   Docker step       #";
+echo "#######################";
 
 
 # Stop all container
