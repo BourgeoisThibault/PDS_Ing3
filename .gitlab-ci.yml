@@ -52,6 +52,12 @@ dab_app:
   only:
     refs:
       - master
+      
+
+before_script:
+# Install build dependencies
+  - apt-get update && apt-get -y install cmake 
+
 
 nfc_lib_c:
   stage: deploy
