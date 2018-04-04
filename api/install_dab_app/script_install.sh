@@ -1,5 +1,9 @@
 #!/bin/bash
 
+export READER_PATH=/home/pi/explore-nfc
+export HOME_PATH=/home/pi
+
+
 # Check if script is execute with SUDO permission
 if [ "$UID" -ne "0" ]; then
    echo "Thibaut ! execute en SUDO :D"
@@ -24,16 +28,47 @@ tar -xvf dab-app.tgz
 # Download Dockerfile
 wget http://api.esibank.inside.esiag.info/install_dab_app/Dockerfile
 
+
 # Download nef reader C lib
-wget http://api.esibank.inside.esiag.info/install_dab_app/nfc-reader-lib.zip
+wget http://api.esibank.inside.esiag.info/install_dab_app/nfc-reader-lib.tgz
 
-unzip nfc-reader-lib.zip
+echo "tar -xvf nfc-reader-lib.tgz"
+tar -xvf nfc-reader-lib.tgz
 
-cd nfc-reader-lib/build
+echo "rm nfc-reader-lib/build"
+rm -r nfc-reader-lib/build
 
+echo "mkdir nfc-reader-lib/build"
+mkdir nfc-reader-lib/build
+
+echo "rm ~/explore-nfc"
+rm -r $HOME_PATH/explore-nfc
+
+echo "mkdir ~/explore-nfc"
+mkdir  $HOME_PATH/explore-nfc
+
+echo "cp -r nfc-reader-lib/* ~/explore-nfc"
+cp -r nfc-reader-lib/*  $HOME_PATH/explore-nfc
+
+
+echo "Chemin courant : "`pwd`
+cd $HOME_PATH/explore-nfc/build
+
+echo "sed -i -e 's/${READER_PATH}/\/home\/pi\/explore-nfc/g' /home/pi/explore-nfc/source/CMakeCache.txt"
+sed -i -e 's/${READER_PATH}/\/home\/pi\/explore-nfc/g' /home/pi/explore-nfc/source/CMakeCache.txt
+
+echo "cp ../source/Makefile ./"
+cp ../source/Makefile ./
+
+sed -i -e 's/${READER_PATH}//home/pi/explore/g' ~/explore-nfc/source/CMakeCache.txt
+
+echo "cmake../source"
 cmake ../source
 
-make ./cardEmulation-fb &
+echo "make"
+echo "Chemin courant"`pwd`
+make
+
 
 # Stop all container
 docker container stop dabappcontainer
