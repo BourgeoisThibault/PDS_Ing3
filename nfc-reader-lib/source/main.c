@@ -73,7 +73,7 @@ phbalReg_RPi_spi_DataParams_t   bal;            /* BAL component holder */
 phhalHw_Pn512_DataParams_t      hal;            /* HAL component holder */
 phOsal_RPi_DataParams_t         osal;           /* OSAL component holder for RaspberryPi */
 
-const uint8_t JAVA_CMD[]="sudo python /home/pi/dab-app/app/nfc_management/nfc_gateway.py \""; /* calling the java application */
+const uint8_t JAVA_CMD[]="sudo python /home/pi/dab-app/dab-app/app/nfc_management/nfc_gateway.py \""; /* calling the java application */
 uint8_t bTempBuff[FB_BUF_MAX];
 
 /*----------------------------------------------------------------------------------------------
