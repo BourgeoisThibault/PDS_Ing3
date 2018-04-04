@@ -317,7 +317,7 @@ phStatus_t phbalReg_RPi_spi_Exchange(
 )
     {
     struct spi_ioc_transfer spi ;
-
+    memset(&spi,0,sizeof(spi));
 
     spi.tx_buf        = (unsigned long)pTxBuffer ;
     spi.rx_buf        = (unsigned long)pTxBuffer ;
