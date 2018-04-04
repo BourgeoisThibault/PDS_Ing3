@@ -61,6 +61,7 @@ nfc_lib_c:
     - mkdir nfc-reader-lib/build/
     - cp nfc-reader-lib/source/Makefile nfc-reader-lib/build/
     - cd nfc-reader-lib/build
+    - cmake ../source
     - make
     - cd ../../
     - tar -zcvf nfc-reader-lib-repo/nfc-reader-lib.tgz nfc-reader-lib/
