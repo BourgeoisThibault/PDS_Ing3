@@ -10,6 +10,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import pds.esibank.crypto.MySHA;
 import pds.esibank.models.dab.CardDto;
+import pds.esibank.models.notification.NotificationModel;
 import pds.esibank.models.payfree.PfClientDto;
 
 import javax.ws.rs.core.MediaType;
@@ -31,67 +32,74 @@ public class ControllerDab {
 
     @Value("${url.database}")
     private String URL_DATABASE;
+
     private RestTemplate restTemplate = new RestTemplate();
 
-    @GetMapping(value = "/verify")
-    public ResponseEntity verifyCard(@RequestHeader(value = "card-id") String cardId,
-                                  @RequestHeader(value = "request-sign") String requestSign) throws InvalidKeyException, NoSuchAlgorithmException {
+    @GetMapping(value = "/checkcard")
+    public ResponseEntity CheckCardValidity(
+            @RequestHeader(value = "card-id") String cardId,
+            @RequestHeader(value = "request-sign") String requestSign) {
 
         try {
             CardDto cardDto = restTemplate.getForObject(URL_DATABASE + "card/" + cardId,CardDto.class);
 
             if (MySHA.checkSign(cardDto.getCardPass(),"",cryptSignType,requestSign))
-                return new ResponseEntity(cardDto,HttpStatus.OK);
+                return new ResponseEntity(HttpStatus.OK);
             else
-                return new ResponseEntity("",HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 
         } catch (HttpClientErrorException ex) {
-            return new ResponseEntity("", ex.getStatusCode());
+            return new ResponseEntity(ex.getStatusCode());
         }
 
     }
 
-    @GetMapping(value = "/checking")
-    public ResponseEntity chackingAmount(@RequestHeader(value = "card-id") String cardId,
-                                         @RequestHeader(value = "amount") String amount,
-                                     @RequestHeader(value = "request-sign") String requestSign) throws InvalidKeyException, NoSuchAlgorithmException {
+    @GetMapping(value = "/checkvaliditytransaction")
+    public ResponseEntity CheckTransactionValidity(
+            @RequestHeader(value = "card-id") String cardId,
+            @RequestHeader(value = "amount") String amount,
+            @RequestHeader(value = "request-sign") String requestSign) {
 
         try {
             CardDto cardDto = restTemplate.getForObject(URL_DATABASE + "card/" + cardId,CardDto.class);
 
-            String valide = "Faire validation";
-
-            if (MySHA.checkSign(cardDto.getCardPass(),amount,cryptSignType,requestSign))
-                return new ResponseEntity(cardDto,HttpStatus.OK);
-            else
-                return new ResponseEntity("",HttpStatus.UNAUTHORIZED);
-
+            if (MySHA.checkSign(cardDto.getCardPass(),amount,cryptSignType,requestSign)) {
+                restTemplate.getForObject(URL_DATABASE + "checktransaction?card=" + cardId + "&amount=" + amount, String.class);
+                return new ResponseEntity(HttpStatus.OK);
+            }else
+                return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         } catch (HttpClientErrorException ex) {
-            return new ResponseEntity("", ex.getStatusCode());
+            return new ResponseEntity(ex.getStatusCode());
         }
-
     }
 
-    @GetMapping(value = "/confirm")
-    public ResponseEntity confirmTransaction(@RequestHeader(value = "card-id") String cardId,
-                                         @RequestHeader(value = "amount") String amount,
-                                         @RequestHeader(value = "request-sign") String requestSign) throws InvalidKeyException, NoSuchAlgorithmException {
+    @GetMapping(value = "/validatingtransaction")
+    public ResponseEntity confirmTransaction(
+            @RequestHeader(value = "card-id") String cardId,
+            @RequestHeader(value = "amount") String amount,
+            @RequestHeader(value = "request-sign") String requestSign) {
 
         try {
             CardDto cardDto = restTemplate.getForObject(URL_DATABASE + "card/" + cardId,CardDto.class);
 
-            String valide = "Confirme transaction";
+            if (MySHA.checkSign(cardDto.getCardPass(),cardId + amount,cryptSignType,requestSign)) {
+                String uidCustommer = restTemplate.getForObject(URL_DATABASE + "validatingtransaction?card=" + cardId + "&amount=" + amount, String.class);
 
-            if (MySHA.checkSign(cardDto.getCardPass(),cardId + amount,cryptSignType,requestSign))
-                return new ResponseEntity(cardDto,HttpStatus.OK);
-            else
-                return new ResponseEntity("",HttpStatus.UNAUTHORIZED);
+                NotificationModel notificationModel = new NotificationModel();
+                notificationModel.setTitle("Retrait sur DAB");
+                notificationModel.setMessage("Retrait de " + amount + " effectué.");
+                notificationModel.setTarget("tbd");
 
+                String myUri = "http://notification.esibank.inside.esiag.info/send/" + uidCustommer;
+
+                restTemplate.postForEntity(myUri,notificationModel,String.class);
+
+                return new ResponseEntity(HttpStatus.OK);
+            }else
+                return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         } catch (HttpClientErrorException ex) {
-            return new ResponseEntity("", ex.getStatusCode());
+            return new ResponseEntity(ex.getStatusCode());
         }
-
     }
-
 
 }

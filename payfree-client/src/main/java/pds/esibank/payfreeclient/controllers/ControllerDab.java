@@ -6,10 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import pds.esibank.crypto.MySHA;
@@ -23,7 +20,7 @@ import static org.springframework.http.HttpMethod.GET;
  * Time     11:39
  */
 
-@RestController("/dab")
+@RestController
 public class ControllerDab {
 
     @Autowired
@@ -36,18 +33,13 @@ public class ControllerDab {
     @Value("${crypt.sign.type}")
     private String cryptSignType;
 
-    @Value("${perso.user}")
-    private String myUser;
-    @Value("${perso.pass}")
-    private String myPass;
-
     @GetMapping("/check")
     public ResponseEntity CheckValidityCard(
             @RequestParam("card") String card,
             @RequestParam("pin") String pin
     ){
 
-        String finalUrl = URL_SECURE + "verify";
+        String finalUrl = URL_SECURE + "checkcard";
 
         String encryptedPass = MySHA.passToSHA(pin, cryptPassType);
         String signature = MySHA.generateSign(encryptedPass, "", cryptSignType);
@@ -59,11 +51,10 @@ public class ControllerDab {
         HttpEntity entity = new HttpEntity("parameters",headers);
 
         try {
-            ResponseEntity response = restTemplate.exchange(
-                    finalUrl, GET, entity, String.class);
-            return new ResponseEntity("",HttpStatus.OK);
+            restTemplate.exchange(finalUrl, GET, entity, String.class);
+            return new ResponseEntity(HttpStatus.OK);
         } catch (HttpClientErrorException ex) {
-            return new ResponseEntity("",ex.getStatusCode());
+            return new ResponseEntity(ex.getStatusCode());
         }
     }
 
@@ -74,7 +65,7 @@ public class ControllerDab {
             @RequestParam("amount") String amount
     ){
 
-        String finalUrl = URL_SECURE + "checking";
+        String finalUrl = URL_SECURE + "checkvaliditytransaction";
 
         String encryptedPass = MySHA.passToSHA(pin, cryptPassType);
         String signature = MySHA.generateSign(encryptedPass, amount, cryptSignType);
@@ -87,21 +78,20 @@ public class ControllerDab {
         HttpEntity entity = new HttpEntity("parameters",headers);
 
         try {
-            ResponseEntity response = restTemplate.exchange(
-                    finalUrl, GET, entity, String.class);
-            return new ResponseEntity("",HttpStatus.OK);
+            restTemplate.exchange(finalUrl, GET, entity, String.class);
+            return new ResponseEntity(HttpStatus.OK);
         } catch (HttpClientErrorException ex) {
-            return new ResponseEntity("",ex.getStatusCode());
+            return new ResponseEntity(ex.getStatusCode());
         }
     }
 
     @GetMapping("/confirme")
-    public ResponseEntity ConfirmeTransaction(
+    public ResponseEntity ValidatingTransaction(
             @RequestParam("card") String card,
             @RequestParam("pin") String pin,
             @RequestParam("amount") String amount){
 
-        String finalUrl = URL_SECURE + "confirm";
+        String finalUrl = URL_SECURE + "validatingtransaction";
 
         String encryptedPass = MySHA.passToSHA(pin, cryptPassType);
         String signature = MySHA.generateSign(encryptedPass, card + amount, cryptSignType);
@@ -114,11 +104,10 @@ public class ControllerDab {
         HttpEntity entity = new HttpEntity("parameters",headers);
 
         try {
-            ResponseEntity response = restTemplate.exchange(
-                    finalUrl, GET, entity, String.class);
-            return new ResponseEntity("",HttpStatus.OK);
+            restTemplate.exchange(finalUrl, GET, entity, String.class);
+            return new ResponseEntity(HttpStatus.OK);
         } catch (HttpClientErrorException ex) {
-            return new ResponseEntity("",ex.getStatusCode());
+            return new ResponseEntity(ex.getStatusCode());
         }
     }
 
