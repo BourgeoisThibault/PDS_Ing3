@@ -56,14 +56,7 @@ dab_app:
 nfc_lib_c:
   stage: deploy
   script:
-    - apt-get update && apt-get -y install cmake 
     - mkdir nfc-reader-lib-repo/
-    - mkdir nfc-reader-lib/build/
-    - cp nfc-reader-lib/source/Makefile nfc-reader-lib/build/
-    - cd nfc-reader-lib/build
-    - cmake ../source
-    - make
-    - cd ../../
     - tar -zcvf nfc-reader-lib-repo/nfc-reader-lib.tgz nfc-reader-lib/
   artifacts:
       expire_in: 1 hrs
