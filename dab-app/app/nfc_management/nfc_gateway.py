@@ -5,8 +5,6 @@
 import sys
 import nfc_rest
 import logging
-from app import logging
-
 
 CARD_NUMBER_SIZE = 16
 CARD_PIN_SIZE = 4

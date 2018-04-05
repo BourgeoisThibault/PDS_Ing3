@@ -12,5 +12,6 @@ if __name__ == '__main__':
     install('flask.ext.cors')
     install('Flask-Session')
     install('requests')
+    install('logging')
 
 
