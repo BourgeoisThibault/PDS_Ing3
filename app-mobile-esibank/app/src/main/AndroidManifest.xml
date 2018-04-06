@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.NFC" />
+
 
     <application
         android:allowBackup="true"
@@ -48,6 +50,15 @@
             android:theme="@style/AppTheme"></activity>
         <activity android:name=".AccountsActivity" />
         <activity android:name=".TransactionActivity" />
+        <activity android:name=".NfcWriterActivity">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
         <activity android:name=".NotificationActivity"></activity>
     </application>
 
