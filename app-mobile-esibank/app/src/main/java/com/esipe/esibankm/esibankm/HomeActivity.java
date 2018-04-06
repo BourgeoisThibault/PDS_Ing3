@@ -31,6 +31,7 @@ import com.esipe.esibankm.esibankm.services.ConnectSocket;
 import com.esipe.esibankm.esibankm.services.LocalService;
 import com.esipe.esibankm.esibankm.utils.JsonUtils;
 import com.esipe.esibankm.esibankm.utils.LoadProp;
+import com.esipe.esibankm.esibankm.utils.NFCManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.File;
