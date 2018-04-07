@@ -14,14 +14,14 @@ public class Loan implements java.io.Serializable{
     @Column( name = "loan_id" )
     private Long loan_id;
     @Column(name = "loan_type")
-    private String loan_type;
+    private int loan_type;
     @Column( name = "loan_rate" )
-    private String loan_rate;
+    private float loan_rate;
     @Column( name = "loan_amount" )
-    private String loan_amount;
+    private float loan_amount;
     @Column( name = "loan_duration" )
     private int loan_duration;
     @Column( name = "loan_assurance" )
-    private String loan_assurance;
+    private float loan_assurance;
 
 }
