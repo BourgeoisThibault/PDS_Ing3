@@ -1,0 +1,14 @@
+div.centre {
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    width: 1200px;
+    height: 600px;
+    margin-left: -600px; /* Cette valeur doit être la moitié négative de la valeur du width */
+    margin-top: -300px; /* Cette valeur doit être la moitié négative de la valeur du height */
+    background-color:rgba(235, 235, 247,0.5);
+    border-width:3px;
+    border-style:double;
+    border-color:black;
+}
+
