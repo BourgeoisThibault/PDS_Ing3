@@ -15,11 +15,13 @@ INSERT INTO card (card_id, card_num, card_pass) VALUES (111003, '3333333333', '1
 INSERT INTO link_card_account (card_id, id_account) VALUES (111001,111001),(111002,111002),(111003,111003);
 -- YOU CAN NOW TOUCH, IS NOT FOR THIBAULT. KISS KISS BANG BANG...
 
-INSERT INTO loan(loan_id, loan_type, loan_rate, loan_amount, loan_duration, loan_assurance) VALUES(1, 2,"0,015","12233.23",24,"0,015"),(2, 1,"0,035","9033.50",48,"0,015"),(3, 2,"0,015","8933",18,"0,015"),(4, 1,"0,015","122323",72,"0,015");
-INSERT INTO receivable(receivable_id ,id_client,id_loan, receivable_monthly) VALUES (1,1,1,"122.25");
-INSERT INTO receivable(receivable_id ,id_client,id_loan, receivable_monthly) VALUES (2,11,3,"6422.89");
-INSERT INTO receivable(receivable_id ,id_client,id_loan, receivable_monthly) VALUES (3,21,4,"7892.67");
-INSERT INTO receivable(receivable_id ,id_client,id_loan, receivable_monthly) VALUES (4,31,2,"982.50");
+INSERT INTO loan(loan_id, loan_type, loan_rate, loan_amount, loan_duration, loan_assurance) VALUES(1, 2,"0.015","12233.23",24,"0.015"),(2, 1,"0.035","9033.50",48,"0.015"),(3, 2,"0.015","8933",18,"0.015"),(4, 1,"0.015","122323",72,"0.015");
+INSERT INTO receivable(receivable_id ,id_customer,id_loan, receivable_monthly) VALUES (1,1,1,"122.25");
+INSERT INTO receivable(receivable_id ,id_customer,id_loan, receivable_monthly) VALUES (2,11,3,"6422.89");
+INSERT INTO receivable(receivable_id ,id_customer,id_loan, receivable_monthly) VALUES (3,21,4,"7892.67");
+INSERT INTO receivable(receivable_id ,id_customer,id_loan, receivable_monthly) VALUES (4,31,2,"982.50");
+INSERT INTO type_loan (id_loantype,type, amount_min,amount_max,duration_max,duration_min,rate_max,rate_min,assurance) VALUES (1,'personnel',20000,75000,3,60,1,20,"0.015");
+INSERT INTO type_loan (id_loantype,type, amount_min,amount_max,duration_max,duration_min,rate_max,rate_min,assurance) VALUES (2,'immobilier',200000,1000000,60,480,1,40,"0.015");
 
 INSERT INTO region (id_region, name_region) VALUES (1, 'Auvergne-Rhone-Alpes'),(2, 'Bourgogne-Franche-Comté'),(3, 'Bretagne'),(4, 'Centre-Val de Loire');
 INSERT INTO region (id_region, name_region) VALUES (5, 'Corse'),(6, 'Grand Est'),(7, 'Hauts-de-France'),(8, 'Île-de-France'),(9, 'Normandie'),(10, 'Nouvelle-Aquitaine');
