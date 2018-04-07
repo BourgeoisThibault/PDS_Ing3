@@ -35,7 +35,7 @@ public class Receivable implements java.io.Serializable{
     @JoinColumn(name="id_loan")
     private Loan loan;
 
-    @Column( name = "receivable_receivable_monthly" )
-    private int receivable_receivable_monthly;
+    @Column( name = "receivable_monthly")
+    private float receivable_monthly;
 
 }
