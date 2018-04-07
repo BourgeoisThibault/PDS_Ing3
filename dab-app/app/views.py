@@ -108,6 +108,23 @@ def last_check():
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
 
+@app.route('/error')
+def errorPage():
+    d = date.today().isoformat()
+    return render_template('error_page.html', messageError="La carte n'est pas reconnu")
+
+@app.route('/help')
+def helpPage():
+    d = date.today().isoformat()
+    return render_template('help_page.html')
+
+@app.route('/success')
+def successPage():
+    return render_template('success_page.html')
+
+@app.route('/testing')
+def tetPge():
+    return render_template('pinui.html')
 
 @app.route('/pinui', methods=['POST'])
 def punui():
