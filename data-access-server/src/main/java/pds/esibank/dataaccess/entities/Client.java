@@ -2,14 +2,12 @@ package pds.esibank.dataaccess.entities;
 
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 /**
- * Created by Abbdoulaye on 06/02/2018.
+ * Created by jeremy on 07/04/2018.
  */
 @Data
 @ToString
@@ -26,9 +24,9 @@ public class Client {
     private String firstName;
     @Column( name = "profession" )
     private String profession;
-
-    //List<Account> accounts;
-
-
+    @Column( name = "birth" )
+    private Date birth;
+    @Column( name = "Gender" )
+    private String Gender;
 
 }
