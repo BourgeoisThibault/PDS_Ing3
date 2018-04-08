@@ -14,7 +14,8 @@ public class Receivable implements java.io.Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( name = "receivable_id" )
     private Long receivable_id;
-    @Column(name = "receivable_amount")
+
+    /*@Column(name = "receivable_amount")
     private int receivable_amount;
     @Column( name = "receivable_rate" )
     private String receivable_rate;
@@ -26,9 +27,15 @@ public class Receivable implements java.io.Serializable{
     //@OneToMany
     //@JoinColumn(name="id_Customer")
     //private Customer customer;
+*/
+    @Column( name = "id_customer")
+    private int id_customer;
 
     @OneToOne
     @JoinColumn(name="id_loan")
     private Loan loan;
+
+    @Column( name = "receivable_monthly")
+    private float receivable_monthly;
 
 }
