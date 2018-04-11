@@ -50,3 +50,23 @@
     color: white;
     padding: 12px;
 }
+
+.main-content-verif{
+    visibility: hidden;
+}
+
+
+#err_div{
+    visibility: hidden;
+}
+
+#secret_form{
+    visibility: hidden;
+}
+
+#check_div{
+    visibility: hidden;
+}
+
+
+

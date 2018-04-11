@@ -56,3 +56,45 @@
 .main-content-err {
     visibility: hidden;
 }
+
+.amount-label{
+    color: #fed189;
+    font-weight: 300;
+    font-size: 75px;
+    background-color: #1a2732;
+    text-align: center;
+}
+
+.amount-table td{
+    text-align: center;
+    width: 170px !important;
+}
+
+
+.amount-table .amount-table-tr input{
+    width: 200px !important;
+}
+
+.tr-confirm-buttons .extra-cancel{
+     color: #f3f1fc;
+     font-weight: 300;
+     font-size: 43px;
+     background-color: #e52121;
+     text-align: center;
+ }
+
+.tr-confirm-buttons .extra-valid{
+    color: #f3f1fc;
+    font-weight: 300;
+    font-size: 43px;
+    background-color: #2fc050;
+    text-align: center;
+}
+
+.amount-table .tr-confirm-buttons input{
+    width: 300px !important;
+}
+.amount-table{
+font-family: "Segoe UI",Arial,sans-serif;
+}
+
