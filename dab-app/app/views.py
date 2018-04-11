@@ -3,13 +3,10 @@
 #
 
 
-import os,json
 import logging
 import rest_utils
 
 from flask import Flask, request, render_template, jsonify
-from flask_bootstrap import Bootstrap
-from flask.ext.cors import CORS, cross_origin
 
 from datetime import date
 from flask_socketio import SocketIO,send,emit
@@ -26,19 +23,19 @@ from app import logging
 thread = Thread()
 thread_stop_event = Event()
 
+AMOUNT_STATEFULL = 0
 
 @app.route('/card_checking')
-#@cross_origin(origin='*',headers=['Content-Type', 'Authorization'])
 def card_checking():
     card_id = request.args.get('card_id')
     pin = request.args.get('pin')
     logging.info(card_id + " - " + pin)
     if rest_utils.check_valid_card(card_id, pin):
-        socketio.emit('newnumber', {'number': 1,'card_id': card_id, 'pin': pin}, namespace='/home_pool')
+        socketio.emit('response_card_checking', {'code': 200,'card_id': card_id, 'pin': pin}, namespace='/home_pool')
         return "ok", 200
     else:
         print("Envoi de ko ")
-        socketio.emit('newnumber', {'number': 2}, namespace='/home_pool')
+        socketio.emit('response_card_checking', {'code': 401}, namespace='/home_pool')
         return "ko", 401
 
 
@@ -48,16 +45,18 @@ def confirm_transac():
     card_id = request.args.get('card_id')
     pin = request.args.get('pin')
     amount = request.args.get('amount')
+    amount = AMOUNT_STATEFULL
 
-    logging.info("Card id + " + card_id + " - PIN : " + pin + " - Amount : " + amount)
+    print(AMOUNT_STATEFULL)
+    logging.info("Card id + " + str(card_id) + " - PIN : " + str(pin) + " - Amount2 : " + str(amount))
 
     if rest_utils.check_confirm_transac(card_id, pin, amount):
-        socketio.emit('confirm_transac', {'conf': 'VALID'}, namespace='/confirm_transac')
+        socketio.emit('confirm_transac', {'code': 200}, namespace='/confirm_transac')
         return "ok",200
 
     else:
         print("Envoi de ko ")
-        socketio.emit('confirm_transac', {'conf': 'NOT_VALID'}, namespace='/confirm_transac')
+        socketio.emit('confirm_transac', {'code': 401}, namespace='/confirm_transac')
         return "ko", 401
 
 
@@ -73,7 +72,6 @@ def default_error_handler(e):
 
 
 @app.route('/pinui/_check_data')
-#@cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def check_valid_transac():
     print("en attente ....")
     sleep(2)
@@ -81,18 +79,17 @@ def check_valid_transac():
     card_id = request.args.get('card_id')
     pin = request.args.get('pin_id')
     amount = request.args.get('amount')
-
-    print("Card id + " + card_id + " - PIN : " + pin + " - Amount : " + amount)
+    AMOUNT_STATEFULL = 50
+    print("Card id + " + card_id + " - PIN : " + pin + " - Amount2 : " + amount)
 
     if rest_utils.check_valid_transac(card_id, pin, 123):
-        return jsonify(result="ok")
+        return jsonify(response=200)
     else:
         print("Envoi de ko ")
-        return jsonify(result="ko")
+        return jsonify(response=401)
 
 
 @app.route('/pinui/_last_checking')
-#@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 def last_check():
     data = True
     logging.info('en attente de last_checking....')
