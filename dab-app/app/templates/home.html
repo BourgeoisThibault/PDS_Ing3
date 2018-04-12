@@ -5,7 +5,7 @@
 {% block styles %}
 {{super()}}
 <!--<link rel="stylesheet"-->
-      <!--href="{{url_for('.static', filename='css/pinui.css')}}" xmlns="http://www.w3.org/1999/html">-->
+      <!--href="{{url_for('.static', filename='css/withdrawal_ui.css')}}" xmlns="http://www.w3.org/1999/html">-->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
       href="{{url_for('.static', filename='css/home.css')}}">
@@ -17,7 +17,7 @@
 
 {% block content %}
 <!--<h3>{{ request.method }}</h3>-->
-<form  action="http://localhost:5000/pinui" method="POST" id="form_info_home">
+<form  action="http://localhost:5000/withdrawal_ui" method="POST" id="form_info_home">
     <input type="hidden" id="var1" name="card_id" value=""/>
     <input type="hidden" id="var2" name="pin" value=""/>
 </form>
@@ -146,7 +146,7 @@
 </div>
 
 <div id="secret_form">
-    <form  action="http://localhost:5000/pinui" method="POST" id="form_info_home">
+    <form  action="http://localhost:5000/withdrawal_ui" method="POST" id="form_info_home">
         <input type="hidden" id="var1" name="card_id" value=""/>
         <input type="hidden" id="var2" name="pin" value=""/>
     </form>
