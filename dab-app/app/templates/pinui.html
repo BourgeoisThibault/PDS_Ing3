@@ -40,41 +40,36 @@
 
     <div class="container-fluid" style="text-align:center; height: 75px; margin-top: 5px">
         <h1 style="color: #1a2732; font-weight: 300; font-size: 50px">
-            Selection du montant à retirer.
+            Selection du montant à retirer: <span id="edit-val"></span>
         </h1>
     </div>
 
-    <div style="margin-top: 50px">
-        <div style="position:absolute; border-radius: 50px; width: 200px; height: 120px; margin-left: 150px; background-color: #1a2732; text-align: center;">
-            <span style="color: #fed189; font-weight: 300; font-size: 75px">10€</span>
-        </div>
-        <div style="position:absolute; border-radius: 50px; width: 200px; height: 120px;; margin-left: 383.33px; background-color: #1a2732; text-align: center;">
-            <span style="color: #fed189; font-weight: 300; font-size: 75px">20€</span>
-        </div>
-        <div style="position:absolute; border-radius: 50px; width: 200px; height: 120px;; margin-left: 616.66px; background-color: #1a2732; text-align: center;">
-            <span style="color: #fed189; font-weight: 300; font-size: 75px">40€</span>
-        </div>
-        <div style="position:absolute; border-radius: 50px; width: 200px; height: 120px;; margin-left: 850px; background-color: #1a2732; text-align: center;">
-            <span style="color: #fed189; font-weight: 300; font-size: 75px">50€</span>
-        </div>
-    </div>
 
-    <div style="margin-top: 225px">
-        <div style="position:absolute; border-radius: 50px; width: 200px; height: 120px; margin-left: 150px; background-color: #1a2732; text-align: center;">
-            <span style="color: #fed189; font-weight: 300; font-size: 75px">60€</span>
-        </div>
-        <div style="position:absolute; border-radius: 50px; width: 200px; height: 120px;; margin-left: 383.33px; background-color: #1a2732; text-align: center;">
-            <span style="color: #fed189; font-weight: 300; font-size: 75px">70€</span>
-        </div>
-        <div style="position:absolute; border-radius: 50px; width: 200px; height: 120px;; margin-left: 616.66px; background-color: #1a2732; text-align: center;">
-            <span style="color: #fed189; font-weight: 300; font-size: 75px">80€</span>
-        </div>
-        <div style="position:absolute; border-radius: 50px; width: 200px; height: 120px;; margin-left: 850px; background-color: #1a2732; text-align: center;">
-            <span style="color: #fed189; font-weight: 300; font-size: 75px">90€</span>
-        </div>
-    </div>
+
+    <table class="table table-responsive table-inverse amount-table">
+        <tbody>
+        <tr class="amount-table-tr">
+            <td><input type="button" class="btn-val btn btn-lg amount-label" value="10€"></td>
+            <td><input type="button" class="btn-val btn btn-lg amount-label" value="20€"></td>
+            <td><input type="button" class="btn-val btn btn-lg amount-label" value="30€"></td>
+        </tr>
+        <tr class="amount-table-tr">
+            <td><input type="button" class="btn-val btn btn-lg amount-label" value="50€"></td>
+            <td><input type="button" class="btn-val btn btn-lg amount-label" value="80€"></td>
+            <td><input type="button" class="btn-val btn btn-lg amount-label" value="100€"></td>
+        </tr>
+        <br>
+        <br>
+        <tr class="tr-confirm-buttons">
+            <td><input type="button" class="btn btn-lg extra-label extra-cancel" value="Annuler"></td>
+            <td></td>
+            <td><input type="button" id="valid-input" class="btn btn-lg extra-label extra-valid" value="Valider"></td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
+
 
 <div id="verif" class="main-content-verif centre">
             <div class="container-fluid"  style="background-color: #1a2732">
@@ -89,7 +84,7 @@
 
             <div class="container-fluid" style="text-align:center; height: 130px; margin-top: 5px">
                 <h1 style="color: #1a2732; font-weight: 300; font-size: 50px">
-                    Vérification de vos informations. Merci de patienter durant le traitement.
+                    Vérification de vos informations. Merci de patienter durant le traitement...
                 </h1>
             </div>
 
@@ -102,6 +97,94 @@
                     En cas de problème avec le distributeur, veuillez vous présenter en agence ou contacter le 01 23 45 67 89.
                 </h1>
             </div>
+</div>
+
+
+<div id="verif" class="main-content-conf centre">
+    <div class="container-fluid"  style="background-color: #1a2732">
+        <div class="navbar-header">
+            <h1>
+                <img alt="Brand" src="{{url_for('.static', filename='img/logo_esibank.png')}}">
+                <span style="color: #fed189; font-weight: 300">ESI</span>
+                <span style="color: #00a0df; font-weight: 300">BANK</span>
+            </h1>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="text-align:center; height: 130px; margin-top: 5px">
+        <h1 style="color: #1a2732; font-weight: 300; font-size: 50px">
+            Pour effectuer votre retrait, merci de placer votre mobile sur la platforme dédiée
+        </h1>
+        <h2>Montant sélectionné : <span id="conf-amount"></span></h2>
+    </div>
+
+    <div style="text-align: center; margin-top: 5px">
+        <img alt="nfc" src="{{url_for('.static', filename='img/loading_NFC.gif')}}" style="width: 300px; height: 300px">
+    </div>
+
+    <div class="container-fluid" style="text-align:center; ">
+        <h1 style="color: #1a2732; font-weight: 300; font-size: 15px">
+            En cas de problème avec le distributeur, veuillez vous présenter en agence ou contacter le 01 23 45 67 89.
+        </h1>
+    </div>
+</div>
+
+
+<div id="verif" class="main-content-out centre">
+    <div class="container-fluid"  style="background-color: #1a2732">
+        <div class="navbar-header">
+            <h1>
+                <img alt="Brand" src="{{url_for('.static', filename='img/logo_esibank.png')}}">
+                <span style="color: #fed189; font-weight: 300">ESI</span>
+                <span style="color: #00a0df; font-weight: 300">BANK</span>
+            </h1>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="text-align:center; height: 130px; margin-top: 5px">
+        <h1 style="color: #1a2732; font-weight: 300; font-size: 50px">
+            N'oubliez pas de retirer vos billets
+        </h1>
+    </div>
+
+    <div style="text-align: center; margin-top: 5px">
+        <img alt="nfc" src="{{url_for('.static', filename='img/loading_SUCCESS.gif')}}" style="width: 300px; height: 300px">
+    </div>
+
+    <div class="container-fluid" style="text-align:center; ">
+        <h1 style="color: #1a2732; font-weight: 300; font-size: 15px">
+            En cas de problème avec le distributeur, veuillez vous présenter en agence ou contacter le 01 23 45 67 89.
+        </h1>
+    </div>
+</div>
+
+
+<div id="verif" class="main-content-forbidden centre">
+    <div class="container-fluid"  style="background-color: #1a2732">
+        <div class="navbar-header">
+            <h1>
+                <img alt="Brand" src="{{url_for('.static', filename='img/logo_esibank.png')}}">
+                <span style="color: #fed189; font-weight: 300">ESI</span>
+                <span style="color: #00a0df; font-weight: 300">BANK</span>
+            </h1>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="text-align:center; height: 130px; margin-top: 5px">
+        <h1 style="color: #1a2732; font-weight: 300; font-size: 50px">
+            Erreur, opération non autorisée ! Merci de réessayer ultérieurement
+        </h1>
+    </div>
+
+    <div style="text-align: center; margin-top: 5px">
+        <img alt="nfc" src="{{url_for('.static', filename='img/error.gif')}}" style="width: 300px; height: 300px">
+    </div>
+
+    <div class="container-fluid" style="text-align:center; ">
+        <h1 style="color: #1a2732; font-weight: 300; font-size: 15px">
+            En cas de problème avec le distributeur, veuillez vous présenter en agence ou contacter le 01 23 45 67 89.
+        </h1>
+    </div>
 </div>
 
 {% endblock %}
