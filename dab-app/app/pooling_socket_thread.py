@@ -18,7 +18,7 @@ class CheckThread(Thread):
         #logging.info('Dans le Thread....')
 
         while not views.thread_stop_event.isSet():
-            views.socketio.emit('newnumber', {'number': 0}, namespace='/home_pool')
+            views.socketio.emit('response_card_checking', {'code': 0}, namespace='/home_pool')
             sleep(1)
             views.socketio.emit('confirm_transac', {'conf': 'NOT_VALID'}, namespace='/confirm_transac')
 

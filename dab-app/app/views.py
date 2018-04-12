@@ -2,14 +2,12 @@
 #@author ABID BUTT Usman
 #
 
-
-import os,json
+import os
 import logging
 import rest_utils
 
-from flask import Flask, request, render_template, jsonify
-from flask_bootstrap import Bootstrap
-from flask.ext.cors import CORS, cross_origin
+from flask import Flask, request, render_template, jsonify, session
+from flask.ext.session import Session
 
 from datetime import date
 from flask_socketio import SocketIO,send,emit
@@ -22,43 +20,50 @@ from app.pooling_socket_thread import CheckThread
 from app import socketio, app
 from app import logging
 
+Session(app)
 
 thread = Thread()
 thread_stop_event = Event()
 
-
 @app.route('/card_checking')
-#@cross_origin(origin='*',headers=['Content-Type', 'Authorization'])
 def card_checking():
     card_id = request.args.get('card_id')
     pin = request.args.get('pin')
+    #Add theses values in session
+    print("CARD CHECKING STEP : " + session.get('step'))
+
     logging.info(card_id + " - " + pin)
-    if rest_utils.check_valid_card(card_id, pin):
-        socketio.emit('newnumber', {'number': 1,'card_id': card_id, 'pin': pin}, namespace='/home_pool')
-        return "ok", 200
+    if session.get('step') == "FIRST":
+        if rest_utils.check_valid_card(card_id, pin):
+            socketio.emit('response_card_checking', {'code': 200,'card_id': card_id, 'pin': pin}, namespace='/home_pool')
+            return "ok", 200
+        else:
+            print("Envoi de ko ")
+            socketio.emit('response_card_checking', {'code': 401}, namespace='/home_pool')
+            return "ko", 401
     else:
-        print("Envoi de ko ")
-        socketio.emit('newnumber', {'number': 2}, namespace='/home_pool')
-        return "ko", 401
+        return confirm_transac()
 
 
-@app.route('/confirm_transac')
 def confirm_transac():
-
     card_id = request.args.get('card_id')
     pin = request.args.get('pin')
-    amount = request.args.get('amount')
+    amount = session.get('amount')
 
-    logging.info("Card id + " + card_id + " - PIN : " + pin + " - Amount : " + amount)
+    logging.info("CONFIRM TRANSAC Card id + " + str(card_id) + " - PIN : " + str(pin) + " - Amount2 : " + str(amount) + "STEP " + session.get('step'))
 
-    if rest_utils.check_confirm_transac(card_id, pin, amount):
-        socketio.emit('confirm_transac', {'conf': 'VALID'}, namespace='/confirm_transac')
-        return "ok",200
-
+    #if card_id stored in session des not match with request arg card_id, return forbidden code 403
+    if card_id != session.get('card_id') or pin != session.get('pin'):
+        socketio.emit('confirm_transac', {'code': 403}, namespace='/confirm_transac')
+        return "ko", 403
     else:
-        print("Envoi de ko ")
-        socketio.emit('confirm_transac', {'conf': 'NOT_VALID'}, namespace='/confirm_transac')
-        return "ko", 401
+        if rest_utils.check_confirm_transac(card_id, pin, amount):
+            socketio.emit('confirm_transac', {'code': 200}, namespace='/confirm_transac')
+            return "ok",200
+        else:
+            print("Envoi de ko ")
+            socketio.emit('confirm_transac', {'code': 401}, namespace='/confirm_transac')
+            return "ko", 401
 
 
 @socketio.on_error()
@@ -72,27 +77,29 @@ def default_error_handler(e):
     logging.warning(request.event["message"])
 
 
-@app.route('/pinui/_check_data')
-#@cross_origin(origin='*',headers=['Content-Type','Authorization'])
+@app.route('/withdrawal_ui/_check_data')
 def check_valid_transac():
     print("en attente ....")
+    session['step'] = "SECOND"
+
     sleep(2)
 
-    card_id = request.args.get('card_id')
-    pin = request.args.get('pin_id')
+    card_id = session.get('card_id')
+    pin = session.get('pin')
     amount = request.args.get('amount')
+    #Add amount in session for last checking operation
+    session['amount'] = amount
 
-    print("Card id + " + card_id + " - PIN : " + pin + " - Amount : " + amount)
+    print("SESSION VALUES : Card id + " + session.get('card_id') + " PIN  + " + session.get('pin') + "Amount : " + session.get('amount'))
 
-    if rest_utils.check_valid_transac(card_id, pin, 123):
-        return jsonify(result="ok")
+    if rest_utils.check_valid_transac(card_id, pin, amount):
+        return jsonify(response=200, amount=amount)
     else:
         print("Envoi de ko ")
-        return jsonify(result="ko")
+        return jsonify(response=401)
 
 
-@app.route('/pinui/_last_checking')
-#@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
+@app.route('/withdrawal_ui/_last_checking')
 def last_check():
     data = True
     logging.info('en attente de last_checking....')
@@ -124,21 +131,26 @@ def successPage():
 
 @app.route('/testing')
 def tetPge():
-    return render_template('pinui.html')
+    return render_template('withdrawal_ui.html')
 
-@app.route('/pinui', methods=['POST'])
-def punui():
+@app.route('/withdrawal_ui', methods=['POST'])
+def withdrawal_ui():
     mots = "test"
     # TODO save these values in SESSION...
+    session['card_id'] = request.form['card_id']
+    session['pin'] = request.form['pin']
+
     card = request.form['card_id']
     pin = request.form['pin']
     print("INFO : "+card+"  "+pin)
-    return render_template('pinui.html',card_id=card, pin_id=pin)
+    return render_template('withdrawal_ui.html',card_id=card, pin_id=pin)
 
 
 @app.route('/')
 def home():
     d = date.today().isoformat()
+    session['step'] = "FIRST"
+    print(session.get('step'))
     return render_template('home.html')
 
 

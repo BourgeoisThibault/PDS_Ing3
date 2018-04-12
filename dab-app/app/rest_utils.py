@@ -7,7 +7,9 @@ import logging
 import json
 from app import logging
 
+
 def check_valid_card(card_id,pin):
+
     url = "http://localhost:4321/check?card="+str(card_id)+"&&pin="+str(pin)
     logging.info("###########################################################")
     logging.info("##### Check valid card request : "+url)
@@ -19,8 +21,9 @@ def check_valid_card(card_id,pin):
         return True
     elif response.status_code == 401:
         return False
-    else :
+    else:
         return None
+
 
 def check_valid_transac(card_id, pin, amount):
 
