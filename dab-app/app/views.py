@@ -7,7 +7,7 @@ import logging
 import rest_utils
 
 from flask import Flask, request, render_template, jsonify, session
-from flask.ext.session import Session
+from flask_session import Session
 
 from datetime import date
 from flask_socketio import SocketIO,send,emit
