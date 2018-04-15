@@ -1,5 +1,6 @@
 package com.esipe.esibankm.esibankm.services;
 
+import com.esipe.esibankm.esibankm.models.Card;
 import com.esipe.esibankm.esibankm.models.MobileToken;
 
 import retrofit.http.Body;
@@ -19,5 +20,8 @@ public interface EsibankService {
 
     @POST("/token/")
     MobileToken postToken(@Body MobileToken mobileToken);
+
+    @GET("/card/{cardNum}")
+    Card getCardById(@Path("cardNum") String cardId);
 
 }

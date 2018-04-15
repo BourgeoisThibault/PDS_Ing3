@@ -129,6 +129,9 @@ public class ConnectSocket implements Runnable {
                 .build()
                 .create(EsibankService.class);
         mobileToken = esibankService.postToken(mobileToken);
+
+
+
         Log.i(TAG, "Token from server : " + mobileToken.getToken());
         try {
             JsonUtils.saveData(contextService, JsonUtils.objectToJson(mobileToken),FILE_NAME,Context.MODE_PRIVATE);

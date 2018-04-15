@@ -6,29 +6,32 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
-import android.nfc.NfcEvent;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esipe.esibankm.esibankm.models.Card;
+import com.esipe.esibankm.esibankm.models.MobileToken;
+import com.esipe.esibankm.esibankm.utils.CardDBOpenHelper;
+import com.esipe.esibankm.esibankm.utils.JsonUtils;
 import com.esipe.esibankm.esibankm.utils.NFCManager;
+
+import java.util.regex.Pattern;
+
+import retrofit.RestAdapter;
 
 
 public class NfcWriterActivity extends Activity {
+    private static final String FILE_NAME = "data.json";
 
     private NFCManager nfcMger;
 
@@ -37,11 +40,43 @@ public class NfcWriterActivity extends Activity {
     private ProgressDialog dialog;
     Tag currentTag;
     private boolean response;
-
+    private Card card;
+    private Cursor rs;
+    private CardDBOpenHelper mydb;
+    private EditText card_num;
+    private EditText card_pin;
+    private TextView card_label;
+    private MobileToken mobileToken;
+    private TextView card_name;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_writer);
+        card_label = findViewById(R.id.card_number);
+        card_name = findViewById(R.id.card_name);
+
+        card_num = findViewById(R.id.edit_card_num);
+        card_pin = findViewById(R.id.edit_pin);
+
+        mydb = new CardDBOpenHelper(this);
+
+
+        mobileToken = JsonUtils.MobileTokenFromJson(JsonUtils.getData(getApplicationContext(),FILE_NAME));
+
+        rs = mydb.getData(Integer.valueOf(mobileToken.getUid()));
+        if(rs.moveToFirst()){
+            findViewById(R.id.paiement_layout).setVisibility(View.VISIBLE);
+            System.out.println("BDD resultats : "+rs.getString(rs.getColumnIndex(CardDBOpenHelper.pin)));
+            card_label.setText(rs.getString(rs.getColumnIndex(CardDBOpenHelper.card_num)).toString());
+//            card_name.setText(rs.getString(rs.getColumnIndex(CardDBOpenHelper.name)).toString());
+        }
+        else{
+            findViewById(R.id.paiement_layout).setVisibility(View.GONE);
+            findViewById(R.id.register_card0).setVisibility(View.VISIBLE);
+            System.out.println("Aucune carte correspondante  ! : ");
+
+        }
+
     }
 
 
@@ -78,6 +113,38 @@ public class NfcWriterActivity extends Activity {
         }
         else
             Toast.makeText(getApplicationContext(), "Echec de l'envoi des informations !", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void OnValidClick(View view) {
+        if ((Pattern.matches("[a-zA-Z]+", card_num.toString()) == true  || card_num.length() != 16)) {
+            Toast.makeText(getApplicationContext(), "Le numéro de carte doit contenir 16 chiffres !"+card_num.length(), Toast.LENGTH_SHORT).show();
+        }
+        else if(card_pin.length() != 4){
+            Toast.makeText(getApplicationContext(), "Le code pin doit contenir 4 chiffres !"+card_num.length(), Toast.LENGTH_SHORT).show();
+        }
+        else{
+            String card = card_num.getText().toString();
+            String pin = card_pin.getText().toString();
+
+            System.out.println("Ok, Info !! + NUM : "+card_num.getText().toString() + " PIN : "+card_pin.getText().toString());
+
+            mydb.insertCard(Integer.parseInt(mobileToken.getUid()),card,pin);
+            Toast.makeText(getApplicationContext(), "Carte enregistrée avec succès !", Toast.LENGTH_SHORT).show();
+
+            card_label.setText(card);
+
+            findViewById(R.id.paiement_layout).setVisibility(View.VISIBLE);
+            findViewById(R.id.register_card0).setVisibility(View.GONE);
+
+        }
+    }
+
+    public void onDeleteClick(View view) {
+        mydb.deleteCard(Integer.valueOf(mobileToken.getUid()));
+        Toast.makeText(getApplicationContext(), "Carte supprimée avec succès !", Toast.LENGTH_SHORT).show();
+        findViewById(R.id.register_card0).setVisibility(View.VISIBLE);
+        findViewById(R.id.paiement_layout).setVisibility(View.GONE);
 
     }
 
