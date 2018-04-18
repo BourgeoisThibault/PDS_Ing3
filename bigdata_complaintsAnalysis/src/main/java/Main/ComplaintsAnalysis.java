@@ -43,7 +43,7 @@ public class ComplaintsAnalysis {
 
         // Number of lines which contains the word "Spark"
         System.out.println("# contains Mortgage: " + jrdd.filter(line -> line.contains("Mortgage") ).count() );
-*/
+        */
 
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         SparkSession spark = SparkSession
