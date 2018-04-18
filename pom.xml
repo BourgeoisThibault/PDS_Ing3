@@ -18,6 +18,7 @@
         <module>rest-secure</module>
         <module>it-notification-send</module>
         <module>payfree-client</module>
+        <module>bigdata_complaintsAnalysis</module>
     </modules>
 
     <properties>
