@@ -55,12 +55,12 @@ def card_checking():
 def confirm_transac():
     card_id = request.args.get('card_id')
     pin = request.args.get('pin')
-    amount = session.get('amount')
+   # amount = session.get('amount')
 
     r_card_id = redis_management.get_card_id(REDIS_CONNECTION)
     r_pin = redis_management.get_pin(REDIS_CONNECTION)
     r_amount = redis_management.get_amount(REDIS_CONNECTION)
-
+    r_amount = r_amount
     logging.info("CONFIRM TRANSAC Card id + " + str(card_id) + " - PIN : " + str(pin) + " - Amount2 : " + str(amount) + "STEP " + session.get('step'))
 
     #if card_id stored in redis DB  does not match with request arg card_id, return forbidden code 403
