@@ -211,12 +211,16 @@ public class HomeActivity extends MainActivity {
             mySnack = Snackbar.make(view, "Vous êtes déjà connecté !", 2000);
             mySnack.show();
         }else
-        {
-            this.restartService();
-            login_connected.setText(name);
-            NAME = name;
-            startActivity(appel);
-        }
+            if(ConnectSocket.isOnline()){
+                this.restartService();
+                login_connected.setText(name);
+                NAME = name;
+                startActivity(appel);
+            }
+            else{
+                mySnack = Snackbar.make(view, "Aucune connexion ou VPN non connecté !", 2000);
+                mySnack.show();
+            }
 
     }
 

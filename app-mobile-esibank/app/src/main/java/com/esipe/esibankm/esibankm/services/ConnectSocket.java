@@ -144,7 +144,7 @@ public class ConnectSocket implements Runnable {
     }
 
 
-    public Boolean isOnline() {
+    public static Boolean isOnline() {
         try {
             Process p1 = java.lang.Runtime.getRuntime().exec("ping -c 1 www.esibank.inside.esiag.info");
             int returnVal = p1.waitFor();
