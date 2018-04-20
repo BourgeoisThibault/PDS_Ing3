@@ -13,6 +13,7 @@ if __name__ == '__main__':
     install('Flask-Session')
     install('requests')
     install('logging')
+    install('redis')
     install('MagicMock')
 
 

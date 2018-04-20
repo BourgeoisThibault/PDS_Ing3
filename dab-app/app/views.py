@@ -16,11 +16,17 @@ from time import sleep
 from threading import Thread, Event
 
 from app.pooling_socket_thread import CheckThread
+import redis_management
 
 from app import socketio, app
 from app import logging
 
-Session(app)
+#Session(app)
+
+
+REDIS_CONNECTION = redis_management.create_connection()
+redis_management.initialize_keys(REDIS_CONNECTION)
+
 
 thread = Thread()
 thread_stop_event = Event()
@@ -29,11 +35,12 @@ thread_stop_event = Event()
 def card_checking():
     card_id = request.args.get('card_id')
     pin = request.args.get('pin')
-    #Add theses values in session
-    print("CARD CHECKING STEP : " + session.get('step'))
-
+    step = redis_management.get_step_key('step')
+#Add theses values in session
+#    print("CARD CHECKING STEP : " + session.get('step'))
+    print("CARD CHECKING STEP : " + step)
     logging.info(card_id + " - " + pin)
-    if session.get('step') == "FIRST":
+    if step == "FIRST":
         if rest_utils.check_valid_card(card_id, pin):
             socketio.emit('response_card_checking', {'code': 200,'card_id': card_id, 'pin': pin}, namespace='/home_pool')
             return "ok", 200
@@ -50,13 +57,17 @@ def confirm_transac():
     pin = request.args.get('pin')
     amount = session.get('amount')
 
+    r_card_id = redis_management.get_card_id(REDIS_CONNECTION)
+    r_pin = redis_management.get_pin(REDIS_CONNECTION)
+    r_amount = redis_management.get_amount(REDIS_CONNECTION)
+
     logging.info("CONFIRM TRANSAC Card id + " + str(card_id) + " - PIN : " + str(pin) + " - Amount2 : " + str(amount) + "STEP " + session.get('step'))
 
-    #if card_id stored in session des not match with request arg card_id, return forbidden code 403
-    if card_id != session.get('card_id') or pin != session.get('pin'):
+    #if card_id stored in redis DB  does not match with request arg card_id, return forbidden code 403
+    if card_id != r_card_id or pin != r_pin:
         socketio.emit('confirm_transac', {'code': 403}, namespace='/confirm_transac')
         return "ko", 403
-    else:
+    else:#double verification
         if rest_utils.check_confirm_transac(card_id, pin, amount):
             socketio.emit('confirm_transac', {'code': 200}, namespace='/confirm_transac')
             return "ok",200
@@ -80,17 +91,20 @@ def default_error_handler(e):
 @app.route('/withdrawal_ui/_check_data')
 def check_valid_transac():
     print("en attente ....")
-    session['step'] = "SECOND"
-
+#    session['step'] = "SECOND"
+    redis_management.set_step_key("SECOND", REDIS_CONNECTION)
     sleep(2)
 
-    card_id = session.get('card_id')
-    pin = session.get('pin')
+    #card_id = session.get('card_id')
+    #pin = session.get('pin')
+    card_id = redis_management.get_card_id(REDIS_CONNECTION)
+    pin = redis_management.get_pin(REDIS_CONNECTION)
     amount = request.args.get('amount')
     #Add amount in session for last checking operation
-    session['amount'] = amount
-
-    print("SESSION VALUES : Card id + " + session.get('card_id') + " PIN  + " + session.get('pin') + "Amount : " + session.get('amount'))
+    #session['amount'] = amount
+    redis_management.set_amount(amount, REDIS_CONNECTION)
+#    print("SESSION VALUES : Card id + " + session.get('card_id') + " PIN  + " + session.get('pin') + "Amount : " + session.get('amount'))
+    print("REDIS VALUES : Card id + " + card_id + " PIN  + " + pin + "Amount : " + amount)
 
     if rest_utils.check_valid_transac(card_id, pin, amount):
         return jsonify(response=200, amount=amount)
@@ -115,33 +129,41 @@ def last_check():
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
 
+
 @app.route('/error')
 def errorPage():
     d = date.today().isoformat()
     return render_template('error_page.html', messageError="La carte n'est pas reconnu")
+
 
 @app.route('/help')
 def helpPage():
     d = date.today().isoformat()
     return render_template('help_page.html')
 
+
 @app.route('/success')
 def successPage():
     return render_template('success_page.html')
+
 
 @app.route('/testing')
 def tetPge():
     return render_template('withdrawal_ui.html')
 
+
 @app.route('/withdrawal_ui', methods=['POST'])
 def withdrawal_ui():
     mots = "test"
-    # TODO save these values in SESSION...
-    session['card_id'] = request.form['card_id']
-    session['pin'] = request.form['pin']
-
+    # TODO save these values in REDIS DB...
+    # session['card_id'] = request.form['card_id']
+    # session['pin'] = request.form['pin']
     card = request.form['card_id']
     pin = request.form['pin']
+
+    redis_management.set_card_id(card, REDIS_CONNECTION)
+    redis_management.set_pin(pin, REDIS_CONNECTION)
+
     print("INFO : "+card+"  "+pin)
     return render_template('withdrawal_ui.html',card_id=card, pin_id=pin)
 
@@ -149,8 +171,10 @@ def withdrawal_ui():
 @app.route('/')
 def home():
     d = date.today().isoformat()
-    session['step'] = "FIRST"
-    print(session.get('step'))
+#    session['step'] = "FIRST"
+    redis_management.initialize_keys(REDIS_CONNECTION)
+    redis_management.set_step_key("FIRST", REDIS_CONNECTION)
+    print("STEP BY HOME FROM REDIS : " + redis_management.get_step_key())
     return render_template('home.html')
 
 
