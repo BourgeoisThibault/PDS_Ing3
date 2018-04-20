@@ -84,6 +84,8 @@ echo "#######################";
 echo "#   Docker step       #";
 echo "#######################";
 
+echo "$HOME_PATH/dab-app/"
+cd $HOME_PATH/dab-app/
 
 # Stop all container
 docker container stop dabappcontainer
