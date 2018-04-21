@@ -35,14 +35,14 @@ thread_stop_event = Event()
 def card_checking():
     card_id = request.args.get('card_id')
     pin = request.args.get('pin')
-    step = redis_management.get_step_key('step')
+    step = redis_management.get_step_key(REDIS_CONNECTION)
 #Add theses values in session
 #    print("CARD CHECKING STEP : " + session.get('step'))
     print("CARD CHECKING STEP : " + step)
     logging.info(card_id + " - " + pin)
     if step == "FIRST":
         if rest_utils.check_valid_card(card_id, pin):
-            socketio.emit('response_card_checking', {'code': 200,'card_id': card_id, 'pin': pin}, namespace='/home_pool')
+            socketio.emit('response_card_checking', {'code': 200, 'card_id': card_id, 'pin': pin}, namespace='/home_pool')
             return "ok", 200
         else:
             print("Envoi de ko ")
@@ -174,7 +174,8 @@ def home():
 #    session['step'] = "FIRST"
     redis_management.initialize_keys(REDIS_CONNECTION)
     redis_management.set_step_key("FIRST", REDIS_CONNECTION)
-    print("STEP BY HOME FROM REDIS : " + redis_management.get_step_key())
+    step = redis_management.get_step_key(REDIS_CONNECTION)
+    print("STEP BY HOME FROM REDIS : " + step)
     return render_template('home.html')
 
 

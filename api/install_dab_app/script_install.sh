@@ -80,9 +80,18 @@ chmod 777 ./cardEmulation-fb
 echo "./cardEmulation-fb"
 ./cardEmulation-fb &
 
-echo "#######################";
-echo "#   Docker step       #";
-echo "#######################";
+
+echo "###############################";
+echo "# Docker step for REDIS IMAGE #";
+echo "###############################";
+
+cd $HOME_PATH/
+sudo docker pull redis
+sudo docker run --name some-redis -d redis
+
+echo "#######################################";
+echo "#### Docker step for DABAPP IMAGE #####";
+echo "#######################################";
 
 echo "$HOME_PATH/dab-app/"
 cd $HOME_PATH/dab-app/
