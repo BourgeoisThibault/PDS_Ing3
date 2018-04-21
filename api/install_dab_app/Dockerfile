@@ -2,7 +2,7 @@ FROM python:2.7
 
 ADD dab-app ./
 
-RUN python import_dependencies.py
+RUN pip install requirements.txt
 
 ENTRYPOINT [ "python" ]
 
