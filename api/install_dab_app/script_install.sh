@@ -85,9 +85,17 @@ echo "###############################";
 echo "# Docker step for REDIS IMAGE #";
 echo "###############################";
 
+# Stop all container
+docker container stop redis
+
+# Remove all container
+docker container rm redis
+
+
 cd $HOME_PATH/
-sudo docker pull redis
-sudo docker run --name some-redis -d redis
+docker pull redis
+docker run -d --name redis -p 6379:6379 --restart unless-stopped redis
+
 
 echo "#######################################";
 echo "#### Docker step for DABAPP IMAGE #####";
@@ -106,7 +114,7 @@ docker container rm dabappcontainer
 docker build --rm -t dabappcontainer:1.0 .
 
 # Run container dab-app
-docker run --name=dabappcontainer -d -p 5000:5000 dabappcontainer:1.0
+docker run --name=dabappcontainer -d -p 5000:5000 --restart unless-stopped dabappcontainer:1.0
 
 echo "#######################";
 echo "# Waiting start       #";
