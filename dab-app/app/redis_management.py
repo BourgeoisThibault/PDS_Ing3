@@ -13,7 +13,7 @@ def set_step_key(step, connection):
 
 
 def get_step_key(connection):
-    connection.get("step")
+    return connection.get("step")
 
 
 def set_card_id(card_id, connection):
@@ -29,15 +29,15 @@ def set_amount(amount, connection):
 
 
 def get_card_id(connection):
-    connection.get("card_id")
+    return connection.get("card_id")
 
 
 def get_pin(connection):
-    connection.get("pin")
+    return connection.get("pin")
 
 
 def get_amount(connection):
-    connection.get("amount")
+    return connection.get("amount")
 
 
 def initialize_keys(connection):
