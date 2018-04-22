@@ -19,6 +19,13 @@ mkdir dab-app
 # Enter in folder
 cd dab-app
 
+echo "###############################";
+echo "##### DOWNLOADING FILES #######";
+echo "###############################";
+
+#Download pip
+apt-get install python-pip -y
+
 # Download compress dab-app application file
 wget http://api.esibank.inside.esiag.info/install_dab_app/dab-app.tgz
 
@@ -101,20 +108,29 @@ echo "#######################################";
 echo "#### Docker step for DABAPP IMAGE #####";
 echo "#######################################";
 
-echo "$HOME_PATH/dab-app/"
-cd $HOME_PATH/dab-app/
+echo "cd $HOME_PATH/dab-app/dab-app"
+cd $HOME_PATH/dab-app/dab-app
+
+echo "pip install -r requirements.txt"
+pip install -r requirements.txt
+
+echo "python application.py"
+python application.py
+
+#echo "$HOME_PATH/dab-app/"
+#cd $HOME_PATH/dab-app/
 
 # Stop all container
-docker container stop dabappcontainer
+#docker container stop dabappcontainer
 
 # Remove all container
-docker container rm dabappcontainer
+#docker container rm dabappcontainer
 
 # Build image and remove older
-docker build --rm -t dabappcontainer:1.0 .
+#docker build --rm -t dabappcontainer:1.0 .
 
 # Run container dab-app
-docker run --name=dabappcontainer -d -p 5000:5000 --restart unless-stopped dabappcontainer:1.0
+#docker run --name=dabappcontainer -d -p 5000:5000 --restart unless-stopped dabappcontainer:1.0
 
 echo "#######################";
 echo "# Waiting start       #";
