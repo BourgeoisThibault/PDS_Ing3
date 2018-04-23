@@ -1,18 +1,10 @@
 package Main;
-import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.catalyst.expressions.Year;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-
-import org.apache.spark.api.java.JavaRDD;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import DataAccess.DataAccess;
+import DataHandling.DataHandling;
 
 
 /**
@@ -20,7 +12,8 @@ import java.text.SimpleDateFormat;
  */
 public class ComplaintsAnalysis {
 
-
+    private DataAccess dataAccess = new DataAccess();
+    private DataHandling dataHandling = new DataHandling();
 
     public void run()
     {
@@ -45,42 +38,38 @@ public class ComplaintsAnalysis {
         System.out.println("# contains Mortgage: " + jrdd.filter(line -> line.contains("Mortgage") ).count() );
         */
 
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        SparkSession spark = SparkSession
-                .builder()
-                .appName("Spark Sarah")
-                .master("local[*]")
-                .getOrCreate();
 
-        Dataset<Row> ds = spark.read().option("delimiter", ",")
-                .option("header", true)
-                .option("Date_received", "dd/MM/yyyy")
-                .csv("/Users/SarahAllouche/Documents/Consumer_Complaints.csv");
+        Dataset<Row> ds = dataHandling.loadData();
         //Charge le cache
-        //ds.cache();
-        ds.groupBy("Product").count().show();
-        ds.groupBy("Consumer_disputed").count().show();
-        ds.groupBy("Company_response_to_consumer").count().show();
+        ds.cache();
 
-        // double count = ds.filter(to_date(col("Date_received").cast(date_format())).gt(01/01/2016)).count();
-        //ds.select(to_date(col("Date_received"),"yyyy") == 2016);
-       // ds.select(to_date(ds.col("Date_received"),"y")==2010);
-                //Year($"Date").geq(lit(2016)));
-                //data.filter(year($"date").geq(lit(2016)))
+        // Create Temp View for sql
+        ds.createOrReplaceTempView("ConsumerComplaints");
+        // sql for cast date
+        ds = dataHandling.formatDate(ds);
 
-        //double count = ds.count();
-        //System.out.println("le count " + count);
 
-        //ds.show();
+       // ds.groupBy("Consumer_disputed").count().show();
+       // ds.filter(ds.col("Timely_response").equalTo("No")).show();
+
+        // print shema
+       // ds.printSchema();
+        // show 20 first rows
+        ds.show();
+        // insert filtre TimelyResponse no
+         //dataAccess.insertConsumerDisputedCount(ds);
+        //insert filtre on ConsumerDisputed yes
+        // dataAccess.insertYesConsumerDisputed(ds);
         // decharge le cache
         ds.unpersist();
+
     }
 
 
     public static void main( String[] args )
     {
-        ComplaintsAnalysis j = new ComplaintsAnalysis();
-        j.run();
+        ComplaintsAnalysis complaintsAnalysis = new ComplaintsAnalysis();
+        complaintsAnalysis.run();
 
     }
 
