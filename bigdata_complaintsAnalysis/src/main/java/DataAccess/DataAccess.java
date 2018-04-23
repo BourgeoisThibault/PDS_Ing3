@@ -24,7 +24,8 @@ public class DataAccess {
             e.printStackTrace();
         }
     }
-
+    // procedures for traitments
+    
     public void insertProductCount(Dataset<Row> ds)
     {
         String table = "CountProductsProblem";
