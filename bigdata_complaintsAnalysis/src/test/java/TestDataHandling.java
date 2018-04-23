@@ -18,6 +18,8 @@ import DataHandling.DataHandling;
 /**
  * Created by SarahAllouche on 23/04/2018.
  */
+
+/*
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(MockitoJUnitRunner.class)
 public class TestDataHandling {
@@ -59,4 +61,5 @@ public class TestDataHandling {
         Assert.assertEquals("Error Format data get name", structFieldMock[0].dataType(), DataTypes.DateType);
         dsTest.unpersist();
     }
-}
+
+}*/
