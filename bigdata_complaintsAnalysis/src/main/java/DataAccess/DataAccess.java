@@ -1,10 +1,13 @@
 package DataAccess;
 
+import java.time.Year;
 import java.util.Properties;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.functions;
 import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions;
+
 
 /**
  * Created by SarahAllouche on 22/04/2018.
@@ -29,8 +32,8 @@ public class DataAccess {
     public void insertProductCount(Dataset<Row> ds)
     {
         String table = "CountProductsProblem";
-        Dataset<Row> dsno = ds.groupBy("Product").count();
-        dsno.write()
+        Dataset<Row> dsProduct = ds.groupBy("Product").count();
+        dsProduct.write()
                 .mode(SaveMode.Append)// safe mode
                 .mode("overwrite") // ecrase est recree la table
                 .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver") //driver
@@ -40,8 +43,8 @@ public class DataAccess {
     public void insertConsumerDisputedCount(Dataset<Row> ds)
     {
         String table = "CountConsumerDisputed";
-        Dataset<Row> dsyes =   ds.groupBy("Consumer_disputed").count();
-        dsyes.write()
+        Dataset<Row> dsDisputed =   ds.groupBy("Consumer_disputed").count();
+        dsDisputed.write()
                 .mode(SaveMode.Append)// safe mode
                 .mode("overwrite") // ecrase est recree la table
                 .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver")
@@ -51,8 +54,8 @@ public class DataAccess {
     public void insertResponseCount(Dataset<Row> ds)
     {
         String table = "ResponseCount";
-        Dataset<Row> dsno = ds.groupBy("Company_response_to_consumer").count();
-        dsno.write()
+        Dataset<Row> dsResponse = ds.groupBy("Company_response_to_consumer").count();
+        dsResponse.write()
                 .mode("overwrite") // ecrase est recree la table
                 .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver") //driver
                 .jdbc(url, table, connectionProperties);
@@ -61,11 +64,19 @@ public class DataAccess {
     public void insertIssuesPerYearCount(Dataset<Row> ds)
     {
         String table = "IssuesPerYearCount";
-       /* Dataset<Row> dsno = ds.filter(ds.col("d").geq(2016)).show();
-                dsno.write()
+
+       /* ds.col("Date_received").geq("2016").count();
+        ds.filter(Year(ds.col("date_received"));*/
+      // ds.show();
+       // ds.sqlContext().sql("Select YEAR(Date_received) as y, count(*) as nbPerYear" +
+            //    " from ConsumerComplaints group by y").show();
+
+        //Dataset<Row> dsDate = ds.filter(ds.col("Date_received").geq(2016));
+          /*      dsDate.write()
                 .mode("overwrite") // ecrase est recree la table
                 .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver") //driver
                 .jdbc(url, table, connectionProperties);*/
+
     }
 
     /*
