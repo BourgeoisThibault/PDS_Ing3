@@ -10,7 +10,7 @@ import org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions;
  * Created by SarahAllouche on 22/04/2018.
  */
 public class DataAccess {
-    private String url = "jdbc:mysql://localhost:8889/pdstrain";
+    private String url = "jdbc:mysql://localhost:3306/esibank_decisionnel";
     private Properties connectionProperties = new Properties();
 
     public DataAccess()
