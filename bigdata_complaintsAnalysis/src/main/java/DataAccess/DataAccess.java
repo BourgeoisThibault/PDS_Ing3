@@ -10,15 +10,15 @@ import org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions;
  * Created by SarahAllouche on 22/04/2018.
  */
 public class DataAccess {
-    private String url = "jdbc:mysql://localhost:3306/esibank_decisionnel";
+    private String url = "jdbc:mysql://192.154.88.161:3306/esibank_decisionnel";
     private Properties connectionProperties = new Properties();
 
     public DataAccess()
     {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connectionProperties.put("user", "root");
-            connectionProperties.put("password", "root");
+            connectionProperties.put("user", "esibank");
+            connectionProperties.put("password", "esibankpds");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
