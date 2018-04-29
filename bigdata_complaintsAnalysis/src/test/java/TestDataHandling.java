@@ -100,7 +100,7 @@ public class TestDataHandling {
         StructField[] structFieldMock = structTypeMock.fields();
         // test name
         Assert.assertEquals("Error Format data get name", structFieldMock[0].name(), "Date_received");
-        // test chargement de type du champ string -> date
+        // test to transform string to date
         Assert.assertEquals("Error Format data get name", structFieldMock[0].dataType(), DataTypes.DateType);
         dsTest.unpersist();
     }

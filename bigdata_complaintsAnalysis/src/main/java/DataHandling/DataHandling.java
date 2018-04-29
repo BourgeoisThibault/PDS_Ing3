@@ -30,7 +30,7 @@ public class DataHandling {
                 .csv(path);
     }
 
-    // cree la structure de notre document
+    // create document structure
     public StructType getSchema()
         {
             return new StructType(new StructField[]{

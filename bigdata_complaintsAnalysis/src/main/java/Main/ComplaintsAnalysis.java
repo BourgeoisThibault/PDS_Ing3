@@ -1,6 +1,5 @@
 package Main;
 
-import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import DataAccess.DataAccess;
@@ -15,6 +14,7 @@ public class ComplaintsAnalysis {
 
     private DataAccess dataAccess = new DataAccess();
     private DataHandling dataHandling = new DataHandling();
+    // to replace with the folder on server
     private String path = "/Users/SarahAllouche/Documents/Consumer_Complaints.csv";
 
     public void run()
