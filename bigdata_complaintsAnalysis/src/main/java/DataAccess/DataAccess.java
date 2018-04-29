@@ -64,30 +64,13 @@ public class DataAccess {
     public void insertIssuesPerYearCount(Dataset<Row> ds)
     {
         String table = "IssuesPerYearCount";
-
-       /* ds.col("Date_received").geq("2016").count();
-        ds.filter(Year(ds.col("date_received"));*/
-      // ds.show();
-       // ds.sqlContext().sql("Select YEAR(Date_received) as y, count(*) as nbPerYear" +
-            //    " from ConsumerComplaints group by y").show();
-
-        //Dataset<Row> dsDate = ds.filter(ds.col("Date_received").geq(2016));
-          /*      dsDate.write()
-                .mode("overwrite") // ecrase est recree la table
-                .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver") //driver
-                .jdbc(url, table, connectionProperties);*/
+        Dataset<Row> dsDate = ds.select(org.apache.spark.sql.functions.year(ds.col("Date_received"))
+                .as("YearReceived")).groupBy("YearReceived").count();
+        dsDate.write()
+            .mode("overwrite") // ecrase est recree la table
+            .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver") //driver
+            .jdbc(url, table, connectionProperties);
 
     }
 
-    /*
-
-        ds.groupBy("Consumer_disputed").count().show();
-        .show();
-
-        // double count = ds.filter(to_date(col("Date_received").cast(date_format())).gt(01/01/2016)).count();
-        //ds.select(to_date(col("Date_received"),"yyyy") == 2016);
-       // ds.select(to_date(ds.col("Date_received"),"y")==2010);
-                //Year($"Date").geq(lit(2016)));
-                //data.filter(year($"date").geq(lit(2016)))
-     */
 }

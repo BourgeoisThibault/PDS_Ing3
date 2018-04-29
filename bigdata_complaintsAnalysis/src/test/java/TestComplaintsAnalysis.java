@@ -84,7 +84,8 @@ public class TestComplaintsAnalysis {
         Mockito.doNothing().when(dataAccess).insertProductCount(Matchers.any(Dataset.class));
         Mockito.doNothing().when(dataAccess).insertResponseCount(Matchers.any(Dataset.class));
 
-        Mockito.when(dataHandlingMock.loadData(Matchers.any(String.class))).thenReturn(dsTest);
+        Mockito.when(dataHandlingMock.getSchema()).thenReturn(structMock);
+        Mockito.when(dataHandlingMock.loadData(Matchers.any(String.class), Matchers.any(StructType.class))).thenReturn(dsTest);
         Mockito.when(dataHandlingMock.formatDate(Matchers.any(Dataset.class))).thenReturn(dsTest);
     }
 

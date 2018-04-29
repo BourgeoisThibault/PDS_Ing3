@@ -19,14 +19,14 @@ public class DataHandling {
                 .getOrCreate();
     }
 
-    public Dataset<Row> loadData(final String path){
+    public Dataset<Row> loadData(final String path, final StructType schemaCsv){
 
         return spark.read()
                 .option("delimiter", ",")
                 .option("inferSchema", true)
                 .option("multiline", true)
                 .option("header", true)
-                .schema(getSchema())
+                .schema(schemaCsv)
                 .csv(path);
     }
 

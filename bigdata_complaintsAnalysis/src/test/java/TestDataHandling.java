@@ -36,6 +36,7 @@ public class TestDataHandling {
 
     private Dataset<Row> dsTest;
     private String path;
+    private StructType structMock;
 
     @Before
     public void setup() throws Exception {
@@ -47,7 +48,7 @@ public class TestDataHandling {
         dsTest = sparkMock.emptyDataFrame();
         dsTest.cache();
         path = "Mock_ConsumersComplaints.csv";
-        StructType structMock = new StructType(new StructField[]{
+        structMock = new StructType(new StructField[]{
                 new StructField("Date_received", DataTypes.StringType, false, Metadata.empty()),
                 new StructField("Product", DataTypes.StringType, false, Metadata.empty()),
                 new StructField("Sub_product", DataTypes.StringType, false, Metadata.empty()),
@@ -86,7 +87,7 @@ public class TestDataHandling {
     @Test
     public void shouldLoad() throws Exception {
         long dsCount;
-        Dataset<Row> dsTestLoad = dataHandlingSUT.loadData(path);
+        Dataset<Row> dsTestLoad = dataHandlingSUT.loadData(path, structMock);
         dsCount = dsTestLoad.count();
         Assert.assertEquals("Error loading data", dsCount, 4);
     }

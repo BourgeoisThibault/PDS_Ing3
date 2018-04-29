@@ -5,6 +5,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import DataAccess.DataAccess;
 import DataHandling.DataHandling;
+import org.apache.spark.sql.types.StructType;
 
 
 /**
@@ -19,23 +20,22 @@ public class ComplaintsAnalysis {
     public void run()
     {
 
-       // System.setProperty("hadoop.home.dir","C:\\hadoop" );
-        Dataset<Row> ds = dataHandling.loadData(path);
+
+        StructType csvStruct = dataHandling.getSchema();
+        Dataset<Row> ds = dataHandling.loadData(path, csvStruct);
 
         ds.cache();
 
         ds.createOrReplaceTempView("ConsumerComplaints");
 
         ds = dataHandling.formatDate(ds);
-        ds.printSchema();
+
         //filters
 
         dataAccess.insertConsumerDisputedCount(ds);
         dataAccess.insertResponseCount(ds);
         dataAccess.insertProductCount(ds);
-
-
-        //dataAccess.insertIssuesPerYearCount(ds);
+        dataAccess.insertIssuesPerYearCount(ds);
 
 
         ds.unpersist();
