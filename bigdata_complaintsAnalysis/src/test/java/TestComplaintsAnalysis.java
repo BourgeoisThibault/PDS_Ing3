@@ -46,7 +46,7 @@ public class TestComplaintsAnalysis {
     public void setup() throws Exception {
         Mockito.mock(ComplaintsAnalysis.class);
         SparkSession sparkMock = SparkSession.builder()
-                .appName("Sarah")
+                .appName("ComplaintsTests")
                 .master("local[*]")
                 .getOrCreate();
 

@@ -42,7 +42,7 @@ public class TestDataHandling {
     public void setup() throws Exception {
         Mockito.mock(DataHandling.class);
         SparkSession sparkMock = SparkSession.builder()
-                .appName("Sarah")
+                .appName("SparkTest")
                 .master("local[*]")
                 .getOrCreate();
         dsTest = sparkMock.emptyDataFrame();
