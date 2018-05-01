@@ -1,4 +1,6 @@
 package DataHandling;
+import com.mongodb.spark.MongoSpark;
+import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -10,13 +12,17 @@ import org.apache.spark.sql.types.StructType;
 public class DataHandling {
 
     private SparkSession spark;
+    private JavaSparkContext jsc;
 
     public DataHandling(){
         this.spark = SparkSession
                 .builder()
                 .appName("SparkComplaints")
                 .master("local[*]")
+                .config("spark.mongodb.input.uri", "mongodb://127.0.0.1/ConsumerComplaint.Complaints")
+                .config("spark.mongodb.output.uri", "mongodb://127.0.0.1/ConsumerComplaint.Complaints")
                 .getOrCreate();
+            this.jsc = new JavaSparkContext(spark.sparkContext());
     }
 
     public Dataset<Row> loadData(final String path, final StructType schemaCsv){
@@ -30,10 +36,16 @@ public class DataHandling {
                 .csv(path);
     }
 
-    // create document structure
+    public Dataset<Row> loadDataFromMongoDb()
+    {
+        return MongoSpark.load(jsc).toDF();
+    }
+
+
+    // create initial document structure
     public StructType getSchema()
-        {
-            return new StructType(new StructField[]{
+    {
+        return new StructType(new StructField[]{
                     new StructField("Date_received", DataTypes.StringType, false, Metadata.empty()),
                     new StructField("Product", DataTypes.StringType, false, Metadata.empty()),
                     new StructField("Sub_product", DataTypes.StringType, false, Metadata.empty()),
@@ -52,10 +64,10 @@ public class DataHandling {
                     new StructField("Timely_response", DataTypes.StringType, false, Metadata.empty()),
                     new StructField("Consumer_disputed", DataTypes.StringType, false, Metadata.empty()),
                     new StructField("ComplaintID", DataTypes.DoubleType, false, Metadata.empty())
-            });
-        }
+        });
+    }
 
-    //return new format of dataset and dataset columns
+    //return new format of dataset and dataset columns: with date
     public  Dataset<Row> formatDate(Dataset<Row> ds)
     {
         return ds.sqlContext().sql("SELECT TO_DATE(CAST(UNIX_TIMESTAMP(Date_received, 'MM/dd/yyyy') AS TIMESTAMP)) As Date_received,"

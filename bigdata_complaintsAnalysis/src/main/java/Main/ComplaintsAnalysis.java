@@ -5,8 +5,6 @@ import org.apache.spark.sql.Row;
 import DataAccess.DataAccess;
 import DataHandling.DataHandling;
 import org.apache.spark.sql.types.StructType;
-
-
 /**
  * Created by SarahAllouche on 16/04/2018.
  */
@@ -20,18 +18,28 @@ public class ComplaintsAnalysis {
     public void run()
     {
 
-
         StructType csvStruct = dataHandling.getSchema();
-        Dataset<Row> ds = dataHandling.loadData(path, csvStruct);
 
+        Dataset<Row> dsCsv = dataHandling.loadData(path, csvStruct);
+        Dataset<Row> dsMongoDb = dataHandling.loadDataFromMongoDb();
+
+        dsMongoDb.cache();
+        dsCsv.cache();
+
+        dsMongoDb.createOrReplaceTempView("ConsumerComplaints");
+        dsMongoDb = dataHandling.formatDate(dsMongoDb);
+        dsMongoDb.printSchema();
+        dsCsv.createOrReplaceTempView("ConsumerComplaints");
+        dsCsv = dataHandling.formatDate(dsCsv);
+
+
+        Dataset <Row> ds = dsCsv.union(dsMongoDb);
         ds.cache();
 
-        ds.createOrReplaceTempView("ConsumerComplaints");
-
-        ds = dataHandling.formatDate(ds);
+        dsCsv.unpersist();
+        dsMongoDb.unpersist();
 
         //filters
-
         dataAccess.insertConsumerDisputedCount(ds);
         dataAccess.insertResponseCount(ds);
         dataAccess.insertProductCount(ds);
