@@ -72,6 +72,7 @@ public class TestDataHandling {
         data.add(RowFactory.create("03/12/2014", "Mortgage", "Other mortgage", "Loan modification collection foreclosure", "",
                 "", "", "M&T BANK CORPORATION", "MI", "48382", "","N/A","Referral", "03/17/2014","Closed with explanation", "Yes", "No",759217));
 
+        //Specify headers
         dsTest = sparkMock.createDataFrame(data, structMock).toDF("Date_received", "Product", "Sub_product", "Issue", "Sub_issue","Consumer_complaint_narrative",
                 "Company_public_response", "Company" , "State", "ZIP_code", "Tags", "Consumer_consent_provided", "Submitted_via",
                 "Date_sent_to_company", "Company_response_to_consumer", "Timely_response", "Consumer_disputed", "ComplaintID");
