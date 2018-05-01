@@ -14,7 +14,7 @@ public class DataHandling {
     public DataHandling(){
         this.spark = SparkSession
                 .builder()
-                .appName("Spark Sarah")
+                .appName("SparkComplaints")
                 .master("local[*]")
                 .getOrCreate();
     }
