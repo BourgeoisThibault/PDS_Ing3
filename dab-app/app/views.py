@@ -41,6 +41,7 @@ def card_checking():
     print("CARD CHECKING STEP : " + step)
     logging.info(card_id + " - " + pin)
     if step == "FIRST":
+        socketio.emit('response_card_checking', {'code': 444}, namespace='/home_pool')
         if rest_utils.check_valid_card(card_id, pin):
             socketio.emit('response_card_checking', {'code': 200, 'card_id': card_id, 'pin': pin}, namespace='/home_pool')
             return "ok", 200
@@ -61,16 +62,16 @@ def confirm_transac():
     r_pin = redis_management.get_pin(REDIS_CONNECTION)
     r_amount = redis_management.get_amount(REDIS_CONNECTION)
     r_amount = r_amount
-    logging.info("CONFIRM TRANSAC Card id + " + str(card_id) + " - PIN : " + str(pin) + " - Amount2 : " + str(amount) + "STEP " + session.get('step'))
+    logging.info("CONFIRM TRANSAC Card id + " + str(card_id) + " - PIN : " + str(pin) + " - Amount2 : " + str(r_amount) + "STEP ")
 
     #if card_id stored in redis DB  does not match with request arg card_id, return forbidden code 403
     if card_id != r_card_id or pin != r_pin:
         socketio.emit('confirm_transac', {'code': 403}, namespace='/confirm_transac')
         return "ko", 403
     else:#double verification
-        if rest_utils.check_confirm_transac(card_id, pin, amount):
+        if rest_utils.check_confirm_transac(r_card_id, r_pin, r_amount):
             socketio.emit('confirm_transac', {'code': 200}, namespace='/confirm_transac')
-            return "ok",200
+            return "ok", 200
         else:
             print("Envoi de ko ")
             socketio.emit('confirm_transac', {'code': 401}, namespace='/confirm_transac')
@@ -88,7 +89,7 @@ def default_error_handler(e):
     logging.warning(request.event["message"])
 
 
-@app.route('/withdrawal_ui/_check_data')
+@app.route('/withdrawal_ui/confirme')
 def check_valid_transac():
     print("en attente ....")
 #    session['step'] = "SECOND"

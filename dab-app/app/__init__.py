@@ -3,7 +3,11 @@ from flask_bootstrap import Bootstrap
 from flask_socketio import SocketIO,send,emit
 import logging
 import os
-logging.basicConfig(filename='dap-app.log', level=logging.DEBUG)
+# logging.basicConfig(filename='dab-app.log', filemode='w', level=logging.INFO)
+# logging.getLogger('socket.io').setLevel(logging.ERROR)
+# logging.getLogger('socketio').setLevel(logging.ERROR)
+# logging.getLogger('werkzeug').setLevel(logging.ERROR)
+# logging.getLogger('engineio').setLevel(logging.ERROR)
 
 
 
