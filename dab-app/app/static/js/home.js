@@ -2,11 +2,8 @@
  * @author ABID BUTT Usman
  */
 
-
 $(document).ready(function() {
     console.log("ok home");
-
-
 
 
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/home_pool');
@@ -18,8 +15,8 @@ $(document).ready(function() {
         if (response == 200) {
 
             console.log("Reponse error : "+tcp_res.code);
-            $(".main-content-home").css('visibility', 'hidden');
-            $("#verif").css('visibility', 'visible');
+            // $(".main-content-home").css('visibility', 'hidden');
+            // $("#verif").css('visibility', 'visible');
 
             $("#var1").val(tcp_res.card_id);
             $("#var2").val(tcp_res.pin);
@@ -39,9 +36,9 @@ $(document).ready(function() {
         } else if (tcp_res.code == 401) {
 
 
-            console.log("Reponse error : "+tcp_res.code);
-            $(".main-content-home").css('visibility', 'hidden');
-            $("#verif").css('visibility', 'visible');
+            console.log("Reponse error : " + tcp_res.code);
+            // $(".main-content-home").css('visibility', 'hidden');
+            // $("#verif").css('visibility', 'visible');
 
             //executes instructions after 8 s
             setTimeout(function () {
@@ -54,11 +51,11 @@ $(document).ready(function() {
                 console.log("waiting err...");
                 $("#err_div").css('visibility', 'hidden');
                 $(".main-content-home").css('visibility', 'visible');
-            }, 13000);
-
-
-
-
+            }, 12000);
+        }
+        else if (tcp_res.code == 444) {
+            $(".main-content-home").css('visibility', 'hidden');
+            $("#verif").css('visibility', 'visible');
         }
 
 

@@ -25,7 +25,7 @@ def handle_card_checking_contact():
     card_id = str(sys.argv[1]).split(";")[0]
     pin_id =str(sys.argv[1]).split(";")[1]
 
-    if has_numbers_only(card_id,CARD_NUMBER_SIZE) and has_numbers_only(pin_id, CARD_PIN_SIZE) and handle_arg_error():
+    if handle_arg_error():
         nfc_rest.send_contact_info(card_id, pin_id)
         print("Tests are ok")
     else:

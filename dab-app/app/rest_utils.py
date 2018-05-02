@@ -5,17 +5,20 @@
 import requests
 import logging
 import json
-from app import logging
 
 
-def check_valid_card(card_id,pin):
+def check_valid_card(card_id, pin):
 
     url = "http://localhost:4321/check?card="+str(card_id)+"&&pin="+str(pin)
     logging.info("###########################################################")
     logging.info("##### Check valid card request : "+url)
     logging.info("###########################################################")
 
-    response = requests.get(url)
+    try:
+        response = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        logging.info("PAYFREE CHECK", "ERROR COMMUNICATION WITH PAYFREE MODULE : ")
+        return None
 
     if response.status_code == 200:
         return True
@@ -32,7 +35,11 @@ def check_valid_transac(card_id, pin, amount):
     logging.info("##### Check valid transac request : "+url)
     logging.info("###########################################################")
 
-    response = requests.get(url)
+    try:
+        response = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        logging.info("PAYFREE VALIDATE", "ERROR COMMUNICATION WITH PAYFREE MODULE : ")
+        return None
 
     if response.status_code == 200:
         return True
@@ -49,7 +56,11 @@ def check_confirm_transac(card_id, pin, amount):
     logging.info("##### Check confirm transac request : "+url)
     logging.info("###########################################################")
 
-    response = requests.get(url)
+    try:
+        response = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        logging.info("PAYFREE VALIDATE", "ERROR COMMUNICATION WITH PAYFREE MODULE : ")
+        return None
 
     if response.status_code == 200:
         return True
