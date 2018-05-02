@@ -31,28 +31,29 @@ docker container rm payfreecontainer
 docker build --rm -t clientpayfree:1.0 .
 
 # Run container PayFree
-docker run --name=payfreecontainer -d -p 8080:4321 clientpayfree:1.0
+docker run --add-host ws.esibank.inside.esiag.info:192.168.20.3 --name=payfreecontainer -d -p 4321:4321 clientpayfree:1.0
 
 echo "#######################";
 echo "# Waiting start       #";
 echo "#######################";
-sleep 1
-cpt=0
-while ((cpt<200))
-do
-  STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080)
+
+endtime=$(($(date +%s) + 1000))
+boolsuccess=false
+while (( $(date +%s) < $endtime )) ; do
+  STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:4321)
   if [ $STATUS -eq 200 ]; then
+    timetoend=$((1000-$(($endtime - $(date +%s)))))
     echo "";
-    echo "Successfully deploy in $cpt secondes"
+    echo "Successfully deploy in $(($timetoend/60)) minutes and $(($timetoend%60)) seconds"
+    boolsuccess=true
     break
   else
-    ((cpt+=1))
-    echo -n .;
+    timebeforeend=$(($endtime - $(date +%s)))
+    echo -ne "\rWaiting during $(($timebeforeend/60)) minutes and $(($timebeforeend%60)) seconds";
   fi
-  sleep 1
 done
 
-if [ $cpt == 200 ]; then
+if [ $boolsuccess == false ]; then
   echo ""
   echo "ERROR: Application not completely deploy" >&2
   exit 1

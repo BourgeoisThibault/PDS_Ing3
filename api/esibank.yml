@@ -19,35 +19,101 @@ info:
   contact:
     name: BOURGEOIS Thibault
     email: thibault.bourgeois@etu.u-pec.fr
-host: localhost:1111
+host: localhost:4321
 basePath: /
 tags:
-  - name: sample
-    description: operation sample
+  - name: payfree
+    description: operation payfree
 paths:
-  '/sample':
+  '/check':
     get:
       tags:
-        - sample
-      summary: Get all sample
-      description: ''
-      produces:
-        - application/json
+        - payfree
+      summary: Check card validity
+      description: 'Check card number and pin crypted'
+      parameters:
+              - in: query
+                name: card
+                schema:
+                  type: string
+                required: true
+                description: Card number
+              - in: query
+                name: pin
+                schema:
+                  type: string
+                required: true
+                description: Card pin pass
       responses:
         '200':
           description: Success
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Sample'
-definitions:
-  Sample:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-        example: 1
-      myString:
-        type: string
-        example: test
+        '404':
+          description: Card not found
+        '401':
+          description: Unauthorized
+  '/validate':
+    get:
+      tags:
+        - payfree
+      summary: Check card validity and amount
+      description: 'Check card number and pin crypted'
+      parameters:
+              - in: query
+                name: card
+                schema:
+                  type: string
+                required: true
+                description: Card number
+              - in: query
+                name: pin
+                schema:
+                  type: string
+                required: true
+                description: Card pin pass
+              - in: query
+                name: amount
+                schema:
+                  type: string
+                required: true
+                description: Amount transaction
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Card not found
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/confirme':
+    get:
+      tags:
+        - payfree
+      summary: Confirm card validity and amount
+      description: 'Check card number and pin crypted'
+      parameters:
+              - in: query
+                name: card
+                schema:
+                  type: string
+                required: true
+                description: Card number
+              - in: query
+                name: pin
+                schema:
+                  type: string
+                required: true
+                description: Card pin pass
+              - in: query
+                name: amount
+                schema:
+                  type: string
+                required: true
+                description: Amount transaction
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Card not found
+        '401':
+          description: Unauthorized

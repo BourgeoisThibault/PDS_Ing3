@@ -20,6 +20,9 @@
             android:id="@+id/nav_notif"
             android:icon="@android:drawable/stat_notify_chat"
             android:title="Notifications" />
+        <item
+            android:id="@+id/nav_nfc"
+            android:title="NFC retrait" />
     </group>
 
     <item android:title="Application">

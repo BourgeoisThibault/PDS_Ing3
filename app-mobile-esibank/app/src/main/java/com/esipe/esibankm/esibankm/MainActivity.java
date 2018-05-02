@@ -78,7 +78,10 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(getApplicationContext(),TransactionActivity.class);
         } else if (id == R.id.nav_accounts) {
             intent = new Intent(getApplicationContext(),AccountsActivity.class);
-        } else if (id == R.id.nav_home) {
+        }else if (id == R.id.nav_nfc) {
+            intent = new Intent(getApplicationContext(),NfcWriterActivity.class);
+        }
+        else if (id == R.id.nav_home) {
             intent = new Intent(getApplicationContext(),HomeActivity.class);
         } else if (id == R.id.nav_notif) {
             intent = new Intent(getApplicationContext(),NotificationActivity.class);

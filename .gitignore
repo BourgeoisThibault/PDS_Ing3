@@ -22,3 +22,14 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+
+### Python ###
+*.pyc
+dab-app/*.pyc
+dab-app/app/*.pyc
+/venv/
+dab-app/venv/
+dab-app/*.log
+dab-app/dap-app.log
+nfc-reader-lib/.idea
