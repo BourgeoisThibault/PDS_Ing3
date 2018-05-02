@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pds.esibank.dataaccess.entities.Account;
 import pds.esibank.dataaccess.entities.Card;
 import pds.esibank.dataaccess.entities.Customer;
@@ -52,10 +49,25 @@ public class PayfreeController {
         return new ResponseEntity(mapper.map(card, CardDto.class), HttpStatus.OK);
     }
 
+    /*
     @RequestMapping(value="/checktransaction", method= RequestMethod.GET)
     public ResponseEntity checkValidity(
             @RequestParam("card") String card,
             @RequestParam("amount") String amount) {
+        LinkCardToAccount linkCardToAccount = linkCardService.getInfoByCard(card);
+        if(linkCardToAccount == null)
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+        if(( linkCardToAccount.getAccount().getSold()- Float.parseFloat(amount))<0)
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    */
+    @RequestMapping(value="/checktransaction", method= RequestMethod.GET)
+    public ResponseEntity checkValidity(
+            @RequestHeader(value = "card") String card,
+            @RequestHeader(value = "amount") String amount) {
         LinkCardToAccount linkCardToAccount = linkCardService.getInfoByCard(card);
         if(linkCardToAccount == null)
             return new ResponseEntity(HttpStatus.NOT_FOUND);

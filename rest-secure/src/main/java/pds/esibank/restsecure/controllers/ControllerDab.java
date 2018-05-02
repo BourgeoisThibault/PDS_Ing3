@@ -1,6 +1,8 @@
 package pds.esibank.restsecure.controllers;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,8 @@ import pds.esibank.models.payfree.PfClientDto;
 import javax.ws.rs.core.MediaType;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
+import static org.springframework.http.HttpMethod.GET;
 
 /**
  * @author BOURGEOIS Thibault
@@ -64,8 +68,20 @@ public class ControllerDab {
             CardDto cardDto = restTemplate.getForObject(URL_DATABASE + "card/" + cardId,CardDto.class);
 
             if (MySHA.checkSign(cardDto.getCardPass(),amount,cryptSignType,requestSign)) {
-                restTemplate.getForObject(URL_DATABASE + "checktransaction?card=" + cardId + "&amount=" + amount, String.class);
-                return new ResponseEntity(HttpStatus.OK);
+
+                String finalUrl = URL_DATABASE + "checktransaction?card=" + cardId + "&amount=" + amount;
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.set("card", cardId);
+                headers.set("amount", amount);
+                HttpEntity entity = new HttpEntity("parameters",headers);
+
+                try {
+                    restTemplate.exchange(finalUrl, GET, entity, String.class);
+                    return new ResponseEntity(HttpStatus.OK);
+                } catch (HttpClientErrorException ex) {
+                    return new ResponseEntity(ex.getStatusCode());
+                }
             }else
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         } catch (HttpClientErrorException ex) {
