@@ -86,6 +86,8 @@ public class ControllerDab {
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         } catch (HttpClientErrorException ex) {
             return new ResponseEntity(ex.getStatusCode());
+        } catch (Exception es) {
+            return new ResponseEntity(HttpStatus.BAD_GATEWAY);
         }
     }
 
