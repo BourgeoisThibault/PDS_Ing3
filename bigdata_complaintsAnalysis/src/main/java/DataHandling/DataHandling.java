@@ -22,7 +22,7 @@ public class DataHandling {
                 .config("spark.mongodb.input.uri", "mongodb://127.0.0.1/ConsumerComplaint.Complaints")
                 .config("spark.mongodb.output.uri", "mongodb://127.0.0.1/ConsumerComplaint.Complaints")
                 .getOrCreate();
-            this.jsc = new JavaSparkContext(spark.sparkContext());
+                this.jsc = new JavaSparkContext(spark.sparkContext());
     }
 
     public Dataset<Row> loadData(final String path, final StructType schemaCsv){
