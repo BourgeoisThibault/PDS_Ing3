@@ -78,7 +78,7 @@ nfc_lib_c:
 bigdata_complaints:
   stage: deploy
   script:
-    - mvn package -DskipTests -pl bigdata_complaintsAnalysis
+    - mvn package -DskipTests -pl bigdata_complaintsAnalysis -am
   artifacts:
       expire_in: 1 hrs
       paths:
