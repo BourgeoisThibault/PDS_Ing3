@@ -3,6 +3,7 @@ image: maven:3.3.9-jdk-8
 variables:
   IP_DOCKER: "192.154.88.167"
   IP_NOTIF: "192.154.88.168"
+  IP_DATAACCESS: "192.154.88.161"
 stages:
   - compile
   - test
@@ -29,6 +30,7 @@ PackageAll:
   artifacts:
       expire_in: 2 hrs
       paths:
+      - bigdata_complaintsAnalysis/target/bigdata_complaintsAnalysis-1.0-SNAPSHOT.jar
       - si-externe/target/si-externe.war
       - shares-price-historisation/target/shares-price-historisation.war
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
@@ -36,6 +38,8 @@ PackageAll:
   only:
     refs:
       - master
+
+
 
 #################################
 ##  NE PAS TOUCHER (USMAN)  ##
@@ -65,6 +69,25 @@ nfc_lib_c:
   only:
     refs:
       - master
+
+
+
+#################################
+##  (Sarah)  ##
+#################################
+bigdata_complaints:
+  stage: deploy
+  script:
+    - mvn package -DskipTests -pl bigdata_complaintsAnalysis -am
+  artifacts:
+      expire_in: 1 hrs
+      paths:
+      - bigdata_complaintsAnalysis/target/bigdata_complaintsAnalysis.jar
+  only:
+   refs:
+     - master
+
+
 
 #################################
 ##  NE PAS TOUCHER (THIBAULT)  ##
@@ -100,6 +123,7 @@ Exec_script:
     - payfree_clt
     - dab_app
     - nfc_lib_c
+    - bigdata_complaints
   script:
     - mkdir ~/.ssh
     - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
@@ -111,6 +135,7 @@ Exec_script:
     - scp payfree-client/target/payfreeclt.jar esibank@$IP_DOCKER:public-html/install/payfreeclt.jar
     - scp nfc-reader-lib-repo/nfc-reader-lib.tgz esibank@$IP_DOCKER:public-html/install_dab_app/nfc-reader-lib.tgz
     - scp dab-app-tgz-repo/dab-appdab-app.tgz esibank@$IP_DOCKER:public-html/install_dab_app/dab-app.tgz
+    - scp bigdata_complaintsAnalysis/target/bigdata_complaintsAnalysis.jar esibank@IP_DATAACCESS:home/esibank/bigdata_complaintsAnalysis.jar
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
     - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   only:
