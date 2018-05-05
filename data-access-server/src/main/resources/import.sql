@@ -418,3 +418,45 @@ insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration
 insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(28,1,"0.016",32765,56,"0.015");
 insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(29,1,"0.009",58421,58,"0.015");
 insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(30,1,"0.003",53993,53,"0.015");
+
+
+
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(1,136296,1,"1225.87694181584");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(2,112050,2,"514.117222545768");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(3,80366,3,"495.917416634415");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(4,91566,4,"1034.21298779414");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(5,151086,5,"369.31879842017");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(6,70038,6,"909.93321352844");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(7,196621,7,"2049.02114940622");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(8,273033,8,"3690.52260070292");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(9,280512,9,"1512.29943798864");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(10,206103,10,"745.272932300327");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(11,235731,11,"633.704340276066");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(12,73458,12,"1242.70700106894");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(13,46586,13,"852.826780279853");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(14,169151,14,"1393.0123301888");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(15,90008,15,"397.396890960113");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(16,49808,16,"1263.9715863763");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(17,55450,17,"993.168504433448");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(18,198399,18,"1153.94526202099");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(19,49047,19,"589.158127000956");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(20,10039,20,"517.042686703106");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(21,28677,21,"1815.50261820391");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(22,213524,22,"1501.63357910653");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(23,205625,23,"1256.23238973527");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(24,237146,24,"455.510952361064");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(25,109532,25,"1121.48883948187");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(26,61850,26,"680.674981041684");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(27,88283,27,"1578.60231843436");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(28,25353,28,"607.594213835435");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(29,169658,29,"1029.70293803307");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(30,78260,30,"1025.62721314348");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(31,130292,31,"849.430610298289");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(32,107212,32,"808.8119624592");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(33,49287,33,"961.673598362851");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(34,88302,34,"1467.32003437546");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(35,69685,35,"868.648173954583");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(36,167866,36,"1579.78674653059");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(37,294322,37,"2705.3982663831");
+insert into receivable (`receivable_id`,`id_customer`,`id_loan`,`receivable_monthly`) VALUES(38,64508,38,"963.771444006504");
+
