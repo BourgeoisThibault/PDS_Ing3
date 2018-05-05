@@ -1,5 +1,6 @@
 package DataHandling;
 import com.mongodb.spark.MongoSpark;
+import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -13,19 +14,22 @@ public class DataHandling {
 
     private SparkSession spark;
     private JavaSparkContext jsc;
+    private static final Logger logger = Logger.getLogger(DataHandling.class);
 
     public DataHandling(){
+
         this.spark = SparkSession
                 .builder()
                 .appName("SparkComplaints")
                 .master("local[*]")
-                .config("spark.mongodb.input.uri", "mongodb://127.0.0.1/ConsumerComplaint.Complaints")
-                .config("spark.mongodb.output.uri", "mongodb://127.0.0.1/ConsumerComplaint.Complaints")
+                .config("spark.mongodb.input.uri", "mongodb://192.154.88.173/ConsumerComplaint.Complaints")
+                .config("spark.mongodb.output.uri", "mongodb://192.154.88.173/ConsumerComplaint.Complaints")
                 .getOrCreate();
                 this.jsc = new JavaSparkContext(spark.sparkContext());
     }
 
     public Dataset<Row> loadData(final String path, final StructType schemaCsv){
+        logger.info("Start loadData with specific schema and path");
 
         return spark.read()
                 .option("delimiter", ",")
@@ -34,10 +38,12 @@ public class DataHandling {
                 .option("header", true)
                 .schema(schemaCsv)
                 .csv(path);
+
     }
 
     public Dataset<Row> loadDataFromMongoDb()
     {
+        logger.info("Start loading mongodata and put in dataset");
         return MongoSpark.load(jsc).toDF();
     }
 
@@ -45,6 +51,8 @@ public class DataHandling {
     // create initial document structure
     public StructType getSchema()
     {
+        logger.info("Start the retrieve schema");
+
         return new StructType(new StructField[]{
                     new StructField("Date_received", DataTypes.StringType, false, Metadata.empty()),
                     new StructField("Product", DataTypes.StringType, false, Metadata.empty()),
@@ -70,6 +78,7 @@ public class DataHandling {
     //return new format of dataset and dataset columns: with date
     public  Dataset<Row> formatDate(Dataset<Row> ds)
     {
+        logger.info("Start formating date");
         return ds.sqlContext().sql("SELECT TO_DATE(CAST(UNIX_TIMESTAMP(Date_received, 'MM/dd/yyyy') AS TIMESTAMP)) As Date_received,"
                 + "Product, Sub_product, Issue, Sub_issue, Consumer_complaint_narrative, Company_public_response, Company, State, ZIP_code,"
                 + "Tags, Consumer_consent_provided, Submitted_via, TO_DATE(CAST(UNIX_TIMESTAMP(Date_sent_to_company, 'MM/dd/yyyy') AS TIMESTAMP)) As Date_sent_to_company,"
