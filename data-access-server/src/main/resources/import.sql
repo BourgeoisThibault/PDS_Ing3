@@ -385,3 +385,36 @@ INSERT INTO transaction (id_transaction,id_customer,id_account,date_operation,am
 INSERT INTO transaction (id_transaction,id_customer,id_account,date_operation,amount,type_payment,fk_id_region) VALUES (2971,271,271,"2017-05-22","122.51","Credit Card",11),(2972,272,272,"2017-04-27","105.87","Cash",12),(2973,273,273,"2017-07-16","139.57","Credit Card",11),(2974,274,274,"2017-04-04","60.46","Cash",12),(2975,275,275,"2018-03-16","109.74","Cash",12),(2976,276,276,"2017-10-26","112.48","Cash",12),(2977,277,277,"2017-03-31","101.05","Credit Card",11),(2978,278,278,"2017-08-24","62.58","Credit Card",11),(2979,279,279,"2017-10-05","68.70","Credit Card",11),(2980,280,280,"2018-03-22","69.03","Credit Card",11);
 INSERT INTO transaction (id_transaction,id_customer,id_account,date_operation,amount,type_payment,fk_id_region) VALUES (2981,281,281,"2017-10-29","124.01","Cash",12),(2982,282,282,"2017-05-19","81.19","Credit Card",11),(2983,283,283,"2017-05-05","86.23","Cash",12),(2984,284,284,"2018-03-14","57.78","Credit Card",11),(2985,285,285,"2017-03-30","101.66","Credit Card",11),(2986,286,286,"2017-09-10","130.13","Credit Card",11),(2987,287,287,"2017-07-24","80.73","Credit Card",11),(2988,288,288,"2018-03-02","80.59","Cash",12),(2989,289,289,"2017-09-04","56.24","Credit Card",11),(2990,290,290,"2018-02-19","90.62","Cash",12);
 INSERT INTO transaction (id_transaction,id_customer,id_account,date_operation,amount,type_payment,fk_id_region) VALUES (2991,291,291,"2017-04-24","84.84","Credit Card",11),(2992,292,292,"2017-04-05","121.75","Credit Card",11),(2993,293,293,"2017-07-16","114.92","Credit Card",11),(2994,294,294,"2018-03-21","88.25","Cash",12),(2995,295,295,"2017-07-30","109.69","Credit Card",11),(2996,296,296,"2017-09-03","58.26","Cash",12),(2997,297,297,"2017-05-30","84.35","Cash",12),(2998,298,298,"2017-04-13","78.33","Credit Card",11),(2999,299,299,"2017-10-05","104.45","Credit Card",11),(3000,300,300,"2017-11-05","97.14","Cash",12);
+
+
+
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(1,2,"0.008",503419,480,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(2,1,"0.014",29296,59,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(3,1,"0.008",28205,58,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(4,2,"0.023",300460,605,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(5,1,"0.014",20355,57,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(6,1,"0.01",46280,52,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(7,2,"0.022",653693,480,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(8,2,"0.035",952661,480,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(9,2,"0.013",565803,480,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(10,1,"0.013",37663,52,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(11,1,"0.001",32249,51,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(12,1,"0.015",61363,51,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(13,2,"0.007",302149,397,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(14,1,"0.007",74029,54,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(15,1,"0.011",21683,56,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(16,2,"0.004",560572,480,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(17,2,"0.01",268926,307,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(18,1,"0.009",66574,59,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(19,1,"0.019",28844,51,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(20,1,"0.01",26796,53,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(21,2,"0.009",731598,480,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(22,2,"0.027",440474,480,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(23,2,"0.003",568150,480,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(24,1,"0.011",23988,54,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(25,1,"0.006",63007,57,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(26,2,"0.004",228459,356,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(27,2,"0.002",728154,480,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(28,1,"0.016",32765,56,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(29,1,"0.009",58421,58,"0.015");
+insert into loan (`loan_id`,`loan_type`,`loan_rate`,`loan_amount`,`loan_duration`,`loan_assurance`) VALUES(30,1,"0.003",53993,53,"0.015");
