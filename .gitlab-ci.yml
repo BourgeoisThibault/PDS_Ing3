@@ -135,7 +135,7 @@ Exec_script:
     - scp payfree-client/target/payfreeclt.jar esibank@$IP_DOCKER:public-html/install/payfreeclt.jar
     - scp nfc-reader-lib-repo/nfc-reader-lib.tgz esibank@$IP_DOCKER:public-html/install_dab_app/nfc-reader-lib.tgz
     - scp dab-app-tgz-repo/dab-appdab-app.tgz esibank@$IP_DOCKER:public-html/install_dab_app/dab-app.tgz
-    #- scp bigdata_complaintsAnalysis/target/bigdata_complaintsAnalysis.jar esibank@$IP_SPARK:home/esibank/bigdata_complaintsAnalysis.jar
+    - scp bigdata_complaintsAnalysis/target/bigdata_complaintsAnalysis.jar esibank@$IP_SPARK:home/esibank/bigdata_complaintsAnalysis.jar
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
     - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   only:
