@@ -42,12 +42,14 @@
         <h1 style="color: #1a2732; font-weight: 300; font-size: 50px">
             Selection du montant à retirer: <span id="edit-val"></span>
         </h1>
+        <span id="alert-amount"></span>
+
     </div>
 
 
 
     <table class="table table-responsive table-inverse amount-table">
-        <tbody>
+        <tbody class="select-amount">
         <tr class="amount-table-tr">
             <td><input type="button" class="btn-val btn btn-lg amount-label" value="10€"></td>
             <td><input type="button" class="btn-val btn btn-lg amount-label" value="20€"></td>
@@ -61,11 +63,36 @@
         <br>
         <br>
         <tr class="tr-confirm-buttons">
-            <td><input type="button" class="btn btn-lg extra-label extra-cancel" value="Annuler"></td>
-            <td></td>
-            <td><input type="button" id="valid-input" class="btn btn-lg extra-label extra-valid" value="Valider"></td>
+            <td><input type="button" id="cancel-input" class="btn btn-lg extra-label extra-cancel" value="Annuler"></td>
+            <td><input type="button" id="other-amount" class="btn btn-lg extra-label extra-other" value="Autre montant"></td>
+            <td><input type="button" class="btn btn-lg extra-label extra-valid valid-input" value="Valider"></td>
         </tr>
         </tbody>
+
+        <tbody class="edit-amount">
+        <tr class="amount-table-tr">
+            <td><input type="button" class=" btn-val-edit btn btn-lg amount-label" value="1"></td>
+            <td><input type="button" class="btn-val-edit btn btn-lg amount-label" value="2"></td>
+            <td><input type="button" class="btn-val btn-val-edit btn btn-lg amount-label" value="3"></td>
+        </tr>
+        <tr class="amount-table-tr">
+            <td><input type="button" class="btn-val-edit btn btn-lg amount-label" value="4"></td>
+            <td><input type="button" class="btn-val-edit btn btn-lg amount-label" value="5"></td>
+            <td><input type="button" class="btn-val-edit btn btn-lg amount-label" value="6"></td>
+        </tr>
+        <tr class="amount-table-tr">
+            <td><input type="button" class="btn-val-edit btn btn-lg amount-label" value="7"></td>
+            <td><input type="button" class="btn-val-edit btn btn-lg amount-label" value="8"></td>
+            <td><input type="button" class="btn-val-edit btn btn-lg amount-label" value="9"></td>
+        </tr>
+        <tr class="amount-table-tr">
+            <td><input type="button" id="correct-input" class="btn btn-lg extra-label extra-correct amount-label" value="Corriger"></td>
+            <td><input type="button" class="btn-val-edit btn btn-lg amount-label amount-label" value="0"></td>
+            <td><input type="button" class="btn btn-lg extra-label extra-valid amount-label valid-input" value="Valider"></td>
+            <td><input type="button" id="return-input" class="btn btn-lg extra-label extra-return amount-label" value="Retour"></td>
+
+        </tbody>
+
     </table>
 
 </div>
@@ -113,13 +140,13 @@
 
     <div class="container-fluid" style="text-align:center; height: 130px; margin-top: 5px">
         <h1 style="color: #1a2732; font-weight: 300; font-size: 50px">
-            Pour effectuer votre retrait, merci de placer votre mobile sur la platforme dédiée
+            Pour effectuer votre retrait, merci de placer votre mobile sur la platforme dédiée (téléphone dévérouillé)
         </h1>
-        <h2>Montant sélectionné : <span id="conf-amount"></span></h2>
+        <h2>Montant sélectionné : <span id="conf-amount"></span> €</h2>
     </div>
 
     <div style="text-align: center; margin-top: 5px">
-        <img alt="nfc" src="{{url_for('.static', filename='img/loading_NFC.gif')}}" style="width: 300px; height: 300px">
+        <img alt="nfc" src="{{url_for('.static', filename='img/loading_NFC.gif')}}" style="width: 270px;height: 270px;margin-top: 45px;">
     </div>
 
     <div class="container-fluid" style="text-align:center; ">
