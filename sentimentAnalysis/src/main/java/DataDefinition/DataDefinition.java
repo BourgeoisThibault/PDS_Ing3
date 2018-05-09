@@ -1,6 +1,10 @@
 package DataDefinition;
 
+import com.mongodb.spark.MongoSpark;
+import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 /**
@@ -10,6 +14,8 @@ public class DataDefinition {
 
     private SparkSession spark;
     private JavaSparkContext jsc;
+    private static final Logger logger = Logger.getLogger(DataDefinition.class);
+
 
     public DataDefinition(){
         this.spark = SparkSession
@@ -30,6 +36,11 @@ public class DataDefinition {
                 //.config("spark.mongodb.output.uri", "mongodb://192.154.88.173/questionnaires.Raw")
                 .getOrCreate();
         this.jsc = new JavaSparkContext(spark.sparkContext());
+    }
+    public Dataset<Row> RetrieveDataFromMongodb()
+    {
+        logger.info("Retrieve multiple data from Mongodb into Dataset");
+        return MongoSpark.load(jsc).toDF();
     }
 
 }
