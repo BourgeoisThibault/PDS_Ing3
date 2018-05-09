@@ -116,7 +116,6 @@
             android:layout_below="@+id/card_number"
             android:layout_marginTop="13dp"
             android:background="#0064ca"
-            android:text="USMAN ABID BUTT"
             android:textSize="20dp" />
 
         <Button
