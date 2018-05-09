@@ -1,5 +1,5 @@
 import redis
-import views
+import controller
 
 def create_connection():
     try:
