@@ -35,6 +35,7 @@ import com.esipe.esibankm.esibankm.utils.CardDBOpenHelper;
 import com.esipe.esibankm.esibankm.utils.JsonUtils;
 import com.esipe.esibankm.esibankm.utils.LoadProp;
 import com.esipe.esibankm.esibankm.utils.NFCManager;
+import com.esipe.esibankm.esibankm.utils.UsersDBOpenHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.w3c.dom.Text;
@@ -65,16 +66,21 @@ public class HomeActivity extends MainActivity {
             Manifest.permission.RECEIVE_BOOT_COMPLETED, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     private static final int REQUEST_CODE_PERMISSION = 2;
-    private CardDBOpenHelper mydb;
+    private UsersDBOpenHelper mydb;
     private Button connect_button;
     private TextView login_connected;
+    private Cursor c;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         //setContentView(R.layout.activity_home);
-        mydb = new CardDBOpenHelper(this);
+        mydb = new UsersDBOpenHelper(this);
+        mydb.insertUser(111001,"Giraud");
+        mydb.insertUser(111002,"Olivier");
 
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -92,14 +98,24 @@ public class HomeActivity extends MainActivity {
         //setSupportActionBar(myToolbar);
 
         Spinner mySpinner = (Spinner)findViewById(R.id.users_spinner);
-        ArrayAdapter<String> spinnerCountShoesArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.users_list));
+        ArrayAdapter<String> spinnerCountShoesArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getStrings());
         mySpinner.setAdapter(spinnerCountShoesArrayAdapter);
 
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 Object item = parent.getItemAtPosition(pos);
-                name = parent.getSelectedItem().toString();
-                uid = String.valueOf(parent.getSelectedItemId());
+//                name = parent.getSelectedItem().toString();
+//                uid = String.valueOf(parent.getSelectedItemId());
+                uid = String.valueOf(parent.getSelectedItem());
+                Log.i("itemselected uid","Item uid"+uid);
+
+                c = mydb.getUser(Integer.valueOf(parent.getSelectedItem().toString()));
+                if(c.moveToFirst()){
+                    name = c.getString(c.getColumnIndex(CardDBOpenHelper.name));
+                    login_connected.setText(name.toString());
+                    Log.i("itemselected","Item name "+name);
+
+                }
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -129,6 +145,27 @@ public class HomeActivity extends MainActivity {
             findViewById(R.id.connect_button).setVisibility(View.GONE);
         }
 
+
+    }
+
+
+
+    public ArrayList<String> getStrings() {
+
+        ArrayList<String> strings = new ArrayList<String>();
+        String query = String.format("SELECT * FROM users");
+        c = mydb.getAllUsers();
+            while (c.moveToNext()) {
+                Log.i("ADD SPINNER", "Ajout " + c.getString(c.getColumnIndex(UsersDBOpenHelper.id)));
+                Log.i("ADD SPINNER", "Ajout " + c.getString(c.getColumnIndex(UsersDBOpenHelper.name)));
+
+                strings.add(c.getString(c.getColumnIndex(UsersDBOpenHelper.id)));
+        }
+//        for (int i=0;i<strings.size();i++){
+//            Log.i("ArrayList","Value array : "+strings.get(i).toString());
+//        }
+
+        return strings;
 
     }
 
