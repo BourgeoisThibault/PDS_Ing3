@@ -9,6 +9,9 @@ import org.apache.spark.sql.Row;
  * Created by jeremy on 09/05/2018.
  */
 public class DataProcessing {
+
+    private String url = "jdbc:mysql://192.154.88.161:3306/esibank_decisionnel";
+    private DataAccess dataAccess = new DataAccess(url,"esibank", "esibankpds");
     private DataDefinition dataDefiniton = new DataDefinition();
     private static final Logger logger = Logger.getLogger(DataProcessing.class);
 
