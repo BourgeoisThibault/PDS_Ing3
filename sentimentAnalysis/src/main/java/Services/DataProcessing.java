@@ -18,6 +18,18 @@ public class DataProcessing {
         Dataset<Row> dataset = dataDefiniton.RetrieveDataFromMongodb();
         dataset.cache();
 
+        if (dataset.count() > 0)
+        {
+            logger.info("Method run - Status : Loading data succeed");
+            dataset.createOrReplaceTempView("tweets");
+        }
+        else
+        {
+            logger.info("Method run - Status : Loading data failed");
+        }
+
+        dataset.unpersist();
+
 
     }
 
