@@ -3,7 +3,7 @@ package Services;
 /**
  * Created by jeremy on 09/05/2018.
  */
-public class DataAccess {
+public class DataProcessing {
 
     public void run()
     {
@@ -13,7 +13,7 @@ public class DataAccess {
 
     public static void main( String[] args )
     {
-        DataAccess SentimentAnalysis = new DataAccess();
+        DataProcessing SentimentAnalysis = new DataProcessing();
         SentimentAnalysis.run();
 
     }
