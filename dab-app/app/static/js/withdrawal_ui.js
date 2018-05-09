@@ -8,7 +8,7 @@ var amount ="";
 
 function timerIncrement() {
     idleTime = idleTime + 1;
-    if (idleTime >= 1) { // 1 minute
+    if (idleTime >= 3) { // 1 minute
         window.location = "/"
     }
 }
@@ -20,17 +20,17 @@ function resetAmount(){
 }
 
 function checkAmountPattern(amount){
-    if(parseInt(amount)%5!=0){
+    if(amount =="") {
+        $("#alert-amount").text("Merci de sélectionner un montant valide");
+        return false;
+    }
+    else if(parseInt(amount)%5!=0){
         console.log("Erreur !");
         $("#alert-amount").text("Merci de choisir un multiple de 5");
         return false;
     }
     else if(parseInt(amount)==0){
         $("#alert-amount").text("Le montant ne peut être nul !");
-        return false;
-    }
-    else if(amount =="") {
-        $("#alert-amount").text("Merci de sélectionner un montant valide");
         return false;
     }
     else{
@@ -117,6 +117,8 @@ $(document).ready(function(){
         console.log("Montant : "+this.value);
          amount = amount + this.value;
         $("#edit-val").text(this.value);
+        correctAmount  = checkAmountPattern(amount);
+
     });
 
     $("#other-amount").click(function (e) {
@@ -158,7 +160,7 @@ $(document).ready(function(){
         e.preventDefault();
         console.log("Montant2 : "+this.value);
         console.log("Amount value clicked : "+ amount);
-        if(correctAmount){
+        if(correctAmount && checkAmountPattern(amount)){
             //        $(".main-content").hide();
             $(".main-content-select").css('visibility', 'hidden');
             $(".main-content-verif").css('visibility', 'visible');

@@ -50,6 +50,7 @@ def card_checking():
             socketio.emit('response_card_checking', {'code': 401}, namespace='/home_pool')
             return "ko", 401
     else:
+        redis_management.set_step_key("FIRST", REDIS_CONNECTION)#block step 1 to avoid repetitive get 
         return confirm_transac()
 
 
