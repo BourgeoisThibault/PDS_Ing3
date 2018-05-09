@@ -20,10 +20,12 @@ public class DataHandling {
 
         this.spark = SparkSession
                 .builder()
+                .config("spark.testing.memory", "2147480000")
                 .appName("SparkComplaints")
-                .master("local[*]")
+                .master("local[12]")
                 .config("spark.mongodb.input.uri", "mongodb://192.154.88.173/ConsumerComplaint.Complaints")
                 .config("spark.mongodb.output.uri", "mongodb://192.154.88.173/ConsumerComplaint.Complaints")
+                .config("spark.mongodb.input.partitioner" ,"MongoPaginateBySizePartitioner")
                 .getOrCreate();
                 this.jsc = new JavaSparkContext(spark.sparkContext());
     }
