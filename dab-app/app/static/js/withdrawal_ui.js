@@ -8,7 +8,7 @@ var amount ="";
 
 function timerIncrement() {
     idleTime = idleTime + 1;
-    if (idleTime >= 100) { // 1 minute
+    if (idleTime >= 1) { // 1 minute
         window.location = "/"
     }
 }
@@ -115,7 +115,7 @@ $(document).ready(function(){
     $(".btn-val").click(function (e) {
         e.preventDefault();
         console.log("Montant : "+this.value);
-        // amount = amount + this.value;
+         amount = amount + this.value;
         $("#edit-val").text(this.value);
     });
 
@@ -154,7 +154,7 @@ $(document).ready(function(){
     });
 
     $(".valid-input").click(function (e) {
-        var bla = $('#edit-val').val();
+        // amount = $('#edit-val').val();
         e.preventDefault();
         console.log("Montant2 : "+this.value);
         console.log("Amount value clicked : "+ amount);
