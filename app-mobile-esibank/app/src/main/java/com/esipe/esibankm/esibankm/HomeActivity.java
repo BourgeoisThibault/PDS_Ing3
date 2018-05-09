@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,10 +31,14 @@ import android.widget.Toast;
 import com.esipe.esibankm.esibankm.models.MobileToken;
 import com.esipe.esibankm.esibankm.services.ConnectSocket;
 import com.esipe.esibankm.esibankm.services.LocalService;
+import com.esipe.esibankm.esibankm.utils.CardDBOpenHelper;
 import com.esipe.esibankm.esibankm.utils.JsonUtils;
 import com.esipe.esibankm.esibankm.utils.LoadProp;
 import com.esipe.esibankm.esibankm.utils.NFCManager;
+import com.esipe.esibankm.esibankm.utils.UsersDBOpenHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,6 +52,7 @@ import static android.content.ContentValues.TAG;
 public class HomeActivity extends MainActivity {
     private static final String TAG = "HomeActivity";
     private static final String FILE_NAME = "data.json";
+    public static String NAME = "";
     private DrawerLayout mDrawer;
 
     private TelephonyManager telephonyManager;
@@ -59,12 +66,21 @@ public class HomeActivity extends MainActivity {
             Manifest.permission.RECEIVE_BOOT_COMPLETED, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     private static final int REQUEST_CODE_PERMISSION = 2;
+    private UsersDBOpenHelper mydb;
+    private Button connect_button;
+    private TextView login_connected;
+    private Cursor c;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         //setContentView(R.layout.activity_home);
+        mydb = new UsersDBOpenHelper(this);
+        mydb.insertUser(111001,"Giraud");
+        mydb.insertUser(111002,"Olivier");
 
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -73,7 +89,7 @@ public class HomeActivity extends MainActivity {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_home, null, false);
         mDrawer.addView(contentView, 0);
-
+        login_connected = findViewById(R.id.login_connected);
 
 
         telephonyManager = (TelephonyManager)getSystemService(this.TELEPHONY_SERVICE);
@@ -82,14 +98,24 @@ public class HomeActivity extends MainActivity {
         //setSupportActionBar(myToolbar);
 
         Spinner mySpinner = (Spinner)findViewById(R.id.users_spinner);
-        ArrayAdapter<String> spinnerCountShoesArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.users_list));
+        ArrayAdapter<String> spinnerCountShoesArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getStrings());
         mySpinner.setAdapter(spinnerCountShoesArrayAdapter);
 
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 Object item = parent.getItemAtPosition(pos);
-                name = parent.getSelectedItem().toString();
-                uid = String.valueOf(parent.getSelectedItemId());
+//                name = parent.getSelectedItem().toString();
+//                uid = String.valueOf(parent.getSelectedItemId());
+                uid = String.valueOf(parent.getSelectedItem());
+                Log.i("itemselected uid","Item uid"+uid);
+
+                c = mydb.getUser(Integer.valueOf(parent.getSelectedItem().toString()));
+                if(c.moveToFirst()){
+                    name = c.getString(c.getColumnIndex(CardDBOpenHelper.name));
+                    login_connected.setText(name.toString());
+                    Log.i("itemselected","Item name "+name);
+
+                }
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -114,6 +140,32 @@ public class HomeActivity extends MainActivity {
             e.printStackTrace();
         }
 
+
+        if(ConnectSocket.isRunning==true){
+            findViewById(R.id.connect_button).setVisibility(View.GONE);
+        }
+
+
+    }
+
+
+
+    public ArrayList<String> getStrings() {
+
+        ArrayList<String> strings = new ArrayList<String>();
+        String query = String.format("SELECT * FROM users");
+        c = mydb.getAllUsers();
+            while (c.moveToNext()) {
+                Log.i("ADD SPINNER", "Ajout " + c.getString(c.getColumnIndex(UsersDBOpenHelper.id)));
+                Log.i("ADD SPINNER", "Ajout " + c.getString(c.getColumnIndex(UsersDBOpenHelper.name)));
+
+                strings.add(c.getString(c.getColumnIndex(UsersDBOpenHelper.id)));
+        }
+//        for (int i=0;i<strings.size();i++){
+//            Log.i("ArrayList","Value array : "+strings.get(i).toString());
+//        }
+
+        return strings;
 
     }
 
@@ -163,6 +215,18 @@ public class HomeActivity extends MainActivity {
             mySnack = Snackbar.make(view, LoadProp.getProperty("popup_disconnected",getApplicationContext(),"messages"), 2000);
 
         mySnack.show();
+        findViewById(R.id.connected_label).setVisibility(View.GONE);
+        findViewById(R.id.connect_button).setVisibility(View.VISIBLE);
+        findViewById(R.id.name_connected).setVisibility(View.VISIBLE);
+        mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+
+//        if(rs.isFirst()){
+//            System.out.println("BDD resultats : "+mydb.getData(111045));
+//        }
+//        else
+//            mydb.insertCard(111045,1245,1234);
+
 
 
     }
@@ -184,10 +248,17 @@ public class HomeActivity extends MainActivity {
             mySnack = Snackbar.make(view, "Vous êtes déjà connecté !", 2000);
             mySnack.show();
         }else
-        {
-            this.restartService();
-            startActivity(appel);
-        }
+            if(ConnectSocket.isOnline()){
+                this.restartService();
+                login_connected.setText(name);
+                NAME = name;
+                startActivity(appel);
+            }
+            else{
+                mySnack = Snackbar.make(view, "Aucune connexion ou VPN non connecté !", 2000);
+                mySnack.show();
+            }
+
     }
 
 
@@ -232,4 +303,24 @@ public class HomeActivity extends MainActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(ConnectSocket.isRunning==true){
+            findViewById(R.id.connect_button).setVisibility(View.GONE);
+            findViewById(R.id.connected_label).setVisibility(View.VISIBLE);
+            findViewById(R.id.name_connected).setVisibility(View.GONE);
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+
+        }
+        else{
+            findViewById(R.id.connected_label).setVisibility(View.GONE);
+            findViewById(R.id.connect_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.name_connected).setVisibility(View.VISIBLE);
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        }
+    }
 }

@@ -18,7 +18,7 @@
     <string name="local_service_label">local_service_label</string>
     <string name="stop_service">Déconnexion</string>
     <string name="start_service">Démarrer service</string>
-    <string name="fiels_user">Se connecter en tant que :</string>
+    <string name="fiels_user">Numéro de client : </string>
     <string name="connexion">Se connecter</string>
     <string name="welcomeLabel">Bienvenue</string>
 

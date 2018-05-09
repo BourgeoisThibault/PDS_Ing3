@@ -2,9 +2,6 @@ package com.esipe.esibankm.esibankm;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -79,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_accounts) {
             intent = new Intent(getApplicationContext(),AccountsActivity.class);
         }else if (id == R.id.nav_nfc) {
-            intent = new Intent(getApplicationContext(),NfcWriterActivity.class);
+            intent = new Intent(getApplicationContext(),NfcCardActivity.class);
         }
         else if (id == R.id.nav_home) {
             intent = new Intent(getApplicationContext(),HomeActivity.class);
