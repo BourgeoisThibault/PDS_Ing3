@@ -66,6 +66,13 @@
     visibility: hidden;
 }
 
+.edit-amount{
+    display: none;
+}
+.amount-table{
+    text-align: center;
+}
+
 .amount-label{
     color: #fed189;
     font-weight: 300;
@@ -74,11 +81,22 @@
     text-align: center;
 }
 
+.edit-amount .amount-label{
+    font-size: 40px;
+}
+
+.return-input{
+    background-color: #f3f1fc;
+    color: black;
+}
+
 .amount-table td{
     text-align: center;
     width: 170px !important;
 }
-
+#alert-amount{
+    color: #e52121;
+}
 
 .amount-table .amount-table-tr input{
     width: 200px !important;
@@ -91,6 +109,14 @@
      background-color: #e52121;
      text-align: center;
  }
+
+.tr-confirm-buttons .extra-other{
+    color: #fed189;
+    font-weight: 300;
+    font-size: 43px;
+    background-color: #1a2732;
+    text-align: center;
+}
 
 .tr-confirm-buttons .extra-valid{
     color: #f3f1fc;

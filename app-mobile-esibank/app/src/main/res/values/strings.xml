@@ -24,14 +24,9 @@
 
     <string-array name="users_list">
         <item>Anonyme</item>
-        <item>Usman</item>
-        <item>Thibault</item>
-        <item>Grégory</item>
-        <item>Tarik</item>
-        <item>Sarah</item>
-        <item>Abdoulaye</item>
-        <item>Jérémy</item>
-        <item>Mariam</item>
+        <item>Gilles Giraud</item>
+        <item>Alexandre Brenner</item>
+        <item>Olivier Michel</item>
     </string-array>
     <string name="title_activity_main">MainActivity</string>
 
