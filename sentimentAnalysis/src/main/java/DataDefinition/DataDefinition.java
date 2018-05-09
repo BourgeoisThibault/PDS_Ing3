@@ -24,8 +24,8 @@ public class DataDefinition {
                 .master("local[*]")
                 //.config("spark.mongodb.input.uri", "mongodb://192.154.88.173/tweets.tweetRaw")
                 //.config("spark.mongodb.output.uri", "mongodb://192.154.88.173/tweets.tweetRaw")
-                .config("spark.mongodb.input.uri", "mongodb://127.0.0.1/tweets.tweetRaw")
-                .config("spark.mongodb.output.uri", "mongodb://127.0.0.1/tweets.tweetRaw")
+                .config("spark.mongodb.input.uri", "mongodb://127.0.0.1/tweet.tweetRaw")
+                .config("spark.mongodb.output.uri", "mongodb://127.0.0.1/tweet.tweetRaw")
 
                 //.config("spark.mongodb.input.uri", "mongodb://192.154.88.173/facebook.publicationRaw")
                 //.config("spark.mongodb.output.uri", "mongodb://192.154.88.173/tweets.publicationRaw")
