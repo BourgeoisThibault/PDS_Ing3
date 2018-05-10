@@ -1,5 +1,4 @@
 import Main.ComplaintsAnalysis;
-import com.sun.prism.PixelFormat;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;

@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.NFC" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo"
@@ -47,9 +46,10 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity android:name=".AccountsActivity" />
         <activity android:name=".TransactionActivity" />
+        <activity android:name=".NfcCardActivity" />
         <activity android:name=".NfcWriterActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
@@ -59,7 +59,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".NotificationActivity" />
     </application>
 
 </manifest>

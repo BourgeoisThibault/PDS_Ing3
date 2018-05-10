@@ -18,20 +18,15 @@
     <string name="local_service_label">local_service_label</string>
     <string name="stop_service">Déconnexion</string>
     <string name="start_service">Démarrer service</string>
-    <string name="fiels_user">Se connecter en tant que :</string>
+    <string name="fiels_user">Numéro de client : </string>
     <string name="connexion">Se connecter</string>
     <string name="welcomeLabel">Bienvenue</string>
 
     <string-array name="users_list">
         <item>Anonyme</item>
-        <item>Usman</item>
-        <item>Thibault</item>
-        <item>Grégory</item>
-        <item>Tarik</item>
-        <item>Sarah</item>
-        <item>Abdoulaye</item>
-        <item>Jérémy</item>
-        <item>Mariam</item>
+        <item>Gilles Giraud</item>
+        <item>Alexandre Brenner</item>
+        <item>Olivier Michel</item>
     </string-array>
     <string name="title_activity_main">MainActivity</string>
 
