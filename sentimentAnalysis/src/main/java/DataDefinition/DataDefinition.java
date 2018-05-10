@@ -24,16 +24,11 @@ public class DataDefinition {
                 .master("local[*]")
                 //.config("spark.mongodb.input.uri", "mongodb://192.154.88.173/tweets.tweetRaw")
                 //.config("spark.mongodb.output.uri", "mongodb://192.154.88.173/tweets.tweetRaw")
-                .config("spark.mongodb.input.uri", "mongodb://127.0.0.1/tweet.tweetRaw")
-                .config("spark.mongodb.output.uri", "mongodb://127.0.0.1/tweet.tweetRaw")
+                .config("spark.mongodb.input.uri", "mongodb://localhost/tweets.tweetRaw")
+                .config("spark.mongodb.output.uri", "mongodb://localhost/tweets.tweetRaw")
 
-                //.config("spark.mongodb.input.uri", "mongodb://192.154.88.173/facebook.publicationRaw")
-                //.config("spark.mongodb.output.uri", "mongodb://192.154.88.173/tweets.publicationRaw")
-                //.config("spark.mongodb.input.uri", "mongodb://127.0.0.1/facebook.publicationRaw")
-                //.config("spark.mongodb.output.uri", "mongodb://127.0.0.1/tweets.publicationRaw")
-
-                //.config("spark.mongodb.input.uri", "mongodb://192.154.88.173/questionnaires.Raw")
-                //.config("spark.mongodb.output.uri", "mongodb://192.154.88.173/questionnaires.Raw")
+                //.config("spark.mongodb.input.uri", "mongodb://192.154.88.173/avis.Raw")
+                //.config("spark.mongodb.output.uri", "mongodb://192.154.88.173/avis.Raw")
                 .getOrCreate();
         this.jsc = new JavaSparkContext(spark.sparkContext());
     }
