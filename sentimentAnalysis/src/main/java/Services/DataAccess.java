@@ -30,12 +30,7 @@ public class DataAccess {
     {
         logger.info("Methode InsertTweetsCount - Start");
         String table = "TweetsCount";
-        System.out.println("Strucutre : " + dataset.toString());
-
-        Dataset<Row> dsNbTweets = dataset.groupBy("_id").count();
-        System.out.println("Strucutre : " + dsNbTweets.toString());
-        System.out.println("Nb : " + dsNbTweets);
-
+        Dataset<Row> dsNbTweets = dataset.groupBy("RT").count();
         dsNbTweets.write()
                 .mode("overwrite") // to overwrite a table
                 .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver")
