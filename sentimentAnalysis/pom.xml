@@ -60,7 +60,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>Main.DataProcessing</mainClass>
+                    <mainClass>Main.SentimentAnalysis</mainClass>
                 </configuration>
                 <executions>
                     <execution>
@@ -76,7 +76,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main.DataProcessing</mainClass>
+                            <mainClass>Main.SentimentAnalysis</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
