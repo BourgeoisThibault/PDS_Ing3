@@ -5,8 +5,8 @@ import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
 /**
- * @author BOURGEOIS Thibault
- * Date     24/11/2017
+ * @author ABID BUTT USMAN
+ * Date     10/05/2018
  * Time     16:28
  */
 //@ContextConfiguration
@@ -16,5 +16,5 @@ import org.junit.runner.RunWith;
         plugin = {"pretty", "html:target/cucumber" },
         features = "src/main/resources",
         glue = "pds/esibank/it/withdrawal")
-public class DabAppPayfreeTest {
+public class DabAppPayFreeTest {
 }
