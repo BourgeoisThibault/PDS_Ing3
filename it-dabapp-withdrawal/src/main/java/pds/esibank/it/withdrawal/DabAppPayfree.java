@@ -51,19 +51,6 @@ public class DabAppPayfree {
     private ResponseEntity<String> _RESPONSE;
     private ResponseEntity<String> _RESPONSE2;
 
-
-    private String _URL_DATABASE;
-
-//    private static Account _account;
-
-    private String _Host;
-    private int _Port;
-    private Socket _Socket;
-
-    private PrintWriter writer = null;
-    private BufferedInputStream reader = null;
-
-
     private String _ID_ACCOUNT;
     private String _ID_CARD;
 
