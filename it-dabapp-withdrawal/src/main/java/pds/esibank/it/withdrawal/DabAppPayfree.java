@@ -67,8 +67,8 @@ public class DabAppPayfree {
     private String _ID_ACCOUNT;
     private String _ID_CARD;
 
-//    private String _DATABASE_URL = "http://ws.esibank.inside.esiag.info/";
-private String _DATABASE_URL = "http://localhost:8082/";
+    private String _DATABASE_URL = "http://ws.esibank.inside.esiag.info/";
+//private String _DATABASE_URL = "http://localhost:8082/";
 
     @Given("The REST web service at \"(.+?)\"")
     public void setCardCheckingVariables(final String uri) {
