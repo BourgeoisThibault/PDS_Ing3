@@ -14,4 +14,6 @@ public interface CardRepo extends CrudRepository<Card, Long> {
 
     public Card getCardByCardNum(String cardNum);
 
+    @Override
+    Card save(Card card);
 }
