@@ -21,6 +21,7 @@ import pds.esibank.it.withdrawal.config.SslConfiguration;
 import pds.esibank.models.dab.AccountDto;
 import pds.esibank.models.dab.CardDto;
 
+import javax.smartcardio.Card;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,9 +31,9 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
 /**
- * @author BOURGEOIS Thibault
- * Date     24/11/2017
- * Time     16:29
+ * @author ABID BUTT USMAN
+ * Date     10/05/2018
+ * Time     16:28
  */
 
 @Scope("cucumber-glue")
@@ -66,13 +67,12 @@ public class DabAppPayfree {
     private String _ID_ACCOUNT;
     private String _ID_CARD;
 
-    private String _DATABASE_URL = "http://esibanklab_dataaccess:8080/Account/";
+//    private String _DATABASE_URL = "http://ws.esibank.inside.esiag.info/";
+private String _DATABASE_URL = "http://localhost:8082/";
 
-    @Given("The REST web service at \"(.+?)\" with cardnum \"(.+?)\" and pin \"(.+?)\"")
-    public void setCardCheckingVariables(final String uri,final String card,final String pin) {
+    @Given("The REST web service at \"(.+?)\"")
+    public void setCardCheckingVariables(final String uri) {
         _URI = uri;
-        _pin = pin;
-        _card = card;
     }
 
 
@@ -84,11 +84,11 @@ public class DabAppPayfree {
         restTemplate = s.restTemplate();
 
         String finalUrl = _URI + moreUri;
-        String encryptedPass = MySHA.passToSHA("mypass", "SHA-512");
+        String encryptedPass = MySHA.passToSHA(_pin, "SHA-512");
         String signature = MySHA.generateSign(encryptedPass, "", "HmacSHA512");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("card-id", "9999999999");
+        headers.set("card-id", _card);
         headers.set("request-sign", signature);
 
         HttpEntity entity = new HttpEntity("parameters",headers);
@@ -110,20 +110,23 @@ public class DabAppPayfree {
     }
 
     @Then("Status code is KO")
+    public void statusCodeShouldBe404() {
+        Assert.assertTrue(_RESPONSE.getStatusCode() == HttpStatus.NOT_FOUND);
+    }
+
+    @Then("Status code is unauthorized")
     public void statusCodeShouldBe401() {
         Assert.assertTrue(_RESPONSE.getStatusCode() == HttpStatus.UNAUTHORIZED);
     }
 
 
-    @Given("The REST web service2 at \"(.+?)\" with cardnum \"(.+?)\" and pin \"(.+?)\" and amount \"(.+?)\"")
-    public void setCardValidityVariables(final String uri,final String card,final String pin, final String amount) {
+    @Given("The REST web service2 at \"(.+?)\" with amount \"(.+?)\"")
+    public void setCardValidityVariables(final String uri, final String amount) {
         _URI = uri;
-        _pin = pin;
-        _card = card;
         _amount = amount;
     }
 
-    @When("Try to get a card and amount validity transaction \"(.+?)\"")
+    @When("Try to get a card and amount confirmation transaction \"(.+?)\"")
     public void postMethodForTransactionConfirmation(String moreUri) throws Exception {
         final SslConfiguration s = new SslConfiguration();
         restTemplate = s.restTemplate();
@@ -131,6 +134,33 @@ public class DabAppPayfree {
         String finalUrl = _URI + moreUri;
         String encryptedPass = MySHA.passToSHA(_pin, "SHA-512");
         String signature = MySHA.generateSign(encryptedPass, _card + _amount, "HmacSHA512");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("card-id", _card);
+        headers.set("amount", _amount);
+        headers.set("request-sign", signature);
+
+        HttpEntity entity = new HttpEntity("parameters",headers);
+        try {
+            restTemplate.exchange(finalUrl, GET, entity, String.class);
+
+            _RESPONSE = new ResponseEntity(HttpStatus.OK);
+        } catch (HttpClientErrorException ex) {
+            _RESPONSE =  new ResponseEntity(ex.getStatusCode());
+        }
+
+//        Assert.assertTrue(_RESPONSE.getStatusCode() == HttpStatus.OK);
+
+    }
+
+    @When("Try to get a card and amount validation transaction \"(.+?)\"")
+    public void postMethodForTransactionValidation(String moreUri) throws Exception {
+        final SslConfiguration s = new SslConfiguration();
+        restTemplate = s.restTemplate();
+
+        String finalUrl = _URI + moreUri;
+        String encryptedPass = MySHA.passToSHA(_pin, "SHA-512");
+        String signature = MySHA.generateSign(encryptedPass, _amount, "HmacSHA512");
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("card-id", _card);
@@ -173,8 +203,16 @@ public class DabAppPayfree {
         Assert.assertEquals(Float.valueOf(ad.getAmount()), Float.valueOf(sold));
     }
 
-    @And("create card")
-    public void shouldCreateValidCard() {
+    @And("set cardnum at \"(.+?)\"")
+    public void shouldsetCardnum(final String card) {
+        _card = card;
+    }
+
+        @And("create card with cardnum \"(.+?)\" and pin \"(.+?)\"")
+    public void shouldCreateValidCard(final String card, final String pin) {
+        _card = card;
+        _pin = pin;
+
         final RestTemplate restTemplate = new RestTemplate();
         CardDto cardDto = new CardDto();
 //                CardDto.builder()
@@ -184,6 +222,7 @@ public class DabAppPayfree {
         cardDto.setCardNum(_card);
         cardDto.setCardPass(_pin);
         String finalUrl = _DATABASE_URL+"createCard";
+//        HttpEntity entity = new HttpEntity(cardDto);
         restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
         CardDto cd=null;
         try {
