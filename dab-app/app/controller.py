@@ -68,6 +68,7 @@ def confirm_transac():
     #if card_id stored in redis DB  does not match with request arg card_id, return forbidden code 403
     if card_id != r_card_id or pin != r_pin:
         socketio.emit('confirm_transac', {'code': 403}, namespace='/confirm_transac')
+        redis_management.set_step_key("FIRST", REDIS_CONNECTION)#block step 1 to avoid repetitive get
         return "ko", 403
     else:#double verification
         if rest_utils.check_confirm_transac(r_card_id, r_pin, r_amount):
@@ -76,6 +77,7 @@ def confirm_transac():
         else:
             print("Envoi de ko ")
             socketio.emit('confirm_transac', {'code': 401}, namespace='/confirm_transac')
+            redis_management.set_step_key("FIRST", REDIS_CONNECTION)#block step 1 to avoid repetitive get
             return "ko", 401
 
 
@@ -112,6 +114,7 @@ def check_valid_transac():
         return jsonify(response=200, amount=amount)
     else:
         print("Envoi de ko ")
+        redis_management.set_step_key("FIRST", REDIS_CONNECTION)#block step 1 to avoid repetitive get
         return jsonify(response=401)
 
 
