@@ -57,4 +57,17 @@ public class DataAccess {
                 .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver")
                 .jdbc(url, table, connectionProperties);    }
 
+
+    public void InsertsurveysPositiveCount(Dataset<Row> dataset)
+    {
+        logger.info("Methode InsertsurveysPositiveCount - Start");
+        String table = "surveysPositiveCount";
+        Dataset<Row> dsNbsurveys =dataset.filter(dataset.col("note").$greater(2));
+        dsNbsurveys = dsNbsurveys.groupBy("id").count();
+        dsNbsurveys.write()
+                .mode("overwrite") // to overwrite a table
+                .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver")
+                .jdbc(url, table, connectionProperties);    }
+
+
 }

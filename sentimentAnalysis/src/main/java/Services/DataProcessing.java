@@ -79,6 +79,7 @@ public class DataProcessing {
         datasetCsv.createOrReplaceTempView("surveysAnalysis");
         dataset.unpersist();
         dataAccess.InsertsurveysCount(datasetCsv);
+        dataAccess.InsertsurveysPositiveCount(datasetCsv);
 
 
 
