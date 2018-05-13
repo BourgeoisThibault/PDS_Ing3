@@ -18,21 +18,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AboutUsActivity" />
+        <activity android:name=".AboutUsActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".services.LocalService">
 
             <!-- android:enabled="true" -->
         </service>
 
-        <activity android:name=".MockConnectedActivity" />
+        <activity android:name=".MockConnectedActivity"
+            android:screenOrientation="portrait"/>
 
         <receiver
             android:name=".utils.AutoStartService"
@@ -46,11 +49,18 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".AccountsActivity" />
-        <activity android:name=".TransactionActivity" />
-        <activity android:name=".NfcCardActivity" />
-        <activity android:name=".NfcWriterActivity">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AccountsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NotificationPop"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TransactionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NfcCardActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NfcWriterActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
@@ -59,7 +69,8 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".NotificationActivity" />
+        <activity android:name=".NotificationActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

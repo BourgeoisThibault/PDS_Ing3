@@ -119,7 +119,7 @@ public class NFCManager {
 //        }
     }
 
-    private NdefMessage createMessage(String text) {
+    public NdefMessage createMessage(String text) {
 
         NdefRecord[] record = new NdefRecord[1];
 
