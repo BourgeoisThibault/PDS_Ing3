@@ -2,6 +2,9 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
+import org.bson.Document;
+import org.apache.spark.api.java.function.Function;
+import com.mongodb.spark.MongoSpark;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -36,7 +39,7 @@ public class ReadFile {
 
         JavaRDD<String> lines = jsc.textFile(path.toString());
 
-        /*JavaRDD<Document> documentJavaRDD = lines.map
+        JavaRDD<Document> documentJavaRDD = lines.map
                 (new Function<String, Document>() {
                     public Document call(final String stringRDD) throws Exception {
                         Document doc = new Document();
@@ -47,7 +50,7 @@ public class ReadFile {
 
         MongoSpark.save(documentJavaRDD);
 
-        jsc.close();*/
+        jsc.close();
 
 }
 
