@@ -47,5 +47,14 @@ public class DataAccess {
         //Text Mining
     }
 
+    public void InsertsurveysCount(Dataset<Row> dataset)
+    {
+        logger.info("Methode InsertsurveysCount - Start");
+        String table = "surveysCount";
+        Dataset<Row> dsNbsurveys = dataset.groupBy("id").count();
+        dsNbsurveys.write()
+                .mode("overwrite") // to overwrite a table
+                .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver")
+                .jdbc(url, table, connectionProperties);    }
 
 }
