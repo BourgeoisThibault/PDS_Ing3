@@ -1,11 +1,15 @@
 package com.esipe.esibankm.esibankm;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.Parcelable;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -73,6 +77,14 @@ public class NfcWriterActivity extends Activity {
                 response = NFCManager.getInstance().writeToDevice(card_num+";"+pin+";",getIntent(),NFCManager.getInstance().getNFCAdapter(getApplicationContext()));
                 if(response){
                     Toast.makeText(getApplicationContext(), "Envoi des informations réussi !", Toast.LENGTH_SHORT).show();
+                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    // Vibrate for 500 milliseconds
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        v.vibrate(VibrationEffect.createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE));
+                    }else{
+                        //deprecated in API 26
+                        v.vibrate(500);
+                    }
                 }
                 else
                     Toast.makeText(getApplicationContext(), "Echec de l'envoi des informations !", Toast.LENGTH_SHORT).show();
