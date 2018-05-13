@@ -79,8 +79,8 @@ public class HomeActivity extends MainActivity {
 
         //setContentView(R.layout.activity_home);
         mydb = new UsersDBOpenHelper(this);
-        mydb.insertUser(111001,"Giraud");
-        mydb.insertUser(111002,"Olivier");
+//        mydb.insertUser(111001,"Giraud");
+//        mydb.insertUser(111002,"Olivier");
 
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -312,8 +312,6 @@ public class HomeActivity extends MainActivity {
             findViewById(R.id.name_connected).setVisibility(View.GONE);
             mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
             mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-
-
         }
         else{
             findViewById(R.id.connected_label).setVisibility(View.GONE);

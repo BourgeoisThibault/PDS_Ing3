@@ -25,7 +25,7 @@ public class CardDBOpenHelper extends SQLiteOpenHelper {
 
 
     public CardDBOpenHelper(Context context) {
-        super(context, DATABASE_NAME , null, 1);
+        super(context, DATABASE_NAME , null, 2);
     }
 
 
@@ -34,7 +34,7 @@ public class CardDBOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "create table card " +
-                        "(id integer primary key, card_num VARCHAR,pin VARCHAR)"
+                        "(id integer primary key, card_num VARCHAR,pin VARCHAR, name VARCHAR)"
         );
     }
 
@@ -44,12 +44,13 @@ public class CardDBOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertCard (int id, String card_num, String pin) {
+    public boolean insertCard (int id, String card_num, String pin, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("id", id);
         contentValues.put("card_num", card_num);
         contentValues.put("pin", pin);
+        contentValues.put("name", name);
 
         db.insert("card", null, contentValues);
         return true;

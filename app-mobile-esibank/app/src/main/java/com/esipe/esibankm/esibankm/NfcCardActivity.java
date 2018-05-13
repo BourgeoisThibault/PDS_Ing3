@@ -14,6 +14,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class NfcCardActivity extends Activity {
     private TextView card_label;
     private MobileToken mobileToken;
     private TextView card_name;
+    private TextView card_name_edit;
 
     protected void onCreate(Bundle savedInstanceState) {
         mydb = new CardDBOpenHelper(this);
@@ -56,6 +58,7 @@ public class NfcCardActivity extends Activity {
 
         card_num_edit = findViewById(R.id.edit_card_num);
         card_pin_edit = findViewById(R.id.edit_pin);
+        card_name_edit = findViewById(R.id.edit_name);
 
 
         mobileToken = JsonUtils.MobileTokenFromJson(JsonUtils.getData(getApplicationContext(),FILE_NAME));
@@ -65,10 +68,14 @@ public class NfcCardActivity extends Activity {
             findViewById(R.id.paiement_layout).setVisibility(View.VISIBLE);
             System.out.println("BDD resultats : "+rs.getString(rs.getColumnIndex(CardDBOpenHelper.pin)));
             card_label.setText(rs.getString(rs.getColumnIndex(CardDBOpenHelper.card_num)).toString());
+            card_name.setText(rs.getString(rs.getColumnIndex(CardDBOpenHelper.name)).toString());
+
+            findViewById(R.id.register_card0).setVisibility(View.GONE);
+
 //            card_name.setText(rs.getString(rs.getColumnIndex(CardDBOpenHelper.name)).toString());
         }
         else{
-            findViewById(R.id.paiement_layout).setVisibility(View.GONE);
+            findViewById(R.id.paiement_layout).setVisibility(LinearLayout.GONE);
             findViewById(R.id.register_card0).setVisibility(View.VISIBLE);
             System.out.println("Aucune carte correspondante  ! : ");
 
@@ -79,10 +86,12 @@ public class NfcCardActivity extends Activity {
 
     public void OnValidClick(View view) {
         if ((Pattern.matches("[a-zA-Z]+", card_num_edit.toString()) == true  || card_num_edit.length() != 10)) {
-            Toast.makeText(getApplicationContext(), "Le numéro de carte doit contenir 16 chiffres !"+ card_num_edit.length(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Le numéro de carte doit contenir 10 chiffres !"+ card_num_edit.length(), Toast.LENGTH_SHORT).show();
         }
         else if(card_pin_edit.length() != 6){
-            Toast.makeText(getApplicationContext(), "Le code pin doit contenir 4 chiffres !"+ card_num_edit.length(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Le code pin doit contenir 6 caractère !"+ card_pin_edit.length(), Toast.LENGTH_SHORT).show();
+        }    else if(card_name_edit.length() == 0){
+            Toast.makeText(getApplicationContext(), "Merci de renseigner un nom valide !", Toast.LENGTH_SHORT).show();
         }
         else{
             String card = card_num_edit.getText().toString();
@@ -90,11 +99,11 @@ public class NfcCardActivity extends Activity {
 
             Log.i("NFC","Ok, Info !! + NUM : "+ card_num_edit.getText().toString() + " PIN : "+ card_pin_edit.getText().toString());
 
-            mydb.insertCard(Integer.parseInt(mobileToken.getUid()),card,pin);
+            mydb.insertCard(Integer.parseInt(mobileToken.getUid()),card,pin,card_name_edit.getText().toString());
             Toast.makeText(getApplicationContext(), "Carte enregistrée avec succès !", Toast.LENGTH_SHORT).show();
-
-            card_label.setText(card);
-
+            card_label.setText(card_num_edit.getText().toString());
+            card_name.setText(card_name_edit.getText().toString());
+            card_num_edit.setText(card_num_edit.getText().toString());
             findViewById(R.id.paiement_layout).setVisibility(View.VISIBLE);
             findViewById(R.id.register_card0).setVisibility(View.GONE);
 
