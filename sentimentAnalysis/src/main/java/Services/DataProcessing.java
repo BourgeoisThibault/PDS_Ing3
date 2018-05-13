@@ -4,6 +4,7 @@ import DataDefinition.DataDefinition;
 import org.apache.log4j.Logger;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.types.StructType;
 import org.springframework.stereotype.Component;
 
 
@@ -37,6 +38,10 @@ public class DataProcessing {
     private String url = "jdbc:mysql://localhost:8889/esibank_decisionnel";
     private DataAccess dataAccess = new DataAccess(url,"esibank", "esibankpds");
     //private DataAccess dataAccess = new DataAccess(DATA_ACCESS_URI,SECURE_LOGIN, SECURE_PASSWORD);
+    //private String path = "/home/esibank/surveys.csv";
+    private String path = "/Users/jeremy/Desktop/surveys.csv";
+
+
 
     private DataDefinition dataDefiniton = new DataDefinition();
     private static final Logger logger = Logger.getLogger(DataProcessing.class);
@@ -61,10 +66,25 @@ public class DataProcessing {
 
         dataAccess.InsertTweetsCount(dataset);
 
-        logger.info("Method run - Status : Analysis succeded");
+        logger.info("Method run - Status : Analysis tweets succeded");
 
         dataset.unpersist();
+
+        logger.info("Method run - Start : surveys analysis");
+        StructType csvStruct = dataDefiniton.getSchema();
+
+        Dataset<Row> datasetCsv = dataDefiniton.RetrieveDataFromCSV(path, csvStruct);
+        datasetCsv.cache();
+
+        datasetCsv.createOrReplaceTempView("surveysAnalysis");
+        dataset.unpersist();
+        dataAccess.InsertsurveysCount(datasetCsv);
+
+
+
         logger.info("Method run - End");
+
+
 
     }
 
