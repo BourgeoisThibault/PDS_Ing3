@@ -1,0 +1,52 @@
+INFO:root:Started
+INFO:root:Finished
+INFO:root:Starting Thread
+INFO:root:###########################################################
+INFO:root:##### Check valid card request : http://localhost:4321/check?card=1111111111&&pin=mypass
+INFO:root:###########################################################
+INFO:root:Client 2nd front page connected !
+INFO:root:###########################################################
+INFO:root:##### Check valid card request : http://localhost:4321/check?card=1111111111&&pin=mypass
+INFO:root:###########################################################
+INFO:root:###########################################################
+INFO:root:##### Check valid transac request : http://localhost:4321/validate?card=1111111111&&pin=mypass&&amount=10
+INFO:root:###########################################################
+INFO:root:CONFIRM TRANSAC Card id + 1111111111 - PIN : mypass - Amount2 : 10STEP 
+INFO:root:###########################################################
+INFO:root:##### Check confirm transac request : http://localhost:4321/confirme?card=1111111111&&pin=mypass&&amount=10
+INFO:root:###########################################################
+INFO:root:###########################################################
+INFO:root:##### Check valid card request : http://localhost:4321/check?card=1111111111&&pin=mypass
+INFO:root:###########################################################
+INFO:root:###########################################################
+INFO:root:##### Check valid card request : http://localhost:4321/check?card=1111111111&&pin=mypass
+INFO:root:###########################################################
+INFO:root:Client 2nd front page connected !
+INFO:root:###########################################################
+INFO:root:##### Check valid transac request : http://localhost:4321/validate?card=1111111111&&pin=mypass&&amount=10
+INFO:root:###########################################################
+INFO:root:CONFIRM TRANSAC Card id + 2222222222 - PIN : mypass - Amount2 : 10STEP 
+INFO:root:###########################################################
+INFO:root:##### Check valid card request : http://localhost:4321/check?card=2222222222&&pin=mypass
+INFO:root:###########################################################
+INFO:root:###########################################################
+INFO:root:##### Check valid card request : http://localhost:4321/check?card=2222222222&&pin=mypass
+INFO:root:###########################################################
+INFO:root:Client 2nd front page connected !
+INFO:root:###########################################################
+INFO:root:##### Check valid transac request : http://localhost:4321/validate?card=2222222222&&pin=mypass&&amount=8000
+INFO:root:###########################################################
+INFO:root:###########################################################
+INFO:root:##### Check valid card request : http://localhost:4321/check?card=2222222222&&pin=mypass
+INFO:root:###########################################################
+INFO:root:###########################################################
+INFO:root:##### Check valid card request : http://localhost:4321/check?card=2222222222&&pin=mypass
+INFO:root:###########################################################
+INFO:root:Client 2nd front page connected !
+INFO:root:###########################################################
+INFO:root:##### Check valid transac request : http://localhost:4321/validate?card=2222222222&&pin=mypass&&amount=10
+INFO:root:###########################################################
+INFO:root:CONFIRM TRANSAC Card id + 2222222222 - PIN : mypass - Amount2 : 10STEP 
+INFO:root:###########################################################
+INFO:root:##### Check confirm transac request : http://localhost:4321/confirme?card=2222222222&&pin=mypass&&amount=10
+INFO:root:###########################################################
