@@ -5,41 +5,18 @@ import org.apache.log4j.Logger;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.types.StructType;
-import org.springframework.stereotype.Component;
 
 
 /**
  * Created by jeremy on 09/05/2018.
  */
-@Component
 public class DataProcessing {
-/*
-    public static String DATA_ACCESS_URI;
-    public static String SECURE_LOGIN;
-    public static String SECURE_PASSWORD;
-
-
-    @Value("${uri.secure}")
-    public void setSECURE_URI(String DATA_ACCESS_URI) {
-        this.DATA_ACCESS_URI = DATA_ACCESS_URI;
-    }
-
-    @Value("${db.mysql-login}")
-    public void setSECURE_LOGIN(String SECURE_LOGIN) {
-        this.SECURE_LOGIN = SECURE_LOGIN;
-    }
-
-    @Value("${db.mysl-password}")
-    public void setSECURE_PASSWORD(String SECURE_PASSWORD) {
-        this.SECURE_PASSWORD = SECURE_PASSWORD;
-    }*/
 
     //private String url = "jdbc:mysql://192.154.88.161:3306/esibank_decisionnel";
     private String url = "jdbc:mysql://localhost:8889/esibank_decisionnel";
     private DataAccess dataAccess = new DataAccess(url,"esibank", "esibankpds");
-    //private DataAccess dataAccess = new DataAccess(DATA_ACCESS_URI,SECURE_LOGIN, SECURE_PASSWORD);
     //private String path = "/home/esibank/surveys.csv";
-    private String path = "/Users/jeremy/Desktop/surveys.csv";
+    private String path = "/Users/jeremy/Desktop/PDS_data/surveys_bigdata.csv";
 
 
 
@@ -77,10 +54,15 @@ public class DataProcessing {
         datasetCsv.cache();
 
         datasetCsv.createOrReplaceTempView("surveysAnalysis");
+        datasetCsv = dataDefiniton.formatDate(datasetCsv);
         dataset.unpersist();
         dataAccess.InsertsurveysCount(datasetCsv);
-        dataAccess.InsertsurveysPositiveCount(datasetCsv);
+        dataAccess.InsertPositiveSurveys(datasetCsv);
+        dataAccess.InsertNegativeSurveys(datasetCsv);
+        dataAccess.insertNeutralSurveys(datasetCsv);
 
+
+        datasetCsv.unpersist();
 
 
         logger.info("Method run - End");
