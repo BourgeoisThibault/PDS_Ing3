@@ -17,7 +17,6 @@ public class DataProcessing {
     private DataAccess dataAccess = new DataAccess(url,"esibank", "esibankpds");
     private String path = "/home/esibank/surveys.csv";
     //private String path = "/Users/jeremy/Desktop/PDS_data/surveys_bigdata.csv";
-
     private DataDefinition dataDefiniton = new DataDefinition();
     private static final Logger logger = Logger.getLogger(DataProcessing.class);
 
@@ -59,13 +58,9 @@ public class DataProcessing {
         dataAccess.InsertNegativeSurveys(datasetCsv);
         dataAccess.insertNeutralSurveys(datasetCsv);
 
-
         datasetCsv.unpersist();
 
-
         logger.info("Method run - End");
-
-
 
     }
 
