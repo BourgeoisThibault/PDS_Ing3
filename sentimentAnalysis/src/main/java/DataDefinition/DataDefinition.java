@@ -23,8 +23,9 @@ public class DataDefinition {
     public DataDefinition(){
         this.spark = SparkSession
                 .builder()
+                .config("spark.testing.memory", "2147480000")
                 .appName("SentimentAnalysis")
-                .master("local[*]")
+                .master("local[12]")
                 .config("spark.mongodb.input.uri", "mongodb://192.154.88.173/tweets.tweetRaw")
                 .config("spark.mongodb.output.uri", "mongodb://192.154.88.173/tweets.tweetRaw")
                 .getOrCreate();
