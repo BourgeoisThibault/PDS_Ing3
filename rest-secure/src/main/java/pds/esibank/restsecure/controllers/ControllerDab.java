@@ -110,10 +110,12 @@ public class ControllerDab {
                 notificationModel.setMessage("Retrait de " + amount + " effectué.");
                 notificationModel.setTarget("tbd");
 
-                sendLogToElasticEngine(notificationModel);
                 String myUri = "http://notification.esibank.inside.esiag.info/send/" + uidCustommer;
 
                 restTemplate.postForEntity(myUri,notificationModel,String.class);
+                notificationModel.setMessage(amount);
+                notificationModel.setTarget(uidCustommer);
+                sendLogToElasticEngine(notificationModel);
 
                 return new ResponseEntity(HttpStatus.OK);
             }else
