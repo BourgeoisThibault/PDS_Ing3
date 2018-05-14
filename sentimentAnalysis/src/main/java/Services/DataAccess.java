@@ -53,21 +53,45 @@ public class DataAccess {
         String table = "surveysCount";
         Dataset<Row> dsNbsurveys = dataset.groupBy("id").count();
         dsNbsurveys.write()
-                .mode("overwrite") // to overwrite a table
+                .mode("overwrite")
                 .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver")
                 .jdbc(url, table, connectionProperties);    }
 
 
-    public void InsertsurveysPositiveCount(Dataset<Row> dataset)
+    public void InsertPositiveSurveys(Dataset<Row> dataset)
     {
-        logger.info("Methode InsertsurveysPositiveCount - Start");
-        String table = "surveysPositiveCount";
-        Dataset<Row> dsNbsurveys =dataset.filter(dataset.col("note").$greater(2));
-        dsNbsurveys = dsNbsurveys.groupBy("id").count();
-        dsNbsurveys.write()
+        logger.info("Methode InsertPositiveSurveys - Start");
+        String table = "PositiveSurveysCount";
+        Dataset<Row> dsNbsurveys =dataset.filter(dataset.col("note").gt(3));
+        Dataset<Row> dsNb = dsNbsurveys.groupBy("note").count();
+
+        dsNb.write()
                 .mode("overwrite") // to overwrite a table
                 .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver")
                 .jdbc(url, table, connectionProperties);    }
 
+    public void InsertNegativeSurveys(Dataset<Row> dataset)
+    {
+        logger.info("Methode InsertNegativeSurveys - Start");
+        String table = "NegativeSurveysCount";
+        Dataset<Row> dsNbsurveys =dataset.filter(dataset.col("note").lt(3));
+        Dataset<Row> dsNb = dsNbsurveys.groupBy("note").count();
+
+        dsNb.write()
+                .mode("overwrite") // to overwrite a table
+                .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver")
+                .jdbc(url, table, connectionProperties);    }
+
+    public void insertNeutralSurveys(Dataset<Row> dataset)
+    {
+        logger.info("Methode insertNeutralSurveys - Start");
+        String table = "NeutralSurveysCount";
+        Dataset<Row> dsNbsurveys =dataset.filter(dataset.col("note").$eq$eq$eq(3));
+        Dataset<Row> dsNb = dsNbsurveys.groupBy("note").count();
+
+        dsNb.write()
+                .mode("overwrite") // to overwrite a table
+                .option(JDBCOptions.JDBC_DRIVER_CLASS(), "com.mysql.jdbc.Driver")
+                .jdbc(url, table, connectionProperties);    }
 
 }
