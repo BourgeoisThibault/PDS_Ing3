@@ -14,6 +14,7 @@ public class NotificationModel {
     private String title;
     private String message;
     private String target;
+    private String date;
 
     public NotificationModel() {
         super();
