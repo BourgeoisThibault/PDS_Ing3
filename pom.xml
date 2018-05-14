@@ -20,7 +20,7 @@
         <module>payfree-client</module>
         <module>bigdata_complaintsAnalysis</module>
         <module>it-dabapp-withdrawal</module>
-
+        <module>sentimentAnalysis</module>
     </modules>
 
     <properties>
