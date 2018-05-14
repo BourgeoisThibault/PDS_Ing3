@@ -26,13 +26,8 @@ public class DataDefinition {
                 .builder()
                 .appName("SentimentAnalysis")
                 .master("local[*]")
-                //.config("spark.mongodb.input.uri", "mongodb://192.154.88.173/tweets.tweetRaw")
-                //.config("spark.mongodb.output.uri", "mongodb://192.154.88.173/tweets.tweetRaw")
                 .config("spark.mongodb.input.uri", "mongodb://localhost/tweets.tweetRaw")
                 .config("spark.mongodb.output.uri", "mongodb://localhost/tweets.tweetRaw")
-
-                //.config("spark.mongodb.input.uri", "mongodb://192.154.88.173/avis.Raw")
-                //.config("spark.mongodb.output.uri", "mongodb://192.154.88.173/avis.Raw")
                 .getOrCreate();
         this.jsc = new JavaSparkContext(spark.sparkContext());
     }
@@ -61,10 +56,19 @@ public class DataDefinition {
 
         return new StructType(new StructField[]{
                 new StructField("id", DataTypes.LongType, false, Metadata.empty()),
-                new StructField("date", DataTypes.DateType, false, Metadata.empty()),
+                new StructField("date", DataTypes.StringType, false, Metadata.empty()),
                 new StructField("note", DataTypes.IntegerType, false, Metadata.empty()),
                 new StructField("commentaire", DataTypes.StringType, false, Metadata.empty())
         });
+    }
+
+    public  Dataset<Row> formatDate(Dataset<Row> ds)
+    {
+        logger.info("Method formatDate - Start : Formating date");
+
+        return ds.sqlContext().sql("SELECT TO_DATE(CAST(UNIX_TIMESTAMP(date, 'dd/MM/yyyy') AS TIMESTAMP)) As date,"
+                + "id, note, commentaire FROM surveysAnalysis");
+
     }
 
 }
