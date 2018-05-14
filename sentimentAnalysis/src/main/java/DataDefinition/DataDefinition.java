@@ -20,7 +20,6 @@ public class DataDefinition {
     private JavaSparkContext jsc;
     private static final Logger logger = Logger.getLogger(DataDefinition.class);
 
-
     public DataDefinition(){
         this.spark = SparkSession
                 .builder()
