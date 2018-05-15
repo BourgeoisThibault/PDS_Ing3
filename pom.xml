@@ -21,6 +21,7 @@
         <module>bigdata_complaintsAnalysis</module>
         <module>it-dabapp-withdrawal</module>
          <module>GetData</module>
+        <module>sentimentAnalysis</module>
     </modules>
 
     <properties>
