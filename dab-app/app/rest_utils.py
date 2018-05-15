@@ -1,10 +1,16 @@
 #
 #@author ABID BUTT Usman
 #
-
+from datetime import datetime
 import requests
 import logging
 import json
+from elasticsearch import Elasticsearch
+es = Elasticsearch(
+    ['elk.esibank.inside.esiag.info'],
+    scheme="http",
+    port=9200
+)
 
 
 def check_valid_card(card_id, pin):
@@ -19,12 +25,33 @@ def check_valid_card(card_id, pin):
     except requests.exceptions.RequestException as e:
         logging.info("PAYFREE CHECK", "ERROR COMMUNICATION WITH PAYFREE MODULE : ")
         return None
-
     if response.status_code == 200:
+        data = {
+            "message": "Contact sur DAB reussi",
+            "code_status": 200,
+            "valid_card": True,
+            "date": datetime.now()
+                }
+        res = es.index(index="dab-contact-nfc", doc_type='log', id=1, body=data)
+        # requests.post("http://elk.esibank.inside.esiag.info:9200/dab-contact-nfc/log", data=data)
         return True
     elif response.status_code == 401:
+        data = {
+            "message": "Contact sur DAB non autorise",
+            "code_status": 401,
+            "valid_card": False,
+            "date": datetime.now()
+        }
+        requests.post("http://elk.esibank.inside.esiag.info:9200/dab-contact-nfc/log", data=data)
         return False
     else:
+        data = {
+            "message": "Contact sur DAB erreur DAB",
+            "code_status": 0,
+            "valid_card": False,
+            "date": datetime.now()
+        }
+        requests.post("http://elk.esibank.inside.esiag.info:9200/dab-contact-nfc/log", data=data)
         return None
 
 
