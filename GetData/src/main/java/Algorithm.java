@@ -20,6 +20,7 @@ public class Algorithm {
 
         JavaMongoRDD<Document> rdd = MongoSpark.load(row.getJSC());
 
+
         System.out.print("Document avec le filtre 1");
         JavaRDD<Document> rdd1 = rdd.filter(filter1);
         System.out.print(rdd1.collect());
@@ -35,7 +36,6 @@ public class Algorithm {
         System.out.print("Document avec le filtre 4");
         JavaRDD<Document> rdd4 = rdd.filter(filter4);
         System.out.print(rdd4.collect());
-
 
         //System.out.println(rdd.count());
         //System.out.println(rdd.first().toJson());

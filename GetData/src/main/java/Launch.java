@@ -46,7 +46,7 @@ public class Launch {
             MongoSpark.save(documentJavaRDD);
 
             System.out.print("Fin traitement");
-            System.out.print(s.getUser().getName() + " " + s.getText());
+            System.out.print(s.getCreatedAt()+ s.getUser().getName() + " " + s.getText());
         }
     }
 }
