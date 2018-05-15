@@ -19,7 +19,8 @@
         <module>it-notification-send</module>
         <module>payfree-client</module>
         <module>bigdata_complaintsAnalysis</module>
-        <module>GetData</module>
+        <module>it-dabapp-withdrawal</module>
+         <module>GetData</module>
     </modules>
 
     <properties>

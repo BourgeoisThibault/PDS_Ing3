@@ -34,17 +34,6 @@ def handle_card_checking_contact():
         logging.error("############################################")
 
 
-def has_numbers_only(inputCardNumber, length):
-    correct = True
-    for char in inputCardNumber:
-        if char.isdigit() and len(inputCardNumber) == length:
-            print("is ok")
-        else:
-            logging.error("is ko")
-            correct = False
-    return correct
-
-
 if __name__ == '__main__':
     logging.info("############################################")
     logging.info("<---> !!! Contact from client device!!! <--->")

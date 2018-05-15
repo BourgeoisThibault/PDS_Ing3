@@ -9,6 +9,17 @@ public class NotificationModel {
     private String title;
     private String target;
     private String message;
+    private String date;
+
+    public String getNotif_id() {
+        return notif_id;
+    }
+
+    public void setNotif_id(String notif_id) {
+        this.notif_id = notif_id;
+    }
+
+    private String notif_id;
 
     public String getMessage() {
         return message;
@@ -16,6 +27,15 @@ public class NotificationModel {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getTitle() {
         return title;
     }

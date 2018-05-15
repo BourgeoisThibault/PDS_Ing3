@@ -22,10 +22,13 @@ import android.widget.Toast;
 
 import com.esipe.esibankm.esibankm.AccountsActivity;
 import com.esipe.esibankm.esibankm.HomeActivity;
+import com.esipe.esibankm.esibankm.NotificationActivity;
 import com.esipe.esibankm.esibankm.R;
 import com.esipe.esibankm.esibankm.TransactionActivity;
+import com.esipe.esibankm.esibankm.models.MobileToken;
 import com.esipe.esibankm.esibankm.models.NotificationModel;
 import com.esipe.esibankm.esibankm.utils.JsonUtils;
+import com.esipe.esibankm.esibankm.utils.NotificationDBOpenHelper;
 
 
 import java.util.Random;
@@ -46,6 +49,9 @@ public class LocalService extends Service {
     private Handler mainHandler;
     private Handler h;
     private Random random;
+    private MobileToken mobileToken;
+    private static final String FILE_NAME = "data.json";
+    private NotificationDBOpenHelper mydb;
 
 
     @Override
@@ -126,8 +132,9 @@ public class LocalService extends Service {
                             .build();
             int NOTIFICATION_ID = random.nextInt(9999 - 1000) + 1000;
             Log.i("Notification","I am in on showNotification");
-
-
+            mobileToken = JsonUtils.MobileTokenFromJson(JsonUtils.getData(getApplicationContext(),FILE_NAME));
+            mydb = new NotificationDBOpenHelper(this);
+            mydb.insertNotif(Integer.valueOf(mobileToken.getUid()),notif.getTitle(),notif.getMessage(), String.valueOf(NOTIFICATION_ID));
             mNM.notify(NOTIFICATION_ID, builder);
         }
 
@@ -140,7 +147,9 @@ public class LocalService extends Service {
             targetIntent = new Intent(this, AccountsActivity.class);
         }else if(target.equals("transfer")){
             targetIntent = new Intent(this, TransactionActivity.class);
-        }//
+        }else if(target.equals("tbd")){
+            targetIntent = new Intent(this, NotificationActivity.class);
+        }
         //default target
         return targetIntent;
     }

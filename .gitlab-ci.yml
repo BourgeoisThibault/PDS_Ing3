@@ -21,6 +21,11 @@ TestAll:
     - echo "SKIP"
     #- mvn test
   when: on_success
+#TestDabAppPayfreeIntegration:
+#  stage: test
+#  script:
+#    - mvn package -pl it-dabapp-withdrawal -am
+#  when: on_success
 PackageAll:
   stage: build
   script:

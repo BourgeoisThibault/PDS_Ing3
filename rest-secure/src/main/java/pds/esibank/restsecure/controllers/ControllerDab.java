@@ -18,6 +18,9 @@ import pds.esibank.models.payfree.PfClientDto;
 import javax.ws.rs.core.MediaType;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import static org.springframework.http.HttpMethod.GET;
 
@@ -33,7 +36,8 @@ public class ControllerDab {
     private String cryptPassType;
     @Value("${crypt.sign.type}")
     private String cryptSignType;
-
+    @Value("${elastic.endpoint}")
+    private String elastic_enpoint;
     @Value("${url.database}")
     private String URL_DATABASE;
 
@@ -75,7 +79,6 @@ public class ControllerDab {
                 headers.set("card", cardId);
                 headers.set("amount", amount);
                 HttpEntity entity = new HttpEntity("parameters",headers);
-
                 try {
                     restTemplate.exchange(finalUrl, GET, entity, String.class);
                     return new ResponseEntity(HttpStatus.OK);
@@ -105,12 +108,15 @@ public class ControllerDab {
 
                 NotificationModel notificationModel = new NotificationModel();
                 notificationModel.setTitle("Retrait sur DAB");
-                notificationModel.setMessage("Retrait de " + amount + " effectué.");
+                notificationModel.setMessage("Retrait de " + amount + " € effectué.");
                 notificationModel.setTarget("tbd");
 
                 String myUri = "http://notification.esibank.inside.esiag.info/send/" + uidCustommer;
 
                 restTemplate.postForEntity(myUri,notificationModel,String.class);
+                notificationModel.setTarget(uidCustommer);
+                notificationModel.setAmount(Integer.valueOf(amount));
+                sendLogToElasticEngine(notificationModel);
 
                 return new ResponseEntity(HttpStatus.OK);
             }else
@@ -118,6 +124,13 @@ public class ControllerDab {
         } catch (HttpClientErrorException ex) {
             return new ResponseEntity(ex.getStatusCode());
         }
+    }
+
+    public void sendLogToElasticEngine(NotificationModel notificationModel){
+        String formatDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+        notificationModel.setDate(new Date());
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(elastic_enpoint,notificationModel,String.class);
     }
 
 }

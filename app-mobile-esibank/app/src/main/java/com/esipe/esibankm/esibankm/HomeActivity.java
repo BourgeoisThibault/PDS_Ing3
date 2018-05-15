@@ -72,6 +72,7 @@ public class HomeActivity extends MainActivity {
     private Cursor c;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,8 +80,8 @@ public class HomeActivity extends MainActivity {
 
         //setContentView(R.layout.activity_home);
         mydb = new UsersDBOpenHelper(this);
-        mydb.insertUser(111001,"Giraud");
-        mydb.insertUser(111002,"Olivier");
+//        mydb.insertUser(111001,"Giraud");
+//        mydb.insertUser(111002,"Olivier");
 
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -90,7 +91,9 @@ public class HomeActivity extends MainActivity {
         View contentView = inflater.inflate(R.layout.activity_home, null, false);
         mDrawer.addView(contentView, 0);
         login_connected = findViewById(R.id.login_connected);
+        c = mydb.getUser(Integer.valueOf(JsonUtils.MobileTokenFromJson(JsonUtils.getData(getApplicationContext(),"data.json")).getUid()));
 
+        setLogin(c);
 
         telephonyManager = (TelephonyManager)getSystemService(this.TELEPHONY_SERVICE);
 
@@ -110,12 +113,14 @@ public class HomeActivity extends MainActivity {
                 Log.i("itemselected uid","Item uid"+uid);
 
                 c = mydb.getUser(Integer.valueOf(parent.getSelectedItem().toString()));
-                if(c.moveToFirst()){
-                    name = c.getString(c.getColumnIndex(CardDBOpenHelper.name));
-                    login_connected.setText(name.toString());
-                    Log.i("itemselected","Item name "+name);
-
-                }
+                setLogin(c);
+//                if(c.moveToFirst()){
+//                    name = c.getString(c.getColumnIndex(CardDBOpenHelper.name));
+//                    login_connected.setText(name.toString());
+//
+//                    Log.i("itemselected","Item name "+name);
+//
+//                }
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -148,6 +153,14 @@ public class HomeActivity extends MainActivity {
 
     }
 
+    public void setLogin(Cursor c){
+        if(c.moveToFirst()){
+            name = c.getString(c.getColumnIndex(CardDBOpenHelper.name));
+            login_connected.setText(name.toString());
+
+            Log.i("itemselected","Item name "+name);
+        }
+    }
 
 
     public ArrayList<String> getStrings() {
@@ -305,15 +318,13 @@ public class HomeActivity extends MainActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
+
         if(ConnectSocket.isRunning==true){
             findViewById(R.id.connect_button).setVisibility(View.GONE);
             findViewById(R.id.connected_label).setVisibility(View.VISIBLE);
             findViewById(R.id.name_connected).setVisibility(View.GONE);
             mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
             mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-
-
         }
         else{
             findViewById(R.id.connected_label).setVisibility(View.GONE);
@@ -322,5 +333,7 @@ public class HomeActivity extends MainActivity {
             mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         }
+        super.onResume();
+
     }
 }

@@ -12,4 +12,7 @@ public class AccountDto {
 
     private String account_id;
     private String amount;
+    private String cardType;
+    private String customer;
+
 }

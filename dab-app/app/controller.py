@@ -4,6 +4,9 @@
 
 import os
 import logging
+
+import fakeredis
+
 import rest_utils
 
 from flask import Flask, request, render_template, jsonify, session
@@ -24,6 +27,7 @@ from app import logging
 #Session(app)
 
 
+# REDIS_CONNECTION = fakeredis.FakeStrictRedis()
 REDIS_CONNECTION = redis_management.create_connection()
 redis_management.initialize_keys(REDIS_CONNECTION)
 
@@ -36,17 +40,16 @@ def card_checking():
     card_id = request.args.get('card_id')
     pin = request.args.get('pin')
     step = redis_management.get_step_key(REDIS_CONNECTION)
+    print(step)
 #Add theses values in session
-#    print("CARD CHECKING STEP : " + session.get('step'))
-    print("CARD CHECKING STEP : " + step)
-    logging.info(card_id + " - " + pin)
+    # logging.info(card_id + " - " + pin)
     if step == "FIRST":
         socketio.emit('response_card_checking', {'code': 444}, namespace='/home_pool')
         if rest_utils.check_valid_card(card_id, pin):
             socketio.emit('response_card_checking', {'code': 200, 'card_id': card_id, 'pin': pin}, namespace='/home_pool')
             return "ok", 200
         else:
-            print("Envoi de ko ")
+            print("Envoi de ko1 ")
             socketio.emit('response_card_checking', {'code': 401}, namespace='/home_pool')
             return "ko", 401
     else:
@@ -68,14 +71,16 @@ def confirm_transac():
     #if card_id stored in redis DB  does not match with request arg card_id, return forbidden code 403
     if card_id != r_card_id or pin != r_pin:
         socketio.emit('confirm_transac', {'code': 403}, namespace='/confirm_transac')
+        redis_management.set_step_key("FIRST", REDIS_CONNECTION)#block step 1 to avoid repetitive get
         return "ko", 403
     else:#double verification
         if rest_utils.check_confirm_transac(r_card_id, r_pin, r_amount):
             socketio.emit('confirm_transac', {'code': 200}, namespace='/confirm_transac')
             return "ok", 200
         else:
-            print("Envoi de ko ")
+            print("Envoi de ko2 ")
             socketio.emit('confirm_transac', {'code': 401}, namespace='/confirm_transac')
+            redis_management.set_step_key("FIRST", REDIS_CONNECTION)#block step 1 to avoid repetitive get
             return "ko", 401
 
 
@@ -97,34 +102,17 @@ def check_valid_transac():
     redis_management.set_step_key("SECOND", REDIS_CONNECTION)
     sleep(2)
 
-    #card_id = session.get('card_id')
-    #pin = session.get('pin')
     card_id = redis_management.get_card_id(REDIS_CONNECTION)
     pin = redis_management.get_pin(REDIS_CONNECTION)
     amount = request.args.get('amount')
-    #Add amount in session for last checking operation
-    #session['amount'] = amount
     redis_management.set_amount(amount, REDIS_CONNECTION)
-#    print("SESSION VALUES : Card id + " + session.get('card_id') + " PIN  + " + session.get('pin') + "Amount : " + session.get('amount'))
-    print("REDIS VALUES : Card id + " + card_id + " PIN  + " + pin + "Amount : " + amount)
 
     if rest_utils.check_valid_transac(card_id, pin, amount):
         return jsonify(response=200, amount=amount)
     else:
         print("Envoi de ko ")
+        redis_management.set_step_key("FIRST", REDIS_CONNECTION)#block step 1 to avoid repetitive get
         return jsonify(response=401)
-
-
-@app.route('/withdrawal_ui/_last_checking')
-def last_check():
-    data = True
-    logging.info('en attente de last_checking....')
-
-    sleep(5)
-    if data:
-        return jsonify(result="ok")
-    else:
-        return jsonify(result="ko")
 
 
 @app.errorhandler(404)
@@ -135,7 +123,7 @@ def page_not_found(error):
 @app.route('/error')
 def errorPage():
     d = date.today().isoformat()
-    return render_template('error_page.html', messageError="La carte n'est pas reconnu")
+    return render_template('error_page.html', messageError="La carte n'est pas reconnu"), 404
 
 
 @app.route('/help')
@@ -147,11 +135,6 @@ def helpPage():
 @app.route('/success')
 def successPage():
     return render_template('success_page.html')
-
-
-@app.route('/testing')
-def tetPge():
-    return render_template('withdrawal_ui.html')
 
 
 @app.route('/withdrawal_ui', methods=['POST'])
@@ -179,11 +162,6 @@ def home():
     step = redis_management.get_step_key(REDIS_CONNECTION)
     print("STEP BY HOME FROM REDIS : " + step)
     return render_template('home.html')
-
-
-@socketio.on('my event')
-def test_message(message):  # test_message() is the event callback function.
-    emit('my response', {'data': 'got it!'})  # Trigger a new event called "my response"
 
 
 @socketio.on('connect', namespace='/confirm_transac')
