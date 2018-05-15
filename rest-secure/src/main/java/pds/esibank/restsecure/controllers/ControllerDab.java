@@ -20,6 +20,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import static org.springframework.http.HttpMethod.GET;
 
@@ -107,14 +108,14 @@ public class ControllerDab {
 
                 NotificationModel notificationModel = new NotificationModel();
                 notificationModel.setTitle("Retrait sur DAB");
-                notificationModel.setMessage("Retrait de " + amount + " effectué.");
+                notificationModel.setMessage("Retrait de " + amount + " € effectué.");
                 notificationModel.setTarget("tbd");
 
                 String myUri = "http://notification.esibank.inside.esiag.info/send/" + uidCustommer;
 
                 restTemplate.postForEntity(myUri,notificationModel,String.class);
-                notificationModel.setMessage(amount);
                 notificationModel.setTarget(uidCustommer);
+                notificationModel.setAmount(Integer.valueOf(amount));
                 sendLogToElasticEngine(notificationModel);
 
                 return new ResponseEntity(HttpStatus.OK);
@@ -127,7 +128,7 @@ public class ControllerDab {
 
     public void sendLogToElasticEngine(NotificationModel notificationModel){
         String formatDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
-        notificationModel.setDate(formatDateTime);
+        notificationModel.setDate(new Date());
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(elastic_enpoint,notificationModel,String.class);
     }
