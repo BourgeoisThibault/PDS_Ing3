@@ -36,6 +36,7 @@ PackageAll:
       expire_in: 2 hrs
       paths:
       - bigdata_complaintsAnalysis/target/bigdata_complaintsAnalysis-1.0-SNAPSHOT.jar
+      - sentimentAnalysis/target/sentimentAnalysis-1.0-SNAPSHOT.jar
       - si-externe/target/si-externe.war
       - shares-price-historisation/target/shares-price-historisation.war
       - bank-transfer/target/bank-transfer-1.0-SNAPSHOT.jar
@@ -92,6 +93,21 @@ bigdata_complaints:
    refs:
      - master
 
+#################################
+##  (Jérémy)  ##
+#################################
+sentimentAnalysis:
+  stage: deploy
+  script:
+    - mvn package -DskipTests -pl sentimentAnalysis -am
+  artifacts:
+      expire_in: 1 hrs
+      paths:
+      - sentimentAnalysis/target/sentimentAnalysis-1.0-SNAPSHOT.jar
+  only:
+   refs:
+     - master
+
 
 
 #################################
@@ -129,6 +145,7 @@ Exec_script:
     - dab_app
     - nfc_lib_c
     - bigdata_complaints
+    - sentimentAnalysis
   script:
     - mkdir ~/.ssh
     - echo "$TIBO_SSH_PRIVATE" > ~/.ssh/id_rsa
@@ -141,6 +158,7 @@ Exec_script:
     - scp nfc-reader-lib-repo/nfc-reader-lib.tgz esibank@$IP_DOCKER:public-html/install_dab_app/nfc-reader-lib.tgz
     - scp dab-app-tgz-repo/dab-appdab-app.tgz esibank@$IP_DOCKER:public-html/install_dab_app/dab-app.tgz
     - scp bigdata_complaintsAnalysis/target/bigdata_complaintsAnalysis-1.0-SNAPSHOT.jar esibank@$IP_SPARK:bigdata/bigdata_complaintsAnalysis-1.0-SNAPSHOT.jar
+    - scp sentimentAnalysis/target/sentimentAnalysis-1.0-SNAPSHOT.jar esibank@$IP_SPARK:analysisSentiment/sentimentAnalysis-1.0-SNAPSHOT.jar
     - ssh esibank@$IP_DOCKER "sudo ./scriptDeployEsibank.sh"
     - ssh esibank@$IP_NOTIF "sudo ./scriptDeployNotifPush.sh"
   only:
