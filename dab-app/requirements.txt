@@ -13,3 +13,4 @@ fakeredis==0.10.3
 mock
 MagicMock
 patch
+elasticsearch
