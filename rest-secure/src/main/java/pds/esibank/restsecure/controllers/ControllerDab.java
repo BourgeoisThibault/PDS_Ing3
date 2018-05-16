@@ -12,8 +12,11 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import pds.esibank.crypto.MySHA;
 import pds.esibank.models.dab.CardDto;
+import pds.esibank.models.elastik.LogRequest;
+import pds.esibank.models.elastik.SrvInfoSign;
 import pds.esibank.models.notification.NotificationModel;
 import pds.esibank.models.payfree.PfClientDto;
+import pds.esibank.restsecure.ElastikLog;
 
 import javax.ws.rs.core.MediaType;
 import java.security.InvalidKeyException;
@@ -51,11 +54,13 @@ public class ControllerDab {
         try {
             CardDto cardDto = restTemplate.getForObject(URL_DATABASE + "card/" + cardId,CardDto.class);
 
-            if (MySHA.checkSign(cardDto.getCardPass(),"",cryptSignType,requestSign))
+            if (MySHA.checkSign(cardDto.getCardPass(),"",cryptSignType,requestSign)){
+                ElastikLog.sendLog(elastic_enpoint+"payfree-server/validesign", new SrvInfoSign(true, cardId));
                 return new ResponseEntity(HttpStatus.OK);
-            else
+            }else{
+                ElastikLog.sendLog(elastic_enpoint+"payfree-server/validesign", new SrvInfoSign(false, cardId));
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-
+            }
         } catch (HttpClientErrorException ex) {
             return new ResponseEntity(ex.getStatusCode());
         }
@@ -73,6 +78,8 @@ public class ControllerDab {
 
             if (MySHA.checkSign(cardDto.getCardPass(),amount,cryptSignType,requestSign)) {
 
+                ElastikLog.sendLog(elastic_enpoint+"payfree-server/validesign", new SrvInfoSign(true,cardId));
+
                 String finalUrl = URL_DATABASE + "checktransaction?card=" + cardId + "&amount=" + amount;
 
                 HttpHeaders headers = new HttpHeaders();
@@ -85,8 +92,10 @@ public class ControllerDab {
                 } catch (HttpClientErrorException ex) {
                     return new ResponseEntity(ex.getStatusCode());
                 }
-            }else
+            }else{
+                ElastikLog.sendLog(elastic_enpoint+"payfree-server/validesign", new SrvInfoSign(false,cardId));
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            }
         } catch (HttpClientErrorException ex) {
             return new ResponseEntity(ex.getStatusCode());
         } catch (Exception es) {
@@ -104,6 +113,9 @@ public class ControllerDab {
             CardDto cardDto = restTemplate.getForObject(URL_DATABASE + "card/" + cardId,CardDto.class);
 
             if (MySHA.checkSign(cardDto.getCardPass(),cardId + amount,cryptSignType,requestSign)) {
+
+                ElastikLog.sendLog(elastic_enpoint+"payfree-server/validesign", new SrvInfoSign(true,cardId));
+
                 String uidCustommer = restTemplate.getForObject(URL_DATABASE + "validatingtransaction?card=" + cardId + "&amount=" + amount, String.class);
 
                 NotificationModel notificationModel = new NotificationModel();
@@ -116,21 +128,19 @@ public class ControllerDab {
                 restTemplate.postForEntity(myUri,notificationModel,String.class);
                 notificationModel.setTarget(uidCustommer);
                 notificationModel.setAmount(Integer.valueOf(amount));
-                sendLogToElasticEngine(notificationModel);
+
+                String formatDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+                notificationModel.setDate(new Date());
+                ElastikLog.sendLog(elastic_enpoint+"dab-confirme/doc", notificationModel);
 
                 return new ResponseEntity(HttpStatus.OK);
-            }else
+            }else {
+                ElastikLog.sendLog(elastic_enpoint+"payfree-server/validesign", new SrvInfoSign(false,cardId));
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            }
         } catch (HttpClientErrorException ex) {
             return new ResponseEntity(ex.getStatusCode());
         }
-    }
-
-    public void sendLogToElasticEngine(NotificationModel notificationModel){
-        String formatDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
-        notificationModel.setDate(new Date());
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject(elastic_enpoint,notificationModel,String.class);
     }
 
 }
