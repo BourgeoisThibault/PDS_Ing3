@@ -32,7 +32,7 @@ def check_valid_card(card_id, pin):
             "valid_card": True,
             "date": datetime.now()
                 }
-        res = es.index(index="dab-contact-nfc", doc_type='log', id=1, body=data)
+        res = es.index(index="dab-contact-nfc", doc_type='log', body=data)
         # requests.post("http://elk.esibank.inside.esiag.info:9200/dab-contact-nfc/log", data=data)
         return True
     elif response.status_code == 401:
@@ -42,7 +42,8 @@ def check_valid_card(card_id, pin):
             "valid_card": False,
             "date": datetime.now()
         }
-        requests.post("http://elk.esibank.inside.esiag.info:9200/dab-contact-nfc/log", data=data)
+        res = es.index(index="dab-contact-nfc", doc_type='log', body=data)
+     #   requests.post("http://elk.esibank.inside.esiag.info:9200/dab-contact-nfc/log", data=data)
         return False
     else:
         data = {
@@ -51,7 +52,8 @@ def check_valid_card(card_id, pin):
             "valid_card": False,
             "date": datetime.now()
         }
-        requests.post("http://elk.esibank.inside.esiag.info:9200/dab-contact-nfc/log", data=data)
+        res = es.index(index="dab-contact-nfc", doc_type='log', body=data)
+       # requests.post("http://elk.esibank.inside.esiag.info:9200/dab-contact-nfc/log", data=data)
         return None
 
 
