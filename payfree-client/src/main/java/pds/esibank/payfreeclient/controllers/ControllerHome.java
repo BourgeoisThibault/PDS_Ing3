@@ -1,5 +1,7 @@
 package pds.esibank.payfreeclient.controllers;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +25,9 @@ public class ControllerHome {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private Gson gson;
+
     @Value("${url.secure}")
     private String URL_SECURE;
     @Value("${crypt.pass.type}")
@@ -37,7 +42,7 @@ public class ControllerHome {
 
     @GetMapping("/")
     public String home(){
-        return "PAYFREE ESIBANK HOMEPAGE";
+        return "Home";
     }
 
     @GetMapping("/homesecure")
