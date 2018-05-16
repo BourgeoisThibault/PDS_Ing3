@@ -6,16 +6,25 @@ import requests
 import logging
 import json
 from elasticsearch import Elasticsearch
+
+from app import load_properties
+
+_ELASTICSEARCH_URL = load_properties.get_properties("elastic_url")
+_ELASTICSEARCH_PORT = load_properties.get_properties("elastic_port")
+
+_CHECK_CARD_URL = load_properties.get_properties("check_url")
+_VALID_CARD_URL = load_properties.get_properties("valid_url")
+_CONFIRME_CARD_URL = load_properties.get_properties("confirme_url")
+
 es = Elasticsearch(
-    ['elk.esibank.inside.esiag.info'],
+    [_ELASTICSEARCH_URL],
     scheme="http",
-    port=9200
+    port=_ELASTICSEARCH_PORT
 )
 
 
 def check_valid_card(card_id, pin):
-
-    url = "http://localhost:4321/check?card="+str(card_id)+"&&pin="+str(pin)
+    url = _CHECK_CARD_URL+"?card="+str(card_id)+"&&pin="+str(pin)
     logging.info("###########################################################")
     logging.info("##### Check valid card request : "+url)
     logging.info("###########################################################")
@@ -26,40 +35,22 @@ def check_valid_card(card_id, pin):
         logging.info("PAYFREE CHECK", "ERROR COMMUNICATION WITH PAYFREE MODULE : ")
         return None
     if response.status_code == 200:
-        data = {
-            "message": "Contact sur DAB reussi",
-            "code_status": 200,
-            "valid_card": True,
-            "date": datetime.now()
-                }
+        data = get_elastic_check_log("Contact", 200, True, card_id)
         res = es.index(index="dab-contact-nfc", doc_type='log', body=data)
-        # requests.post("http://elk.esibank.inside.esiag.info:9200/dab-contact-nfc/log", data=data)
         return True
     elif response.status_code == 401:
-        data = {
-            "message": "Contact sur DAB non autorise",
-            "code_status": 401,
-            "valid_card": False,
-            "date": datetime.now()
-        }
+        data = get_elastic_check_log("Contact", 401, False, card_id)
         res = es.index(index="dab-contact-nfc", doc_type='log', body=data)
-     #   requests.post("http://elk.esibank.inside.esiag.info:9200/dab-contact-nfc/log", data=data)
         return False
     else:
-        data = {
-            "message": "Contact sur DAB erreur DAB",
-            "code_status": 0,
-            "valid_card": False,
-            "date": datetime.now()
-        }
+        data = get_elastic_check_log("Contact", 0, False, card_id)
         res = es.index(index="dab-contact-nfc", doc_type='log', body=data)
-       # requests.post("http://elk.esibank.inside.esiag.info:9200/dab-contact-nfc/log", data=data)
         return None
 
 
 def check_valid_transac(card_id, pin, amount):
 
-    url = "http://localhost:4321/validate?card="+str(card_id)+"&&pin="+str(pin)+"&&amount="+str(amount)
+    url = _VALID_CARD_URL+"?card="+str(card_id)+"&&pin="+str(pin)+"&&amount="+str(amount)
     logging.info("###########################################################")
     logging.info("##### Check valid transac request : "+url)
     logging.info("###########################################################")
@@ -80,7 +71,7 @@ def check_valid_transac(card_id, pin, amount):
 
 def check_confirm_transac(card_id, pin, amount):
 
-    url = "http://localhost:4321/confirme?card="+str(card_id)+"&&pin="+str(pin)+"&&amount="+str(amount)
+    url = _CONFIRME_CARD_URL+"?card="+str(card_id)+"&&pin="+str(pin)+"&&amount="+str(amount)
     logging.info("###########################################################")
     logging.info("##### Check confirm transac request : "+url)
     logging.info("###########################################################")
@@ -92,8 +83,37 @@ def check_confirm_transac(card_id, pin, amount):
         return None
 
     if response.status_code == 200:
+        data = get_elastic_confirme_log("Retrait", 200, True, amount, card_id)
+        res = es.index(index="dab-confirm-nfc", doc_type='log', body=data)
         return True
     elif response.status_code == 401:
+        data = get_elastic_confirme_log("Retrait", 401, False, amount, card_id)
+        res = es.index(index="dab-confirm-nfc", doc_type='log', body=data)
         return False
     else:
+        data = get_elastic_confirme_log("Retrait", 0, False, amount, card_id)
+        res = es.index(index="dab-confirm-nfc", doc_type='log', body=data)
         return None
+
+
+def get_elastic_check_log(message,code, validBool, cardid):
+    data = {
+        "message": message+" sur DAB",
+        "card_id": cardid,
+        "code_status": code,
+        "valid_card": validBool,
+        "date": datetime.now()
+    }
+    return data
+
+
+def get_elastic_confirme_log(message,code,validBool, amount, cardid):
+    data = {
+        "message": message+" sur DAB",
+        "card_id":cardid,
+        "code_status": code,
+        "valid_card": validBool,
+        "amount":amount,
+        "date": datetime.now()
+    }
+    return data
