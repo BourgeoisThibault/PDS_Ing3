@@ -12,15 +12,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import pds.esibank.crypto.MySHA;
 import pds.esibank.models.dab.CardDto;
-import pds.esibank.models.elastik.LogRequest;
 import pds.esibank.models.elastik.SrvInfoSign;
 import pds.esibank.models.notification.NotificationModel;
-import pds.esibank.models.payfree.PfClientDto;
 import pds.esibank.restsecure.ElastikLog;
 
-import javax.ws.rs.core.MediaType;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
