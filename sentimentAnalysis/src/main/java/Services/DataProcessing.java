@@ -13,10 +13,8 @@ import org.apache.spark.sql.types.StructType;
 public class DataProcessing {
 
     private String url = "jdbc:mysql://192.154.88.161:3306/esibank_decisionnel";
-    //private String url = "jdbc:mysql://localhost:8889/esibank_decisionnel";
     private DataAccess dataAccess = new DataAccess(url,"esibank", "esibankpds");
     private String path = "/home/esibank/surveys.csv";
-    //private String path = "/Users/jeremy/Desktop/PDS_data/surveys_bigdata.csv";
     private DataDefinition dataDefiniton = new DataDefinition();
     private static final Logger logger = Logger.getLogger(DataProcessing.class);
 

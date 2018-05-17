@@ -28,6 +28,7 @@ public class DataDefinition {
                 .master("local[12]")
                 .config("spark.mongodb.input.uri", "mongodb://192.154.88.173/tweets.tweetRaw")
                 .config("spark.mongodb.output.uri", "mongodb://192.154.88.173/tweets.tweetRaw")
+                .config("spark.mongodb.input.partitioner" ,"MongoPaginateBySizePartitioner")
                 .getOrCreate();
         this.jsc = new JavaSparkContext(spark.sparkContext());
     }
