@@ -23,4 +23,4 @@ To comment
 
 # Component Diagram PayFree (+DAB)
 
-![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/master/diagrammes/UC_RetraitSansContact/DeploymentDiagramGlobal.svg) 
+![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/master/diagrammes/UC_RetraitSansContact/DeploymentDiagramGlobal.jpg) 
