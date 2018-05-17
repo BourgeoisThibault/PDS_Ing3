@@ -14,12 +14,13 @@ To comment
   
   _For Dockerize the client, you can use this command `curl http://api.esibank.inside.esiag.info/install/script_install.sh | sudo bash`._
   
-# Deployment diagram 
+  
+# Deployment diagram PayFree (+DAB)
+
+![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/master/diagrammes/UC_RetraitSansContact/ComponentDiagramGlobal.jpg) 
 
 
-![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/master/diagrammes/DeploymentDiagramPDS.jpg) 
 
-# Component Diagram
+# Component Diagram PayFree (+DAB)
 
-
-![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/master/diagrammes/ComponentDiagramPDS.jpg) 
+![alt text](http://gitlab.esibank.inside.esiag.info/esibank-project/project-esibank/raw/master/diagrammes/UC_RetraitSansContact/DeploymentDiagramGlobal.svg) 
