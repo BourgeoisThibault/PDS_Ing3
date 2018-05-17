@@ -43,7 +43,7 @@ def check_valid_card(card_id, pin):
         res = es.index(index="dab-contact-nfc", doc_type='log', body=data)
         return False
     else:
-        data = get_elastic_check_log("Contact", 0, False, card_id)
+        data = get_elastic_check_log("Contact", 401, False, card_id)
         res = es.index(index="dab-contact-nfc", doc_type='log', body=data)
         return None
 
@@ -83,15 +83,21 @@ def check_confirm_transac(card_id, pin, amount):
         return None
 
     if response.status_code == 200:
+        data = get_elastic_check_log("Contact", 200, True, card_id)
+        res = es.index(index="dab-contact-nfc", doc_type='log', body=data)
         data = get_elastic_confirme_log("Retrait", 200, True, amount, card_id)
         res = es.index(index="dab-confirm-nfc", doc_type='log', body=data)
         return True
     elif response.status_code == 401:
+        data = get_elastic_check_log("Contact", 401, False, card_id)
+        res = es.index(index="dab-contact-nfc", doc_type='log', body=data)
         data = get_elastic_confirme_log("Retrait", 401, False, amount, card_id)
         res = es.index(index="dab-confirm-nfc", doc_type='log', body=data)
         return False
     else:
-        data = get_elastic_confirme_log("Retrait", 0, False, amount, card_id)
+        data = get_elastic_check_log("Contact", 401, False, card_id)
+        res = es.index(index="dab-contact-nfc", doc_type='log', body=data)
+        data = get_elastic_confirme_log("Retrait", 400, False, amount, card_id)
         res = es.index(index="dab-confirm-nfc", doc_type='log', body=data)
         return None
 
