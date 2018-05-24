@@ -1,8 +1,0 @@
-<resources>
-    <string-array name="tagContentType">
-        <item>Uri</item>
-        <item>Phone</item>
-        <item>Text</item>
-    </string-array>
-
-</resources>

@@ -1,5 +1,0 @@
-{"elastic_url":"elk.esibank.inside.esiag.info",
-  "elastic_port":9200,
-"check_url": "http://localhost:4321/check",
-"valid_url":"http://localhost:4321/validate",
-"confirme_url":"http://localhost:4321/confirme"}
